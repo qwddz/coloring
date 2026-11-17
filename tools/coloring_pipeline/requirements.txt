@@ -1,0 +1,7 @@
+google-genai>=1.30
+pillow>=10.0
+numpy>=1.26
+opencv-python-headless>=4.9
+scikit-image>=0.22
+rembg>=2.0.60
+onnxruntime>=1.17

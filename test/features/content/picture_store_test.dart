@@ -55,7 +55,7 @@ void main() {
         id: 'home_hamster_book',
         categoryId: 'home',
         title: const LocalizedText({'en': 'Hamster reading'}),
-        level: PictureLevel.detailed,
+        level: PictureLevel.medium,
         free: free,
         asset: asset,
         url: 'home/home_hamster_book.zip',
@@ -272,7 +272,7 @@ void main() {
         id: 'home_hamster_book',
         categoryId: 'home',
         title: LocalizedText({'en': 'Hamster reading'}),
-        level: PictureLevel.detailed,
+        level: PictureLevel.medium,
         free: true,
         asset: asset,
       );

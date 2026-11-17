@@ -27,7 +27,7 @@ final testManifest = ContentManifest.fromJson({
           'id': 'farm_goat_swing',
           'title': {'uk': 'Козеня', 'en': 'Goat', 'ru': 'Козлёнок'},
           'characters': ['farm_goat'],
-          'level': 'detailed',
+          'level': 'medium',
           'free': false,
           'url': 'farm/farm_goat_swing.zip',
           'thumbUrl': 'farm/farm_goat_swing_thumb.webp',

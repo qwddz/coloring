@@ -1,0 +1,22 @@
+{character_refs}
+Use the animal from the character reference: keep species, face, eyes, proportions and friendly
+expression, but do not copy the scene.
+
+Create a black-and-white coloring page in a "bold and easy" cozy style:
+{scene}
+
+Style rules:
+- thick, smooth black outlines of the same width everywhere, like a bold marker
+- every shape fully closed, no gaps in any line
+- large simple rounded shapes that are easy to fill, cute and friendly
+- no shading, no hatching, no gray, no texture lines, no fur strokes
+- pure white inside all shapes
+- the character is the main focus, takes about a third of the image and is fully visible
+- a complete cozy background made of simple, medium-sized objects; no tiny details,
+  no dots, small stars or wallpaper patterns
+- the scene is physically consistent: what is seen through a window stays inside the window frame;
+  no trees, sky or other outdoor objects inside a room
+- the animal has the correct number of legs, paws, fins and tails for its species, no extra limbs
+- no scary poses, no sharp teeth
+- no text, no letters, no border, no watermark
+{level_clause}

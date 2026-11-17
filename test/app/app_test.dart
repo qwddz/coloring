@@ -55,14 +55,14 @@ void main() {
       ProviderScope.containerOf(tester.element(find.byType(ColoringApp)))
           .read(routerProvider);
 
-  testWidgets('all ten categories in English, each coming soon', (
+  testWidgets('all ten categories in English, empty ones coming soon', (
     tester,
   ) async {
     await pumpApp(tester, const [Locale('en', 'US')]);
     expect(find.text('Animosaic Colors'), findsOneWidget);
     expect(find.text('Cozy home'), findsOneWidget);
-    expect(find.text('Coming soon'), findsWidgets);
-    for (final title in bundled.categories.map((c) => c.title.resolve('en'))) {
+    for (final category in bundled.categories) {
+      final title = category.title.resolve('en');
       await tester.scrollUntilVisible(find.text(title), 200);
       final card = find.ancestor(
         of: find.text(title),
@@ -70,7 +70,7 @@ void main() {
       );
       expect(
         find.descendant(of: card, matching: find.text('Coming soon')),
-        findsOneWidget,
+        category.pictures.isEmpty ? findsOneWidget : findsNothing,
         reason: title,
       );
     }
@@ -78,7 +78,16 @@ void main() {
   });
 
   testWidgets('an empty category says pictures are coming', (tester) async {
-    await pumpApp(tester, const [Locale('en', 'US')]);
+    // The bundled manifest fills up as pictures are exported, so empty the
+    // first category here instead of relying on one being empty.
+    final json = jsonDecode(
+      File('assets/manifest.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    final first = (json['categories'] as List).first as Map<String, dynamic>;
+    first['pictures'] = <Object>[];
+    await pumpApp(tester, const [
+      Locale('en', 'US'),
+    ], manifest: ContentManifest.fromJson(json));
     await tester.tap(find.text('Cozy home'));
     await tester.pumpAndSettle();
     expect(find.byType(PaperBackground), findsWidgets);

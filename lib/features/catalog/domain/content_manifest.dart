@@ -15,15 +15,15 @@ class LocalizedText {
   }
 }
 
-/// How much there is to color: «Простая» has 12–40 large regions,
-/// «Подробная» 50–150 with a background.
+/// How much there is to color: «Простая» has up to 100 regions,
+/// «Средняя» up to 150, both with a background.
 enum PictureLevel {
   simple,
-  detailed;
+  medium;
 
   static PictureLevel fromJson(Object? json) => switch (json) {
     'simple' => simple,
-    'detailed' => detailed,
+    'medium' => medium,
     _ => throw FormatException('bad level', json),
   };
 }

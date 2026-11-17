@@ -1,0 +1,1 @@
+"""Animosaic Colors content pipeline."""

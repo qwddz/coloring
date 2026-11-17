@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-"Animosaic Colors" (working title): a cozy "bold & easy" coloring app with Animosaic animals. It uses Flutter + Flame and targets Android first, landscape only, on phones and tablets. The product plan, stages and acceptance criteria live in `PLAN.md` (Russian). Work one stage at a time and check that stage's «Готово, когда» criterion before moving on.
+"Animosaic Colors" (working title): a detailed cozy coloring app with cute Animosaic animals (style: `docs/coloring_refs/STYLE.md`). It uses Flutter + Flame and targets Android first, landscape only, on phones and tablets. The product plan, stages and acceptance criteria live in `PLAN.md` (Russian). Work one stage at a time and check that stage's «Готово, когда» criterion before moving on.
 
 Current state: Stage 0 (project scaffold) is done. The app starts in landscape on the catalog of 10 categories from `assets/manifest.json`, which has no pictures yet, so every category says «coming soon». Settings, About, the parental gate and the paywall work with the fake test store. `/coloring/:id` is a placeholder screen until Stage 1. The «Architecture» section mixes what exists with the target from `PLAN.md`; update it as each part becomes real.
 

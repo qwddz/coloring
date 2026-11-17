@@ -1,0 +1,5 @@
+Image 1 is a coloring page. {character_refs_colored}
+Color image 1 with flat, cheerful colors, using the colors of the character reference for the animal.
+Keep every black line exactly where it is, do not add, move or remove any lines.
+One flat color per shape, no gradients, no shading, no texture.
+Keep the same framing and size as image 1.

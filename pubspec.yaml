@@ -77,6 +77,16 @@ flutter:
 
   assets:
     - assets/manifest.json
+    # coloring-assets:begin (written by tools/coloring_pipeline export)
+    - assets/thumbs/
+    - assets/coloring/free/autumn_hamster_leaves/
+    - assets/coloring/free/hobbies_shark_guitar/
+    - assets/coloring/free/home_fox_cocoa/
+    - assets/coloring/free/spring_spider_umbrella/
+    - assets/coloring/free/summer_giraffe_beach/
+    - assets/coloring/free/underwater_turtle_cafe/
+    - assets/coloring/free/winter_monkey_snowman/
+    # coloring-assets:end
 
   fonts:
     - family: Nunito

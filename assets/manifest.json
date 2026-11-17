@@ -1,96 +1,208 @@
 {
-  "version": 1,
-  "minAppVersion": "1.0.0",
-  "categories": [
+ "version": 4,
+ "minAppVersion": "1.0.0",
+ "categories": [
+  {
+   "id": "home",
+   "title": {
+    "uk": "Затишний дім",
+    "en": "Cozy home",
+    "ru": "Уютный дом"
+   },
+   "pictures": [
     {
-      "id": "home",
-      "title": {
-        "uk": "Затишний дім",
-        "en": "Cozy home",
-        "ru": "Уютный дом"
-      },
-      "pictures": []
-    },
-    {
-      "id": "food",
-      "title": {
-        "uk": "Смаколики",
-        "en": "Treats",
-        "ru": "Вкусняшки"
-      },
-      "pictures": []
-    },
-    {
-      "id": "autumn",
-      "title": {
-        "uk": "Осінь",
-        "en": "Autumn",
-        "ru": "Осень"
-      },
-      "pictures": []
-    },
-    {
-      "id": "winter",
-      "title": {
-        "uk": "Зима і свята",
-        "en": "Winter & holidays",
-        "ru": "Зима и праздники"
-      },
-      "pictures": []
-    },
-    {
-      "id": "spring",
-      "title": {
-        "uk": "Весна і сад",
-        "en": "Spring & garden",
-        "ru": "Весна и сад"
-      },
-      "pictures": []
-    },
-    {
-      "id": "summer",
-      "title": {
-        "uk": "Літо і пляж",
-        "en": "Summer & beach",
-        "ru": "Лето и пляж"
-      },
-      "pictures": []
-    },
-    {
-      "id": "underwater",
-      "title": {
-        "uk": "Під водою",
-        "en": "Under the sea",
-        "ru": "Под водой"
-      },
-      "pictures": []
-    },
-    {
-      "id": "farm",
-      "title": {
-        "uk": "На фермі",
-        "en": "On the farm",
-        "ru": "На ферме"
-      },
-      "pictures": []
-    },
-    {
-      "id": "hobbies",
-      "title": {
-        "uk": "Хобі",
-        "en": "Hobbies",
-        "ru": "Хобби"
-      },
-      "pictures": []
-    },
-    {
-      "id": "travel",
-      "title": {
-        "uk": "Подорожі",
-        "en": "Travel",
-        "ru": "Путешествия"
-      },
-      "pictures": []
+     "id": "home_fox_cocoa",
+     "title": {
+      "uk": "Лисичка з какао",
+      "en": "Fox with cocoa",
+      "ru": "Лисичка с какао"
+     },
+     "characters": [
+      "canines_fox"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/home_fox_cocoa/",
+     "thumb": "thumbs/home_fox_cocoa.webp"
     }
-  ]
+   ]
+  },
+  {
+   "id": "food",
+   "title": {
+    "uk": "Смаколики",
+    "en": "Yummy treats",
+    "ru": "Вкусняшки"
+   },
+   "pictures": []
+  },
+  {
+   "id": "autumn",
+   "title": {
+    "uk": "Осінь",
+    "en": "Autumn",
+    "ru": "Осень"
+   },
+   "pictures": [
+    {
+     "id": "autumn_hamster_leaves",
+     "title": {
+      "uk": "Хом'ячок з листочком",
+      "en": "Hamster with a leaf",
+      "ru": "Хомячок с листиком"
+     },
+     "characters": [
+      "pets_hamster_seeds"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/autumn_hamster_leaves/",
+     "thumb": "thumbs/autumn_hamster_leaves.webp"
+    }
+   ]
+  },
+  {
+   "id": "winter",
+   "title": {
+    "uk": "Зима і свята",
+    "en": "Winter and holidays",
+    "ru": "Зима и праздники"
+   },
+   "pictures": [
+    {
+     "id": "winter_monkey_snowman",
+     "title": {
+      "uk": "Мавпочка ліпить сніговика",
+      "en": "Monkey builds a snowman",
+      "ru": "Обезьянка лепит снеговика"
+     },
+     "characters": [
+      "jungle_monkey_banana"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/winter_monkey_snowman/",
+     "thumb": "thumbs/winter_monkey_snowman.webp"
+    }
+   ]
+  },
+  {
+   "id": "spring",
+   "title": {
+    "uk": "Весна і сад",
+    "en": "Spring garden",
+    "ru": "Весна и сад"
+   },
+   "pictures": [
+    {
+     "id": "spring_spider_umbrella",
+     "title": {
+      "uk": "Павучок з парасолькою",
+      "en": "Spider with an umbrella",
+      "ru": "Паучок с зонтиком"
+     },
+     "characters": [
+      "spiders_peacock_leaf"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/spring_spider_umbrella/",
+     "thumb": "thumbs/spring_spider_umbrella.webp"
+    }
+   ]
+  },
+  {
+   "id": "summer",
+   "title": {
+    "uk": "Літо і пляж",
+    "en": "Summer and beach",
+    "ru": "Лето и пляж"
+   },
+   "pictures": [
+    {
+     "id": "summer_giraffe_beach",
+     "title": {
+      "uk": "Жираф на пляжі",
+      "en": "Giraffe at the beach",
+      "ru": "Жираф на пляже"
+     },
+     "characters": [
+      "savanna_giraffe"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/summer_giraffe_beach/",
+     "thumb": "thumbs/summer_giraffe_beach.webp"
+    }
+   ]
+  },
+  {
+   "id": "underwater",
+   "title": {
+    "uk": "Під водою",
+    "en": "Under the sea",
+    "ru": "Под водой"
+   },
+   "pictures": [
+    {
+     "id": "underwater_turtle_cafe",
+     "title": {
+      "uk": "Черепаха в кав'ярні",
+      "en": "Turtle's cafe",
+      "ru": "Черепаха в кафе"
+     },
+     "characters": [
+      "sea_turtle"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/underwater_turtle_cafe/",
+     "thumb": "thumbs/underwater_turtle_cafe.webp"
+    }
+   ]
+  },
+  {
+   "id": "farm",
+   "title": {
+    "uk": "На фермі",
+    "en": "On the farm",
+    "ru": "На ферме"
+   },
+   "pictures": []
+  },
+  {
+   "id": "hobbies",
+   "title": {
+    "uk": "Захоплення",
+    "en": "Hobbies",
+    "ru": "Хобби"
+   },
+   "pictures": [
+    {
+     "id": "hobbies_shark_guitar",
+     "title": {
+      "uk": "Акула з укулеле",
+      "en": "Shark with a ukulele",
+      "ru": "Акула с укулеле"
+     },
+     "characters": [
+      "sharks_whale_shark_plankton"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/hobbies_shark_guitar/",
+     "thumb": "thumbs/hobbies_shark_guitar.webp"
+    }
+   ]
+  },
+  {
+   "id": "travel",
+   "title": {
+    "uk": "Подорожі",
+    "en": "Travels",
+    "ru": "Путешествия"
+   },
+   "pictures": []
+  }
+ ]
 }

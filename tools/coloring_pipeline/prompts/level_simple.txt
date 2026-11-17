@@ -1,0 +1,1 @@
+simple: a calm background with only a few objects, larger shapes, the animal itself drawn without spots, stripes or patterns, around 100 closed shapes in total (count every separate area to color)

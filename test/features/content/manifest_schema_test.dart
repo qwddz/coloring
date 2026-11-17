@@ -53,7 +53,7 @@ void main() {
               'id': 'home_hamster_book',
               'title': {'en': 'Hamster reading'},
               'characters': ['pets_hamster', 'pets_mouse'],
-              'level': 'detailed',
+              'level': 'medium',
               'free': false,
               'url': 'https://cdn.example.com/home/home_hamster_book.zip',
               'thumbUrl': 'home/home_hamster_book_thumb.webp',
@@ -78,7 +78,7 @@ void main() {
     );
     expect(fox.url, isNull);
     final hamster = manifest.pictureById('home_hamster_book')!;
-    expect(hamster.level, PictureLevel.detailed);
+    expect(hamster.level, PictureLevel.medium);
     expect(hamster.free, isFalse);
     expect(hamster.characters, ['pets_hamster', 'pets_mouse']);
     expect(hamster.assetPath, isNull);

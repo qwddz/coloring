@@ -87,27 +87,26 @@ void main() {
       }
     });
 
+    // Titles come from tools/coloring_pipeline/categories.csv; PLAN.md fixes
+    // the ids, the order and the Russian names (uk and en are checked above).
     test('categories are the ten from PLAN.md, in order, with its names', () {
       const approved = {
-        'home': ['Уютный дом', 'Затишний дім', 'Cozy home'],
-        'food': ['Вкусняшки', 'Смаколики', 'Treats'],
-        'autumn': ['Осень', 'Осінь', 'Autumn'],
-        'winter': ['Зима и праздники', 'Зима і свята', 'Winter & holidays'],
-        'spring': ['Весна и сад', 'Весна і сад', 'Spring & garden'],
-        'summer': ['Лето и пляж', 'Літо і пляж', 'Summer & beach'],
-        'underwater': ['Под водой', 'Під водою', 'Under the sea'],
-        'farm': ['На ферме', 'На фермі', 'On the farm'],
-        'hobbies': ['Хобби', 'Хобі', 'Hobbies'],
-        'travel': ['Путешествия', 'Подорожі', 'Travel'],
+        'home': 'Уютный дом',
+        'food': 'Вкусняшки',
+        'autumn': 'Осень',
+        'winter': 'Зима и праздники',
+        'spring': 'Весна и сад',
+        'summer': 'Лето и пляж',
+        'underwater': 'Под водой',
+        'farm': 'На ферме',
+        'hobbies': 'Хобби',
+        'travel': 'Путешествия',
       };
       expect(categories.map((c) => c['id']), orderedEquals(approved.keys));
       for (final category in categories) {
         final id = category['id'] as String;
         final title = category['title'] as Map<String, dynamic>;
-        final [ru, uk, en] = approved[id]!;
-        expect(title['ru'], ru, reason: '$id ru');
-        expect(title['uk'], uk, reason: '$id uk');
-        expect(title['en'], en, reason: '$id en');
+        expect(title['ru'], approved[id], reason: '$id ru');
       }
     });
 
