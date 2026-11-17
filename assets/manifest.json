@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "minAppVersion": "1.0.0",
+  "categories": [
+    {
+      "id": "home",
+      "title": {
+        "uk": "Затишний дім",
+        "en": "Cozy home",
+        "ru": "Уютный дом"
+      },
+      "pictures": []
+    },
+    {
+      "id": "food",
+      "title": {
+        "uk": "Смаколики",
+        "en": "Treats",
+        "ru": "Вкусняшки"
+      },
+      "pictures": []
+    },
+    {
+      "id": "autumn",
+      "title": {
+        "uk": "Осінь",
+        "en": "Autumn",
+        "ru": "Осень"
+      },
+      "pictures": []
+    },
+    {
+      "id": "winter",
+      "title": {
+        "uk": "Зима і свята",
+        "en": "Winter & holidays",
+        "ru": "Зима и праздники"
+      },
+      "pictures": []
+    },
+    {
+      "id": "spring",
+      "title": {
+        "uk": "Весна і сад",
+        "en": "Spring & garden",
+        "ru": "Весна и сад"
+      },
+      "pictures": []
+    },
+    {
+      "id": "summer",
+      "title": {
+        "uk": "Літо і пляж",
+        "en": "Summer & beach",
+        "ru": "Лето и пляж"
+      },
+      "pictures": []
+    },
+    {
+      "id": "underwater",
+      "title": {
+        "uk": "Під водою",
+        "en": "Under the sea",
+        "ru": "Под водой"
+      },
+      "pictures": []
+    },
+    {
+      "id": "farm",
+      "title": {
+        "uk": "На фермі",
+        "en": "On the farm",
+        "ru": "На ферме"
+      },
+      "pictures": []
+    },
+    {
+      "id": "hobbies",
+      "title": {
+        "uk": "Хобі",
+        "en": "Hobbies",
+        "ru": "Хобби"
+      },
+      "pictures": []
+    },
+    {
+      "id": "travel",
+      "title": {
+        "uk": "Подорожі",
+        "en": "Travel",
+        "ru": "Путешествия"
+      },
+      "pictures": []
+    }
+  ]
+}

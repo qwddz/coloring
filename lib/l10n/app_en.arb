@@ -1,0 +1,86 @@
+{
+  "@@locale": "en",
+  "appTitle": "Animosaic Colors",
+  "@appTitle": {
+    "description": "App name shown in the task switcher and on the home screen"
+  },
+  "back": "Back",
+  "retry": "Try again",
+  "catalogLoadError": "Couldn't load the pictures",
+  "settings": "Settings",
+  "soundEffects": "Sounds",
+  "music": "Music",
+  "language": "Language",
+  "languageSystem": "Same as device",
+  "languageUkrainian": "Українська",
+  "languageEnglish": "English",
+  "languageRussian": "Русский",
+  "categoryMissing": "This category is not available",
+  "lockedPicture": "In the full version",
+  "parentalGateTitle": "For grown-ups",
+  "parentalGateQuestion": "How much is {a} × {b}? Type the answer in digits.",
+  "@parentalGateQuestion": {
+    "placeholders": {
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "parentalGateAnswer": "Answer",
+  "parentalGateCooldown": "Please wait a few seconds and try again.",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "fullVersionTitle": "Full version",
+  "fullVersionIncludes": "{count, plural, one{All {count} picture in every category, and new ones as they arrive} other{All {count} pictures in every category, and new ones as they arrive}}",
+  "@fullVersionIncludes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "oneTimePurchase": "One-time purchase, no subscription",
+  "buyFor": "Buy for {price}",
+  "@buyFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "restorePurchases": "Restore purchases",
+  "testStore": "Test store: nothing is charged",
+  "priceLoadError": "Couldn't reach the store",
+  "purchaseCancelled": "Purchase cancelled",
+  "purchaseFailed": "The purchase didn't go through. Try again.",
+  "purchasePending": "Payment is pending. The full version opens as soon as it completes.",
+  "nothingToRestore": "No purchases to restore",
+  "purchasesRestored": "Full version restored",
+  "restoreFailed": "Couldn't restore purchases. Try again.",
+  "fullVersionUnlocked": "Full version unlocked",
+  "privacyPolicy": "Privacy policy",
+  "termsOfUse": "Terms of use",
+  "about": "About",
+  "appVersion": "Version {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "contactUs": "Contact us",
+  "credits": "Credits",
+  "creditsPictures": "Pictures were created with AI image generation.",
+  "haveAccessCode": "I have an access code",
+  "accessCodeTitle": "Access code",
+  "accessCodeField": "Code",
+  "accessCodeInvalid": "This code doesn't work",
+  "vibration": "Vibration",
+  "comingSoon": "Coming soon",
+  "categoryComingSoon": "New pictures for this category are coming soon",
+  "coloringComingSoon": "Coloring is coming soon"
+}
