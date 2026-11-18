@@ -88,6 +88,8 @@ void main() {
     (categories[0]['title'] as Map)['en'] = 'Home sweet home';
     (categories[1]['title'] as Map)['en'] =
         'An extremely long category name that cannot fit';
+    // Keep one empty category so the coming-soon badge is on screen.
+    categories[1]['pictures'] = <dynamic>[];
     final manifest = ContentManifest.fromJson(json);
     SharedPreferences.setMockInitialValues(const {});
     final prefs = await SharedPreferences.getInstance();

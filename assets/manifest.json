@@ -1,5 +1,5 @@
 {
- "version": 4,
+ "version": 5,
  "minAppVersion": "1.0.0",
  "categories": [
   {
@@ -34,7 +34,23 @@
     "en": "Yummy treats",
     "ru": "Вкусняшки"
    },
-   "pictures": []
+   "pictures": [
+    {
+     "id": "food_pig_pie",
+     "title": {
+      "uk": "Порося пече пиріг",
+      "en": "Pig bakes a pie",
+      "ru": "Свинка печёт пирог"
+     },
+     "characters": [
+      "farm_pig"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/food_pig_pie/",
+     "thumb": "thumbs/food_pig_pie.webp"
+    }
+   ]
   },
   {
    "id": "autumn",
@@ -168,7 +184,23 @@
     "en": "On the farm",
     "ru": "На ферме"
    },
-   "pictures": []
+   "pictures": [
+    {
+     "id": "farm_python_picnic",
+     "title": {
+      "uk": "Пітон на пікніку",
+      "en": "Python's picnic",
+      "ru": "Питон на пикнике"
+     },
+     "characters": [
+      "snakes_python_tree"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/farm_python_picnic/",
+     "thumb": "thumbs/farm_python_picnic.webp"
+    }
+   ]
   },
   {
    "id": "hobbies",
@@ -202,7 +234,23 @@
     "en": "Travels",
     "ru": "Путешествия"
    },
-   "pictures": []
+   "pictures": [
+    {
+     "id": "travel_camel_camera",
+     "title": {
+      "uk": "Верблюд-мандрівник",
+      "en": "Camel traveler",
+      "ru": "Верблюд-путешественник"
+     },
+     "characters": [
+      "desert_camel"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/travel_camel_camera/",
+     "thumb": "thumbs/travel_camel_camera.webp"
+    }
+   ]
   }
  ]
 }
