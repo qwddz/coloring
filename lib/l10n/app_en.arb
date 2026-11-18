@@ -186,5 +186,97 @@
   "coloringHintTitle": "Hint",
   "@coloringHintTitle": {
     "description": "Semantics label for the correct-color hint"
+  },
+  "myWorks": "My works",
+  "@myWorks": {
+    "description": "Title of the screen with the child's saved colorings"
+  },
+  "myWorksEmpty": "Your colorings will appear here",
+  "@myWorksEmpty": {
+    "description": "Empty state of My works"
+  },
+  "myWorksToPictures": "Pick a picture",
+  "@myWorksToPictures": {
+    "description": "Button on the empty My works screen that opens the catalog"
+  },
+  "workContinue": "Continue",
+  "@workContinue": {
+    "description": "Button that reopens an unfinished work"
+  },
+  "workNewWork": "New coloring",
+  "@workNewWork": {
+    "description": "Button that starts a fresh work on the same picture"
+  },
+  "workSaveToGallery": "Save to gallery",
+  "@workSaveToGallery": {
+    "description": "Button that saves the colored picture to the device gallery"
+  },
+  "workShare": "Share",
+  "@workShare": {
+    "description": "Button that shares the colored picture"
+  },
+  "workSavedToGallery": "Saved to the gallery",
+  "@workSavedToGallery": {
+    "description": "Message shown after the picture was saved to the gallery"
+  },
+  "workSaveDenied": "Allow access to save pictures",
+  "@workSaveDenied": {
+    "description": "Message shown when the gallery permission was denied"
+  },
+  "workExportFailed": "Could not prepare the picture. Try again",
+  "@workExportFailed": {
+    "description": "Message shown when rendering the picture for saving or sharing failed"
+  },
+  "workExporting": "Preparing the picture…",
+  "@workExporting": {
+    "description": "Progress message while the picture is rendered for saving or sharing"
+  },
+  "workPictureUnavailable": "This picture is not available",
+  "@workPictureUnavailable": {
+    "description": "Shown on a work whose picture is no longer in the catalog"
+  },
+  "workCompleted": "Finished",
+  "@workCompleted": {
+    "description": "Semantics label of the badge on a finished work"
+  },
+  "pictureCompleted": "Colored",
+  "@pictureCompleted": {
+    "description": "Semantics label of the star on a picture the child has finished"
+  },
+  "levelSimple": "Simple",
+  "@levelSimple": {
+    "description": "Level badge on a picture card: easy picture"
+  },
+  "levelMedium": "Medium",
+  "@levelMedium": {
+    "description": "Level badge on a picture card: medium picture"
+  },
+  "modePickerTitle": "How do you want to color?",
+  "@modePickerTitle": {
+    "description": "Title of the dialog where the child picks a coloring mode"
+  },
+  "modeFreeDescription": "Choose any colors you like",
+  "@modeFreeDescription": {
+    "description": "Description of the free coloring mode"
+  },
+  "modeNumbersDescription": "Follow the numbers",
+  "@modeNumbersDescription": {
+    "description": "Description of the by-numbers coloring mode"
+  },
+  "modeMagicDescription": "The brush shows the right color",
+  "@modeMagicDescription": {
+    "description": "Description of the magic brush coloring mode"
+  },
+  "categoryStars": "{completed} of {total} colored",
+  "@categoryStars": {
+    "description": "Semantics label of the colored-pictures counter on a category card",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -11,6 +11,10 @@ import '../catalog/catalog_grid.dart';
 import '../subscription/data/purchase_providers.dart';
 import 'data/settings_controller.dart';
 
+/// Stage 6 brings music; until then the switch would do nothing, so hide it.
+/// The setting, its storage and the ARB key stay.
+const showMusicSetting = false;
+
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -76,14 +80,15 @@ class SettingsScreen extends ConsumerWidget {
                                   value: settings.soundEnabled,
                                   onChanged: controller.setSoundEnabled,
                                 ),
-                                SwitchListTile(
-                                  secondary: const Icon(
-                                    Icons.music_note_rounded,
+                                if (showMusicSetting)
+                                  SwitchListTile(
+                                    secondary: const Icon(
+                                      Icons.music_note_rounded,
+                                    ),
+                                    title: Text(l10n.music),
+                                    value: settings.musicEnabled,
+                                    onChanged: controller.setMusicEnabled,
                                   ),
-                                  title: Text(l10n.music),
-                                  value: settings.musicEnabled,
-                                  onChanged: controller.setMusicEnabled,
-                                ),
                                 SwitchListTile(
                                   secondary: const Icon(
                                     Icons.vibration_rounded,

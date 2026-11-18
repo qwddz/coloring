@@ -5,7 +5,8 @@ import 'coloring_session.dart';
 import 'fill_state.dart';
 
 /// One coloring work of a picture, saved as JSON (v1) in the works folder.
-/// The star for a picture is just [completed] (decision D2); each work is its
+/// [completed] marks this work only; the star of a picture lives in
+/// `progress.json` and survives new works (decision D2). Each work is its
 /// own file `<pictureId>-<millis>.json` (decision D3).
 class Work {
   Work({
@@ -36,6 +37,13 @@ class Work {
   }
 
   static const int version = 1;
+
+  static final _plainId = RegExp(r'^[A-Za-z0-9_.-]+$');
+
+  /// Work ids are file names: letters, digits, `_`, `.` and `-` only, and
+  /// never `.` or `..`.
+  static bool isPlainId(String id) =>
+      _plainId.hasMatch(id) && id != '.' && id != '..';
 
   final String id;
   final String pictureId;

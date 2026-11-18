@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,10 +7,17 @@ import 'package:go_router/go_router.dart';
 import 'package:coloring/app/app.dart';
 import 'package:coloring/app/book_palette.dart';
 import 'package:coloring/app/router.dart';
+import 'package:coloring/app/theme.dart';
+import 'package:coloring/l10n/app_localizations.dart';
 import 'package:coloring/features/catalog/catalog_grid.dart';
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
 import 'package:coloring/features/coloring/coloring_canvas.dart';
-import 'package:coloring/features/coloring/coloring_screen.dart';
+import 'package:coloring/features/coloring/coloring_route.dart';
+import 'package:coloring/features/coloring/coloring_screen.dart'
+    hide coloringRoute;
+import 'package:coloring/features/coloring/model/coloring_mode.dart';
+import 'package:coloring/features/coloring/model/work.dart';
+import 'package:coloring/features/progress/data/work_repository.dart';
 import 'package:coloring/features/subscription/data/purchase_providers.dart';
 import 'package:coloring/features/subscription/data/review_access.dart';
 import 'package:coloring/features/subscription/domain/parental_challenge.dart';
@@ -17,13 +26,18 @@ import 'package:coloring/features/subscription/paywall_screen.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/coloring/fakes.dart';
 import '../../support/coloring_overrides.dart';
 import '../../support/test_manifest.dart';
 
 void main() {
   late FakePurchaseService store;
+  late InMemoryWorkRepository works;
 
-  setUp(() => store = FakePurchaseService());
+  setUp(() {
+    store = FakePurchaseService();
+    works = InMemoryWorkRepository();
+  });
 
   Future<GoRouter> pumpApp(
     WidgetTester tester, {
@@ -71,6 +85,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(title));
     await tester.pumpAndSettle();
+  }
+
+  Future<void> pickMode(WidgetTester tester, String name) async {
+    expect(find.text('How do you want to color?'), findsOneWidget);
+    await tester.tap(find.text(name));
+    // The coloring screen may follow and never settles.
+    await tester.pump();
   }
 
   Future<void> answerGate(WidgetTester tester, String answer) async {
@@ -181,7 +202,7 @@ void main() {
     expect(find.text('Privacy policy'), findsOneWidget);
   });
 
-  testWidgets('the right answer opens the paywall; buying unlocks the card', (
+  testWidgets('the right answer opens the paywall; buying opens the picture', (
     tester,
   ) async {
     await pumpApp(tester);
@@ -199,14 +220,124 @@ void main() {
     );
     await tester.tap(find.text(r'Buy for $4.99'));
     await tester.pumpAndSettle();
-    // Back on the category, with the picture open.
-    expect(find.byType(PaywallScreen), findsNothing);
-    expect(find.text('On the farm'), findsOneWidget);
-    await tester.ensureVisible(find.text('Goat'));
-    expect(lockOf('Goat'), findsNothing);
-    await tester.tap(find.text('Goat'));
+    // The tapped picture opens right away: the mode picker, then coloring.
+    await pickMode(tester, 'Free');
     await pumpColoringFrames(tester);
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(ColoringCanvas), findsOneWidget);
+  });
+
+  testWidgets('a locked card opens the paywall for that picture', (
+    tester,
+  ) async {
+    final router = await pumpApp(tester);
+    await openFarm(tester);
+    await tapCard(tester, 'Goat');
+    await answerGate(tester, '56');
+    expect(find.byType(PaywallScreen), findsOneWidget);
+    expect(
+      router.state.uri.toString(),
+      paywallRoute(pictureId: 'farm_goat_swing'),
+    );
+    expect(
+      tester.widget<PaywallScreen>(find.byType(PaywallScreen)).pictureId,
+      'farm_goat_swing',
+    );
+  });
+
+  // The paywall opened for a picture, with a stub coloring route that shows
+  // the URL it was given: the coloring screen itself is not part of this flow.
+  Future<void> pumpPaywallFor(WidgetTester tester) async {
+    tester.view.physicalSize = const Size(2400, 1080);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.reset);
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) =>
+              const Scaffold(body: Center(child: Text('home'))),
+          routes: [
+            GoRoute(
+              path: 'paywall',
+              builder: (context, state) => PaywallScreen(
+                pictureId: state.uri.queryParameters['from'],
+                gatePassed: true,
+              ),
+            ),
+            GoRoute(
+              path: 'coloring/:id',
+              builder: (context, state) =>
+                  Scaffold(body: Text('stub ${state.uri}')),
+            ),
+          ],
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          purchaseServiceProvider.overrideWithValue(store),
+          manifestProvider.overrideWith((ref) async => testManifest),
+          workRepositoryProvider.overrideWithValue(works),
+        ],
+        child: MaterialApp.router(
+          theme: buildAppTheme(),
+          locale: const Locale('en'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          routerConfig: router,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    router.push(paywallRoute(pictureId: 'farm_goat_swing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(r'Buy for $4.99'));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('after a purchase a new work asks for its mode', (tester) async {
+    await pumpPaywallFor(tester);
+    await pickMode(tester, 'By numbers');
+    await tester.pumpAndSettle();
+    expect(
+      find.text('stub /coloring/farm_goat_swing?mode=numbers'),
+      findsOneWidget,
+    );
+    expect(find.byType(PaywallScreen), findsNothing);
+  });
+
+  testWidgets('after a purchase an unfinished work opens without a picker', (
+    tester,
+  ) async {
+    await works.save(
+      Work(
+        id: 'goat-1',
+        pictureId: 'farm_goat_swing',
+        mode: ColoringMode.free,
+        colors: Uint32List(3),
+        modified: DateTime.utc(2026, 11, 1),
+      ),
+    );
+    await pumpPaywallFor(tester);
+    expect(find.text('How do you want to color?'), findsNothing);
+    expect(
+      find.text('stub /coloring/farm_goat_swing?work=goat-1'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('cancelling the mode picker after a purchase goes back', (
+    tester,
+  ) async {
+    await pumpPaywallFor(tester);
+    expect(find.text('How do you want to color?'), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.text('home'), findsOneWidget);
   });
 
   testWidgets('a cancelled purchase stays on the paywall', (tester) async {
@@ -327,13 +458,15 @@ void main() {
       final paywall = tester.widget<PaywallScreen>(find.byType(PaywallScreen));
       expect(paywall.pictureId, 'farm_goat_swing');
       await tester.tap(find.text(r'Buy for $4.99'));
+      await tester.pumpAndSettle();
+      await pickMode(tester, 'Free');
       await tester.pump();
       await tester.pump();
       // Let the page transition finish.
       await tester.pump(const Duration(milliseconds: 300));
       expect(find.byType(PaywallScreen), findsNothing);
       final screen = tester.widget<ColoringScreen>(find.byType(ColoringScreen));
-      expect(screen.pictureId, 'farm_goat_swing');
+      expect(screen.request.pictureId, 'farm_goat_swing');
     },
   );
 
@@ -406,11 +539,10 @@ void main() {
       await tapCard(tester, 'Goat');
       await answerGate(tester, '56');
       await enterCode(tester, 'abcd efgh 2345');
-      expect(find.byType(PaywallScreen), findsNothing);
-      await tester.ensureVisible(find.text('Goat'));
-      expect(lockOf('Goat'), findsNothing);
-      await tester.tap(find.text('Goat'));
+      // The tapped picture opens right away, with no purchase.
+      await pickMode(tester, 'Free');
       await pumpColoringFrames(tester);
+      expect(find.byType(PaywallScreen), findsNothing);
       expect(find.byType(ColoringCanvas), findsOneWidget);
     });
   });

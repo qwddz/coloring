@@ -10,7 +10,11 @@ import 'package:coloring/features/catalog/categories_screen.dart';
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
 import 'package:coloring/features/catalog/domain/content_manifest.dart';
 import 'package:coloring/features/coloring/coloring_canvas.dart';
+import 'package:coloring/features/coloring/coloring_controller.dart';
 import 'package:coloring/features/coloring/coloring_screen.dart';
+import 'package:coloring/features/coloring/model/coloring_mode.dart';
+import 'package:coloring/features/gallery/my_works_screen.dart';
+import 'package:coloring/features/gallery/work_actions_dialog.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +22,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../features/coloring/fakes.dart';
+import '../features/coloring/model/fixtures.dart';
+import '../features/gallery/fake_preview_service.dart';
 import '../support/coloring_overrides.dart';
 import '../support/test_manifest.dart';
 
@@ -31,6 +38,8 @@ void main() {
     List<Locale> deviceLocales, {
     Map<String, Object> preferences = const {},
     ContentManifest? manifest,
+    InMemoryWorkRepository? works,
+    FakePreviewService? previews,
   }) async {
     tester.view.physicalSize = const Size(2400, 1080);
     tester.view.devicePixelRatio = 2.625;
@@ -45,7 +54,7 @@ void main() {
           sharedPreferencesProvider.overrideWithValue(prefs),
           // rootBundle caches loads across tests; read the file directly.
           manifestProvider.overrideWith((ref) async => manifest ?? bundled),
-          ...coloringScreenOverrides(),
+          ...coloringScreenOverrides(works: works, previews: previews),
         ],
         child: const ColoringApp(),
       ),
@@ -141,14 +150,96 @@ void main() {
     await tester.tap(find.text('On the farm'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Piglet'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Free'));
     await pumpColoringFrames(tester);
     final screen = tester.widget<ColoringScreen>(find.byType(ColoringScreen));
-    expect(screen.pictureId, 'farm_piglet_picnic');
+    expect(
+      screen.request,
+      const ColoringRequest('farm_piglet_picnic', newMode: ColoringMode.free),
+    );
     expect(find.byType(ColoringCanvas), findsOneWidget);
     await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
     expect(find.byType(ColoringScreen), findsNothing);
     expect(find.text('Piglet'), findsOneWidget);
+  });
+
+  testWidgets('catalog → coloring → «My works» → continue the same work', (
+    tester,
+  ) async {
+    final works = InMemoryWorkRepository();
+    final previews = FakePreviewService();
+    await pumpApp(
+      tester,
+      const [Locale('en', 'US')],
+      manifest: testManifest,
+      works: works,
+      previews: previews,
+    );
+    await tester.tap(find.text('On the farm'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Piglet'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('By numbers'));
+    await pumpColoringFrames(tester);
+    final newWork = tester.widget<ColoringScreen>(find.byType(ColoringScreen));
+    expect(
+      newWork.request,
+      const ColoringRequest(
+        'farm_piglet_picnic',
+        newMode: ColoringMode.numbers,
+      ),
+    );
+
+    // One fill: numbers mode starts on red, the color of region 1.
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(ColoringScreen)),
+    );
+    final (x, y) = fixtureLabels[1]!;
+    container
+        .read(coloringControllerProvider(newWork.request).notifier)
+        .tap(x, y, tolerance: 4);
+    await tester.pump();
+    final work = works.saves.last;
+    expect(work.pictureId, 'farm_piglet_picnic');
+    expect(work.mode, ColoringMode.numbers);
+    expect(work.colors[1], red);
+
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+    expect(find.byType(ColoringScreen), findsNothing);
+    // Leaving the screen queued its preview.
+    expect(previews.calls.single.workId, work.id);
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+    expect(find.byType(CategoriesScreen), findsOneWidget);
+
+    await tester.tap(find.byTooltip('My works'));
+    await tester.pumpAndSettle();
+    expect(find.byType(MyWorksScreen), findsOneWidget);
+    expect(find.byType(PictureCard), findsOneWidget);
+    expect(find.text('Piglet'), findsOneWidget);
+    await tester.tap(find.byType(PictureCard));
+    await tester.pumpAndSettle();
+    expect(find.byType(WorkActionsDialog), findsOneWidget);
+    await tester.tap(find.widgetWithText(BookButton, 'Continue'));
+    await pumpColoringFrames(tester);
+
+    final continued = tester.widget<ColoringScreen>(
+      find.byType(ColoringScreen),
+    );
+    expect(
+      continued.request,
+      ColoringRequest('farm_piglet_picnic', workId: work.id),
+    );
+    expect(router(tester).state.uri.toString(), contains('work=${work.id}'));
+    final state = container
+        .read(coloringControllerProvider(continued.request))
+        .requireValue;
+    expect(state.mode, ColoringMode.numbers);
+    expect(state.filledFraction, greaterThan(0));
+    expect(works.saves.last.id, work.id);
   });
 
   testWidgets('settings screen switches the language', (tester) async {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:coloring/features/audio/audio_controller.dart';
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
@@ -18,6 +19,7 @@ import 'package:coloring/features/coloring/model/coloring_mode.dart';
 import 'package:coloring/features/coloring/model/picture_meta.dart';
 import 'package:coloring/features/coloring/model/work.dart';
 import 'package:coloring/features/content/data/picture_store.dart';
+import 'package:coloring/features/gallery/data/work_preview_service.dart';
 import 'package:coloring/features/palette/palette_panel.dart';
 import 'package:coloring/features/progress/data/progress_store.dart';
 import 'package:coloring/features/progress/data/work_repository.dart';
@@ -31,6 +33,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../gallery/fake_preview_service.dart';
 import 'feedback_test.dart' show FakeAudioBackend, FakeHaptics;
 
 const _pictureId = 'home_fox_cocoa';
@@ -180,8 +183,13 @@ void main() {
         GoRoute(path: '/', builder: (_, _) => const Text('home')),
         GoRoute(
           path: '/coloring/:id',
-          builder: (_, state) =>
-              ColoringScreen(pictureId: state.pathParameters['id']!),
+          builder: (_, state) {
+            final request = ColoringRequest.fromRoute(
+              state.pathParameters['id']!,
+              state.uri.queryParameters,
+            );
+            return ColoringScreen(key: ValueKey(request), request: request);
+          },
         ),
         GoRoute(
           path: '/paywall',
@@ -200,6 +208,7 @@ void main() {
           fullAccessProvider.overrideWith((ref) => Stream.value(false)),
           pictureLoaderProvider.overrideWithValue(_BundledLoader(decoded!)),
           workRepositoryProvider.overrideWithValue(repository),
+          workPreviewServiceProvider.overrideWithValue(FakePreviewService()),
           progressDirectoryProvider.overrideWithValue(() async => progressDir),
           audioBackendProvider.overrideWithValue(audio),
           hapticsBackendProvider.overrideWithValue(haptics),
@@ -238,12 +247,16 @@ void main() {
   ProviderContainer container(WidgetTester tester) =>
       ProviderScope.containerOf(tester.element(find.byType(ColoringScreen)));
 
+  ColoringRequest request(WidgetTester tester) =>
+      tester.widget<ColoringScreen>(find.byType(ColoringScreen)).request;
+
   ColoringController controller(WidgetTester tester) =>
-      container(tester).read(coloringControllerProvider(_pictureId).notifier);
+      container(tester)
+          .read(coloringControllerProvider(request(tester)).notifier);
 
   ColoringState state(WidgetTester tester) =>
       container(tester)
-          .read(coloringControllerProvider(_pictureId))
+          .read(coloringControllerProvider(request(tester)))
           .requireValue;
 
   /// Global position of image point ([x], [y]).
@@ -405,6 +418,63 @@ void main() {
     await pumpApp(tester, key: UniqueKey());
     expect(state(tester).completed, isTrue);
     expect(find.byType(CompletionOverlay), findsNothing);
+  });
+
+  testWidgets('?mode=magic opens a new work in the magic mode', (tester) async {
+    await pumpApp(
+      tester,
+      location: coloringRoute(_pictureId, newMode: ColoringMode.magic),
+    );
+    expect(state(tester).mode, ColoringMode.magic);
+    expect(state(tester).filledFraction, 0);
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Magic brush')),
+      isSemantics(isSelected: true),
+    );
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Free')),
+      isSemantics(isSelected: false),
+    );
+    expect(workFile(), isNull, reason: 'written at the first fill');
+  });
+
+  testWidgets('?work= restores that work, not the newer one', (tester) async {
+    decoded ??= await tester.runAsync(
+      () async =>
+          PictureLoader.decode(BundledPictureFiles(rootBundle, _pictureRoot)),
+    );
+    final regionId = meta().regions
+        .firstWhere((r) => r.id != meta().backgroundId)
+        .id;
+    const color = 0xFF112233;
+    final older = Work(
+      id: '$_pictureId-1000',
+      pictureId: _pictureId,
+      mode: ColoringMode.numbers,
+      colors: Uint32List(meta().regionCount + 1)..[regionId] = color,
+      modified: DateTime.utc(2026, 11, 1),
+    );
+    final newer = Work(
+      id: '$_pictureId-2000',
+      pictureId: _pictureId,
+      mode: ColoringMode.magic,
+      colors: Uint32List(meta().regionCount + 1),
+      modified: DateTime.utc(2026, 11, 10),
+    );
+    await tester.runAsync(() async {
+      final files = WorkRepository(() async => worksDir);
+      await files.save(older);
+      await files.save(newer);
+      files.dispose();
+    });
+
+    await pumpApp(
+      tester,
+      location: coloringRoute(_pictureId, workId: older.id),
+    );
+    expect(request(tester).workId, older.id);
+    expect(state(tester).mode, ColoringMode.numbers);
+    expect(game(tester).fill.colorOf(regionId), color);
   });
 
   testWidgets('a paid picture without access opens the paywall instead', (

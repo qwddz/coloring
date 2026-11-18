@@ -6,6 +6,8 @@ import '../features/catalog/categories_screen.dart';
 import '../features/catalog/category_screen.dart';
 import '../features/catalog/data/manifest_provider.dart';
 import '../features/coloring/coloring_screen.dart';
+import '../features/gallery/gallery_routes.dart';
+import '../features/gallery/my_works_screen.dart';
 import '../features/settings/about_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/subscription/data/purchase_providers.dart';
@@ -25,6 +27,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           state,
           CategoryScreen(categoryId: state.pathParameters['id']!),
         ),
+      ),
+      GoRoute(
+        path: myWorksRoute,
+        pageBuilder: (context, state) =>
+            _fadePage(state, const MyWorksScreen()),
       ),
       GoRoute(
         path: '/settings',
@@ -58,10 +65,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           return paywallRoute(pictureId: id);
         },
         pageBuilder: (context, state) {
-          final id = state.pathParameters['id']!;
+          final request = ColoringRequest.fromRoute(
+            state.pathParameters['id']!,
+            state.uri.queryParameters,
+          );
           return _fadePage(
             state,
-            ColoringScreen(key: ValueKey(id), pictureId: id),
+            ColoringScreen(key: ValueKey(request), request: request),
           );
         },
       ),

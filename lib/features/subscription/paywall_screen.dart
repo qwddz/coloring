@@ -10,7 +10,7 @@ import '../../app/widgets/round_icon_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../catalog/catalog_grid.dart';
 import '../catalog/data/manifest_provider.dart';
-import '../coloring/coloring_screen.dart';
+import '../catalog/open_picture_flow.dart';
 import '../settings/data/about_links.dart';
 import 'data/purchase_providers.dart';
 import 'data/review_access.dart';
@@ -26,10 +26,18 @@ String paywallRoute({String? pictureId}) =>
 const paywallGatePassed = #paywallGatePassed;
 
 /// Asks the parental gate, then opens the paywall. Repeated taps while the
-/// gate is up are ignored, so only one gate and one paywall open.
-Future<void> openPaywallThroughGate(BuildContext context, WidgetRef ref) async {
+/// gate is up are ignored, so only one gate and one paywall open. With
+/// [pictureId], that picture opens after the purchase.
+Future<void> openPaywallThroughGate(
+  BuildContext context,
+  WidgetRef ref, {
+  String? pictureId,
+}) async {
   if (await showParentalGate(context, ref) && context.mounted) {
-    await context.push(paywallRoute(), extra: paywallGatePassed);
+    await context.push(
+      paywallRoute(pictureId: pictureId),
+      extra: paywallGatePassed,
+    );
   }
 }
 
@@ -68,10 +76,16 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     }
   }
 
-  void _leave(BuildContext context) {
+  Future<void> _leave(BuildContext context) async {
     final pictureId = widget.pictureId;
     if (pictureId != null) {
-      context.pushReplacement(coloringRoute(pictureId));
+      final route = await openPictureFlow(context, ref, pictureId);
+      if (!context.mounted) return;
+      if (route != null) {
+        context.pushReplacement(route);
+      } else {
+        _back(context);
+      }
     } else if (context.canPop()) {
       context.pop();
     } else {

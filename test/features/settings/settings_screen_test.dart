@@ -9,6 +9,7 @@ import 'package:coloring/app/book_palette.dart';
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
 import 'package:coloring/features/catalog/domain/content_manifest.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
+import 'package:coloring/features/settings/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -39,13 +40,19 @@ void main() {
     return ProviderScope.containerOf(tester.element(find.byType(ColoringApp)));
   }
 
-  testWidgets('settings screen toggles sound, music and vibration', (
-    tester,
-  ) async {
+  testWidgets('settings screen hides the music switch', (tester) async {
+    await openSettings(tester);
+    expect(showMusicSetting, isFalse);
+    expect(find.widgetWithText(SwitchListTile, 'Music'), findsNothing);
+    expect(find.widgetWithText(SwitchListTile, 'Sounds'), findsOneWidget);
+    expect(find.widgetWithText(SwitchListTile, 'Vibration'), findsOneWidget);
+    expect(find.byType(DropdownButton<String?>), findsOneWidget);
+  });
+
+  testWidgets('settings screen toggles sound and vibration', (tester) async {
     final container = await openSettings(tester);
     for (final (label, value) in [
       ('Sounds', () => container.read(settingsProvider).soundEnabled),
-      ('Music', () => container.read(settingsProvider).musicEnabled),
       ('Vibration', () => container.read(settingsProvider).vibrationEnabled),
     ]) {
       expect(value(), isTrue, reason: label);

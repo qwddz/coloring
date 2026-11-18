@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:coloring/features/catalog/domain/content_manifest.dart';
@@ -77,22 +80,53 @@ class FakePictureLoader implements PictureLoader {
 }
 
 /// Works kept as JSON in memory, so a save and a later read round-trip like
-/// files do. [saves] records every write in order.
+/// files do. [saves] records every write in order; [listCalls],
+/// [previewsCalls] and [previewOfCalls] count listings and preview lookups. Previews are kept as bytes in [previewBytes]; their files
+/// are written only when [previewDirectory] is given, else the paths are
+/// never created.
 class InMemoryWorkRepository implements WorkRepository {
+  InMemoryWorkRepository({this.previewDirectory});
+
+  final Directory? previewDirectory;
   final _files = <String, String>{};
+  final _previews = <String, WorkPreview>{};
+  final _changes = StreamController<WorkChange>.broadcast();
   final saves = <Work>[];
+  final previewBytes = <String, Uint8List>{};
+  int listCalls = 0;
+  int previewsCalls = 0;
+  int previewOfCalls = 0;
+
+  @override
+  Stream<WorkChange> get changes => _changes.stream;
 
   @override
   Future<void> save(Work work) async {
     saves.add(work);
     _files[work.id] = jsonEncode(work.toJson());
+    _changes.add(WorkSaved(work));
   }
+
+  @override
+  Future<Work?> byId(String workId) async {
+    final text = _files[workId];
+    if (text == null) return null;
+    final work = Work.fromJson(jsonDecode(text));
+    return work != null && work.id == workId ? work : null;
+  }
+
+  @override
+  Future<List<Work>> worksFor(String pictureId) async => [
+    for (final text in _files.values)
+      if (Work.fromJson(jsonDecode(text)) case final work?
+          when work.pictureId == pictureId)
+        work,
+  ];
 
   @override
   Future<Work?> latestFor(String pictureId) async {
     Work? latest;
-    for (final work in await list()) {
-      if (work.pictureId != pictureId) continue;
+    for (final work in await worksFor(pictureId)) {
       if (latest == null || work.modified.isAfter(latest.modified)) {
         latest = work;
       }
@@ -101,9 +135,50 @@ class InMemoryWorkRepository implements WorkRepository {
   }
 
   @override
-  Future<List<Work>> list() async => [
-    for (final text in _files.values) ?Work.fromJson(jsonDecode(text)),
-  ];
+  Future<List<Work>> list() async {
+    listCalls++;
+    return [for (final text in _files.values) ?Work.fromJson(jsonDecode(text))];
+  }
+
+  @override
+  Future<WorkPreview?> previewOf(String workId) async {
+    previewOfCalls++;
+    return _previews[workId];
+  }
+
+  @override
+  Future<Map<String, WorkPreview>> previews() async {
+    previewsCalls++;
+    return Map.of(_previews);
+  }
+
+  @override
+  Future<void> savePreview(
+    String workId,
+    DateTime sourceModified,
+    Uint8List png,
+  ) async {
+    final millis = sourceModified.millisecondsSinceEpoch;
+    final dir = previewDirectory;
+    final file = File('${dir?.path ?? 'memory'}/$workId.p$millis.png');
+    if (dir != null) {
+      final old = _previews[workId]?.file;
+      await file.writeAsBytes(png, flush: true);
+      if (old != null && old.path != file.path && await old.exists()) {
+        await old.delete();
+      }
+    }
+    final preview = (
+      file: file,
+      sourceModified: DateTime.fromMillisecondsSinceEpoch(millis, isUtc: true),
+    );
+    previewBytes[workId] = Uint8List.fromList(png);
+    _previews[workId] = preview;
+    _changes.add(PreviewSaved(workId, preview));
+  }
+
+  @override
+  void dispose() => _changes.close();
 }
 
 class RecordingFeedback implements ColoringFeedback {

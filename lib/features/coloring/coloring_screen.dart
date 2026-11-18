@@ -15,6 +15,7 @@ import '../palette/palette_panel.dart';
 import '../subscription/paywall_screen.dart';
 import 'coloring_canvas.dart';
 import 'coloring_controller.dart';
+import 'coloring_route.dart';
 import 'coloring_state.dart';
 import 'coloring_toolbar.dart';
 import 'completion_overlay.dart';
@@ -24,7 +25,7 @@ import 'game/fill_renderer.dart';
 import 'model/coloring_mode.dart';
 import 'model/picture_meta.dart';
 
-String coloringRoute(String pictureId) => '/coloring/$pictureId';
+export 'coloring_route.dart' show coloringRoute, ColoringRequest;
 
 /// Builds the fill renderer of a game from its own copy of `regions.png`.
 typedef FillRendererBuilder = FillRenderer Function(
@@ -43,9 +44,9 @@ final fillRendererProvider = FutureProvider<FillRendererBuilder>((ref) async {
 /// palette on the right. Everything it shows comes from
 /// [coloringControllerProvider]; touches and buttons go back to it.
 class ColoringScreen extends ConsumerStatefulWidget {
-  const ColoringScreen({super.key, required this.pictureId});
+  const ColoringScreen({super.key, required this.request});
 
-  final String pictureId;
+  final ColoringRequest request;
 
   @override
   ConsumerState<ColoringScreen> createState() => _ColoringScreenState();
@@ -67,7 +68,7 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
   bool _redirected = false;
 
   ColoringController get _controller =>
-      ref.read(coloringControllerProvider(widget.pictureId).notifier);
+      ref.read(coloringControllerProvider(widget.request).notifier);
 
   @override
   void initState() {
@@ -137,7 +138,9 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
     _redirected = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        context.pushReplacement(paywallRoute(pictureId: widget.pictureId));
+        context.pushReplacement(
+          paywallRoute(pictureId: widget.request.pictureId),
+        );
       }
     });
   }
@@ -147,7 +150,7 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final provider = coloringControllerProvider(widget.pictureId);
+    final provider = coloringControllerProvider(widget.request);
     ref.listen(provider, _onStateChanged);
     final coloring = ref.watch(provider);
     final renderer = ref.watch(fillRendererProvider);
@@ -189,7 +192,7 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
   /// A spinner, with the download share while a CDN picture comes in.
   Widget _buildLoading(AppLocalizations l10n) {
     final progress = ref.watch(
-      pictureDownloadProgressProvider(widget.pictureId),
+      pictureDownloadProgressProvider(widget.request.pictureId),
     );
     return Center(
       child: Column(

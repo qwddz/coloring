@@ -253,4 +253,70 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get coloringHintTitle => 'Подсказка';
+
+  @override
+  String get myWorks => 'Мои работы';
+
+  @override
+  String get myWorksEmpty => 'Здесь появятся твои раскраски';
+
+  @override
+  String get myWorksToPictures => 'Выбрать картинку';
+
+  @override
+  String get workContinue => 'Продолжить';
+
+  @override
+  String get workNewWork => 'Новая раскраска';
+
+  @override
+  String get workSaveToGallery => 'Сохранить в галерею';
+
+  @override
+  String get workShare => 'Поделиться';
+
+  @override
+  String get workSavedToGallery => 'Сохранено в галерею';
+
+  @override
+  String get workSaveDenied => 'Разреши доступ, чтобы сохранять картинки';
+
+  @override
+  String get workExportFailed =>
+      'Не удалось подготовить картинку. Попробуй ещё раз';
+
+  @override
+  String get workExporting => 'Готовим картинку…';
+
+  @override
+  String get workPictureUnavailable => 'Этой картинки нет';
+
+  @override
+  String get workCompleted => 'Завершено';
+
+  @override
+  String get pictureCompleted => 'Раскрашено';
+
+  @override
+  String get levelSimple => 'Простая';
+
+  @override
+  String get levelMedium => 'Средняя';
+
+  @override
+  String get modePickerTitle => 'Как будем раскрашивать?';
+
+  @override
+  String get modeFreeDescription => 'Выбирай любые цвета';
+
+  @override
+  String get modeNumbersDescription => 'Крась по цифрам';
+
+  @override
+  String get modeMagicDescription => 'Кисточка подскажет правильный цвет';
+
+  @override
+  String categoryStars(int completed, int total) {
+    return 'Раскрашено $completed из $total';
+  }
 }

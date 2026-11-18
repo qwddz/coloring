@@ -537,6 +537,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hint'**
   String get coloringHintTitle;
+
+  /// Title of the screen with the child's saved colorings
+  ///
+  /// In en, this message translates to:
+  /// **'My works'**
+  String get myWorks;
+
+  /// Empty state of My works
+  ///
+  /// In en, this message translates to:
+  /// **'Your colorings will appear here'**
+  String get myWorksEmpty;
+
+  /// Button on the empty My works screen that opens the catalog
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a picture'**
+  String get myWorksToPictures;
+
+  /// Button that reopens an unfinished work
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get workContinue;
+
+  /// Button that starts a fresh work on the same picture
+  ///
+  /// In en, this message translates to:
+  /// **'New coloring'**
+  String get workNewWork;
+
+  /// Button that saves the colored picture to the device gallery
+  ///
+  /// In en, this message translates to:
+  /// **'Save to gallery'**
+  String get workSaveToGallery;
+
+  /// Button that shares the colored picture
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get workShare;
+
+  /// Message shown after the picture was saved to the gallery
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to the gallery'**
+  String get workSavedToGallery;
+
+  /// Message shown when the gallery permission was denied
+  ///
+  /// In en, this message translates to:
+  /// **'Allow access to save pictures'**
+  String get workSaveDenied;
+
+  /// Message shown when rendering the picture for saving or sharing failed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not prepare the picture. Try again'**
+  String get workExportFailed;
+
+  /// Progress message while the picture is rendered for saving or sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing the picture…'**
+  String get workExporting;
+
+  /// Shown on a work whose picture is no longer in the catalog
+  ///
+  /// In en, this message translates to:
+  /// **'This picture is not available'**
+  String get workPictureUnavailable;
+
+  /// Semantics label of the badge on a finished work
+  ///
+  /// In en, this message translates to:
+  /// **'Finished'**
+  String get workCompleted;
+
+  /// Semantics label of the star on a picture the child has finished
+  ///
+  /// In en, this message translates to:
+  /// **'Colored'**
+  String get pictureCompleted;
+
+  /// Level badge on a picture card: easy picture
+  ///
+  /// In en, this message translates to:
+  /// **'Simple'**
+  String get levelSimple;
+
+  /// Level badge on a picture card: medium picture
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get levelMedium;
+
+  /// Title of the dialog where the child picks a coloring mode
+  ///
+  /// In en, this message translates to:
+  /// **'How do you want to color?'**
+  String get modePickerTitle;
+
+  /// Description of the free coloring mode
+  ///
+  /// In en, this message translates to:
+  /// **'Choose any colors you like'**
+  String get modeFreeDescription;
+
+  /// Description of the by-numbers coloring mode
+  ///
+  /// In en, this message translates to:
+  /// **'Follow the numbers'**
+  String get modeNumbersDescription;
+
+  /// Description of the magic brush coloring mode
+  ///
+  /// In en, this message translates to:
+  /// **'The brush shows the right color'**
+  String get modeMagicDescription;
+
+  /// Semantics label of the colored-pictures counter on a category card
+  ///
+  /// In en, this message translates to:
+  /// **'{completed} of {total} colored'**
+  String categoryStars(int completed, int total);
 }
 
 class _AppLocalizationsDelegate

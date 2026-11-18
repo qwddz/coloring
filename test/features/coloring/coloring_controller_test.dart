@@ -4,12 +4,14 @@ import 'dart:typed_data';
 
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
 import 'package:coloring/features/coloring/coloring_controller.dart';
+import 'package:coloring/features/coloring/coloring_route.dart';
 import 'package:coloring/features/coloring/coloring_state.dart';
 import 'package:coloring/features/coloring/data/picture_loader.dart';
 import 'package:coloring/features/coloring/feedback.dart';
 import 'package:coloring/features/coloring/model/coloring_mode.dart';
 import 'package:coloring/features/coloring/model/fill_state.dart';
 import 'package:coloring/features/coloring/model/work.dart';
+import 'package:coloring/features/gallery/data/work_preview_service.dart';
 import 'package:coloring/features/palette/data/recent_colors.dart';
 import 'package:coloring/features/progress/data/progress_store.dart';
 import 'package:coloring/features/progress/data/work_repository.dart';
@@ -20,6 +22,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../gallery/fake_preview_service.dart';
 import 'fakes.dart';
 import 'model/fixtures.dart';
 
@@ -30,6 +33,7 @@ void main() {
   late FakePictureLoader loader;
   late InMemoryWorkRepository repo;
   late RecordingFeedback feedback;
+  late FakePreviewService previews;
   late int ticks;
   late Directory progressDir;
 
@@ -46,6 +50,7 @@ void main() {
     loader = FakePictureLoader();
     repo = InMemoryWorkRepository();
     feedback = RecordingFeedback();
+    previews = FakePreviewService();
     ticks = 0;
     progressDir = Directory.systemTemp.createTempSync('progress_ctrl');
     addTearDown(() => progressDir.deleteSync(recursive: true));
@@ -65,6 +70,7 @@ void main() {
         ),
         pictureLoaderProvider.overrideWithValue(loader),
         workRepositoryProvider.overrideWithValue(repository ?? repo),
+        workPreviewServiceProvider.overrideWithValue(previews),
         progressDirectoryProvider.overrideWithValue(() async => progressDir),
         coloringFeedbackProvider.overrideWithValue(feedback),
         coloringClockProvider.overrideWithValue(
@@ -77,17 +83,29 @@ void main() {
     return c;
   }
 
-  /// Opens [id] and keeps the auto-dispose controller alive.
-  Future<ColoringState> open(ProviderContainer c, String id) {
-    c.listen(coloringControllerProvider(id), (_, _) {});
-    return c.read(coloringControllerProvider(id).future);
+  /// Opens [request] and keeps the auto-dispose controller alive.
+  Future<ColoringState> openRequest(
+    ProviderContainer c,
+    ColoringRequest request,
+  ) {
+    c.listen(coloringControllerProvider(request), (_, _) {});
+    return c.read(coloringControllerProvider(request).future);
   }
 
+  /// Opens the latest work of [id].
+  Future<ColoringState> open(ProviderContainer c, String id) =>
+      openRequest(c, ColoringRequest(id));
+
+  ColoringController controllerFor(
+    ProviderContainer c,
+    ColoringRequest request,
+  ) => c.read(coloringControllerProvider(request).notifier);
+
   ColoringController controllerOf(ProviderContainer c, String id) =>
-      c.read(coloringControllerProvider(id).notifier);
+      controllerFor(c, ColoringRequest(id));
 
   ColoringState stateOf(ProviderContainer c, String id) =>
-      c.read(coloringControllerProvider(id)).requireValue;
+      c.read(coloringControllerProvider(ColoringRequest(id))).requireValue;
 
   void tapRegionOf(ColoringController controller, int id) {
     final (x, y) = fixtureLabels[id]!;
@@ -363,14 +381,234 @@ void main() {
 
   test('a work that does not fit the picture disposes it and fails', () async {
     final c = makeContainer(repository: _MismatchedWorkRepository());
-    c.listen(coloringControllerProvider(freePictureId), (_, _) {});
+    const request = ColoringRequest(freePictureId);
+    c.listen(coloringControllerProvider(request), (_, _) {});
     await expectLater(
-      c.read(coloringControllerProvider(freePictureId).future),
+      c.read(coloringControllerProvider(request).future),
       throwsArgumentError,
     );
     final picture = loader.pictures.single;
     expect(picture.regionsImage.debugDisposed, isTrue);
     expect(picture.linesImage.debugDisposed, isTrue);
+  });
+
+  group('requests', () {
+    final older = Work(
+      id: '$freePictureId-1000',
+      pictureId: freePictureId,
+      mode: ColoringMode.numbers,
+      colors: Uint32List.fromList([0, red, green, 0, 0, 0]),
+      modified: DateTime.utc(2026, 11, 1),
+    );
+    final newer = Work(
+      id: '$freePictureId-2000',
+      pictureId: freePictureId,
+      mode: ColoringMode.magic,
+      colors: Uint32List.fromList([0, 0, 0, blue, 0, 0]),
+      modified: DateTime.utc(2026, 11, 10),
+    );
+
+    Future<void> saveBoth() async {
+      await repo.save(older);
+      await repo.save(newer);
+      repo.saves.clear();
+    }
+
+    test('a work id opens that work, not the newer one', () async {
+      await saveBoth();
+      final c = makeContainer();
+      final request = ColoringRequest(freePictureId, workId: older.id);
+      final state = await openRequest(c, request);
+      expect(state.mode, ColoringMode.numbers);
+      final sink = RecordingSink();
+      final controller = controllerFor(c, request);
+      controller.attachCanvas(sink);
+      expect(sink.lastState!.colors, older.colors);
+
+      tapRegionOf(controller, 4);
+      expect(repo.saves.single.id, older.id);
+    });
+
+    test('an unknown work id opens the latest work', () async {
+      await saveBoth();
+      final c = makeContainer();
+      final state = await openRequest(
+        c,
+        const ColoringRequest(freePictureId, workId: '$freePictureId-999'),
+      );
+      expect(state.mode, ColoringMode.magic);
+      expect(state.filledFraction, closeTo(0.2, 1e-9));
+    });
+
+    test('a work of another picture opens the latest work', () async {
+      await saveBoth();
+      await repo.save(
+        Work(
+          id: '$paidPictureId-3000',
+          pictureId: paidPictureId,
+          mode: ColoringMode.free,
+          colors: Uint32List(6),
+          modified: DateTime.utc(2026, 11, 12),
+        ),
+      );
+      final c = makeContainer();
+      final state = await openRequest(
+        c,
+        const ColoringRequest(freePictureId, workId: '$paidPictureId-3000'),
+      );
+      expect(state.mode, ColoringMode.magic);
+    });
+
+    test('a new mode starts a new work, written at the first fill', () async {
+      await saveBoth();
+      final c = makeContainer();
+      const request = ColoringRequest(
+        freePictureId,
+        newMode: ColoringMode.numbers,
+      );
+      final state = await openRequest(c, request);
+      expect(state.mode, ColoringMode.numbers);
+      expect(state.filledFraction, 0);
+      expect(state.completed, isFalse);
+      expect(repo.saves, isEmpty);
+
+      tapRegionOf(controllerFor(c, request), 1);
+      final saved = repo.saves.single;
+      expect(saved.id, isNot(anyOf(older.id, newer.id)));
+      expect(saved.mode, ColoringMode.numbers);
+      expect(saved.colors[1], red);
+      expect((await repo.byId(older.id))!.colors, older.colors);
+      expect((await repo.byId(newer.id))!.colors, newer.colors);
+    });
+
+    test('a new work left without a fill writes nothing', () async {
+      await saveBoth();
+      final c = makeContainer();
+      await openRequest(
+        c,
+        const ColoringRequest(freePictureId, newMode: ColoringMode.magic),
+      );
+      c.dispose();
+      expect(repo.saves, isEmpty);
+      expect(previews.calls, isEmpty);
+      expect(await repo.worksFor(freePictureId), hasLength(2));
+    });
+
+    test('a new mode request for a locked picture still fails', () async {
+      final c = makeContainer();
+      await expectLater(
+        openRequest(
+          c,
+          const ColoringRequest(paidPictureId, newMode: ColoringMode.numbers),
+        ),
+        throwsA(isA<ColoringLockedException>()),
+      );
+      expect(loader.loadedIds, isEmpty);
+    });
+
+    test('a work id request for an unknown picture is not found', () async {
+      final c = makeContainer();
+      await expectLater(
+        openRequest(c, const ColoringRequest('nope', workId: 'nope-1')),
+        throwsA(isA<ColoringNotFoundException>()),
+      );
+      expect(loader.loadedIds, isEmpty);
+    });
+  });
+
+  group('previews', () {
+    test('leaving after a fill flushes, then queues one preview', () async {
+      final c = makeContainer();
+      await open(c, freePictureId);
+      final controller = controllerOf(c, freePictureId);
+      tapRegionOf(controller, 1);
+      controller.setMode(ColoringMode.magic);
+      controller.beginStroke();
+      final (x, y) = fixtureLabels[2]!;
+      controller.strokeTo(x, y, tolerance: 4);
+      expect(repo.saves, hasLength(2));
+      final picture = loader.pictures.single;
+      int? savesAtCall;
+      bool? linesDisposedAtCall;
+      previews.onRender = (_) {
+        savesAtCall = repo.saves.length;
+        linesDisposedAtCall = picture.linesImage.debugDisposed;
+      };
+
+      c.dispose();
+
+      final call = previews.calls.single;
+      final last = repo.saves.last;
+      expect(savesAtCall, 3, reason: 'the flush comes first');
+      expect(linesDisposedAtCall, isFalse);
+      expect(call.cloneValid, isTrue);
+      expect(call.workId, last.id);
+      expect(call.sourceModified, last.modified);
+      expect(call.colors, last.colors);
+      expect(call.colors[2], green);
+      expect(call.map, same(picture.map));
+      expect(picture.linesImage.debugDisposed, isTrue);
+    });
+
+    test('leaving without changes queues no preview', () async {
+      await repo.save(
+        Work(
+          id: '$freePictureId-1000',
+          pictureId: freePictureId,
+          mode: ColoringMode.free,
+          colors: Uint32List.fromList([0, red, 0, 0, 0, 0]),
+          modified: DateTime.utc(2026, 11, 1),
+        ),
+      );
+      final c = makeContainer();
+      await open(c, freePictureId);
+      goTo(const [AppLifecycleState.inactive, AppLifecycleState.paused]);
+      c.dispose();
+      expect(previews.calls, isEmpty);
+    });
+
+    test('a pause after a fill queues one preview, once', () async {
+      final c = makeContainer();
+      await open(c, freePictureId);
+      tapRegionOf(controllerOf(c, freePictureId), 1);
+      goTo(const [
+        AppLifecycleState.inactive,
+        AppLifecycleState.hidden,
+        AppLifecycleState.paused,
+      ]);
+      final call = previews.calls.single;
+      expect(call.workId, repo.saves.single.id);
+      expect(call.sourceModified, repo.saves.single.modified);
+      expect(call.cloneValid, isTrue);
+
+      goTo(const [
+        AppLifecycleState.hidden,
+        AppLifecycleState.inactive,
+        AppLifecycleState.resumed,
+        AppLifecycleState.inactive,
+        AppLifecycleState.hidden,
+        AppLifecycleState.paused,
+      ]);
+      c.dispose();
+      expect(previews.calls, hasLength(1));
+    });
+
+    test('inactive and hidden save the work but queue no preview', () async {
+      final c = makeContainer();
+      await open(c, freePictureId);
+      final controller = controllerOf(c, freePictureId);
+      controller.setMode(ColoringMode.magic);
+      repo.saves.clear();
+      controller.beginStroke();
+      final (x, y) = fixtureLabels[2]!;
+      controller.strokeTo(x, y, tolerance: 4);
+      goTo(const [AppLifecycleState.inactive, AppLifecycleState.hidden]);
+      expect(repo.saves.single.colors[2], green);
+      expect(previews.calls, isEmpty);
+
+      c.dispose();
+      expect(previews.calls.single.workId, repo.saves.single.id);
+    });
   });
 
   group('effects', () {

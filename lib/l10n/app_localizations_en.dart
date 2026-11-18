@@ -249,4 +249,69 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coloringHintTitle => 'Hint';
+
+  @override
+  String get myWorks => 'My works';
+
+  @override
+  String get myWorksEmpty => 'Your colorings will appear here';
+
+  @override
+  String get myWorksToPictures => 'Pick a picture';
+
+  @override
+  String get workContinue => 'Continue';
+
+  @override
+  String get workNewWork => 'New coloring';
+
+  @override
+  String get workSaveToGallery => 'Save to gallery';
+
+  @override
+  String get workShare => 'Share';
+
+  @override
+  String get workSavedToGallery => 'Saved to the gallery';
+
+  @override
+  String get workSaveDenied => 'Allow access to save pictures';
+
+  @override
+  String get workExportFailed => 'Could not prepare the picture. Try again';
+
+  @override
+  String get workExporting => 'Preparing the picture…';
+
+  @override
+  String get workPictureUnavailable => 'This picture is not available';
+
+  @override
+  String get workCompleted => 'Finished';
+
+  @override
+  String get pictureCompleted => 'Colored';
+
+  @override
+  String get levelSimple => 'Simple';
+
+  @override
+  String get levelMedium => 'Medium';
+
+  @override
+  String get modePickerTitle => 'How do you want to color?';
+
+  @override
+  String get modeFreeDescription => 'Choose any colors you like';
+
+  @override
+  String get modeNumbersDescription => 'Follow the numbers';
+
+  @override
+  String get modeMagicDescription => 'The brush shows the right color';
+
+  @override
+  String categoryStars(int completed, int total) {
+    return '$completed of $total colored';
+  }
 }

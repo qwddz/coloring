@@ -8,6 +8,9 @@ import '../../app/widgets/round_icon_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../content/content_config.dart';
 import '../content/thumb_image.dart';
+import '../gallery/gallery_routes.dart';
+import '../progress/data/progress_store.dart';
+import '../progress/domain/category_progress.dart';
 import 'catalog_grid.dart';
 import 'data/manifest_provider.dart';
 import 'domain/content_manifest.dart';
@@ -30,10 +33,21 @@ class CategoriesScreen extends ConsumerWidget {
             children: [
               CatalogHeader(
                 title: l10n.appTitle,
-                trailing: RoundIconButton(
-                  tooltip: l10n.settings,
-                  icon: Icons.settings_rounded,
-                  onPressed: () => context.push('/settings'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RoundIconButton(
+                      tooltip: l10n.myWorks,
+                      icon: Icons.photo_library_rounded,
+                      onPressed: () => context.push(myWorksRoute),
+                    ),
+                    const SizedBox(width: 8),
+                    RoundIconButton(
+                      tooltip: l10n.settings,
+                      icon: Icons.settings_rounded,
+                      onPressed: () => context.push('/settings'),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -70,7 +84,7 @@ class CategoriesScreen extends ConsumerWidget {
   }
 }
 
-class _CategoryCard extends StatelessWidget {
+class _CategoryCard extends ConsumerWidget {
   const _CategoryCard({
     required this.index,
     required this.category,
@@ -82,18 +96,48 @@ class _CategoryCard extends StatelessWidget {
   final ImageProvider? thumb;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final progress = ref.watch(progressProvider).value;
+    final stars = progress == null || category.pictures.isEmpty
+        ? null
+        : categoryProgress(category, progress);
     final language = Localizations.localeOf(context).languageCode;
     return PictureCard(
       index: index,
       image: thumb,
       onTap: () => context.push('/category/${category.id}'),
-      caption: Text(
-        category.title.resolve(language),
-        style: Theme.of(context).textTheme.titleMedium
-            ?.copyWith(color: BookPalette.text),
-        overflow: TextOverflow.ellipsis,
+      caption: Row(
+        children: [
+          Expanded(
+            child: Text(
+              category.title.resolve(language),
+              style: Theme.of(context).textTheme.titleMedium
+                  ?.copyWith(color: BookPalette.text),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          if (stars != null)
+            Semantics(
+              label: l10n.categoryStars(stars.completed, stars.total),
+              excludeSemantics: true,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.star_rounded,
+                    size: 20,
+                    color: BookPalette.star,
+                  ),
+                  Text(
+                    '${stars.completed}/${stars.total}',
+                    style: Theme.of(context).textTheme.labelLarge
+                        ?.copyWith(color: BookPalette.textMuted),
+                  ),
+                ],
+              ),
+            ),
+        ],
       ),
       // A category without pictures yet says so on its card.
       badge: category.pictures.isEmpty

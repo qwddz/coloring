@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,10 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../catalog/data/manifest_provider.dart';
 import '../content/data/manifest_source.dart';
 import '../content/data/picture_store.dart';
+import '../gallery/data/work_preview_service.dart';
 import '../palette/data/recent_colors.dart';
 import '../progress/data/progress_store.dart';
 import '../progress/data/work_repository.dart';
 import '../subscription/data/purchase_providers.dart';
+import 'coloring_route.dart';
 import 'coloring_state.dart';
 import 'data/picture_loader.dart';
 import 'feedback.dart';
@@ -47,12 +50,16 @@ final coloringClockProvider = Provider<DateTime Function()>(
   (ref) => DateTime.now,
 );
 
-/// Owns one opened picture: loading, the coloring session, saving the work
-/// and the side effects (canvas, sound, vibration, recent colors).
+/// Owns one opened picture: loading, the coloring session, saving the work,
+/// its preview and the side effects (canvas, sound, vibration, recent
+/// colors).
 class ColoringController extends AsyncNotifier<ColoringState> {
-  ColoringController(this.pictureId);
+  ColoringController(this.request);
 
-  final String pictureId;
+  /// Which work of which picture to open.
+  final ColoringRequest request;
+
+  String get pictureId => request.pictureId;
 
   ColoringSession? _session;
   Work? _work;
@@ -63,12 +70,17 @@ class ColoringController extends AsyncNotifier<ColoringState> {
   /// untouched work and inactive → hidden → paused never rewrite the file.
   bool _dirty = false;
 
+  /// A save happened since the last preview: leaving the screen or a
+  /// pause redraws the preview only then.
+  bool _previewDirty = false;
+
   /// When the last stroke fill feedback played; null outside a stroke.
   DateTime? _strokeFeedbackAt;
   int _completionSeq = 0;
   int _rejectSeq = 0;
 
   late WorkRepository _repository;
+  late WorkPreviewService _previews;
   late DateTime Function() _now;
 
   /// The opened picture, or null while loading or after an error.
@@ -80,6 +92,7 @@ class ColoringController extends AsyncNotifier<ColoringState> {
     _work = null;
     _sink = null;
     _dirty = false;
+    _previewDirty = false;
     _strokeFeedbackAt = null;
     // Everything is read before the first await. Read, not watch: a
     // manifest refresh must not rebuild the picture being colored.
@@ -92,6 +105,7 @@ class ColoringController extends AsyncNotifier<ColoringState> {
         .read();
     final loader = ref.read(pictureLoaderProvider);
     final repository = _repository = ref.read(workRepositoryProvider);
+    _previews = ref.read(workPreviewServiceProvider);
     final now = _now = ref.read(coloringClockProvider);
     final progress = ref.read(
       pictureDownloadProgressProvider(pictureId).notifier,
@@ -114,7 +128,7 @@ class ColoringController extends AsyncNotifier<ColoringState> {
     }
     final Work? saved;
     try {
-      saved = await repository.latestFor(pictureId);
+      saved = await _savedWork(repository);
     } on Object {
       picture.dispose();
       rethrow;
@@ -129,6 +143,7 @@ class ColoringController extends AsyncNotifier<ColoringState> {
             pictureId: pictureId,
             regionCount: meta.regionCount,
             now: now,
+            mode: request.newMode ?? ColoringMode.free,
           );
       session = ColoringSession(
         meta: meta,
@@ -155,15 +170,30 @@ class ColoringController extends AsyncNotifier<ColoringState> {
             state == AppLifecycleState.paused) {
           _flush();
         }
+        if (state == AppLifecycleState.paused) _renderPreview(picture);
       },
     );
+    // The preview takes its own clone of the lines, so the picture can go.
     ref.onDispose(() {
       lifecycle.dispose();
       _flush();
+      _renderPreview(picture);
       _sink = null;
       picture.dispose();
     });
     return _snapshot(picture, session);
+  }
+
+  /// The saved work to continue: the requested one if it exists and belongs
+  /// to this picture, none for a new work, else the latest one.
+  Future<Work?> _savedWork(WorkRepository repository) async {
+    if (request.workId case final workId?) {
+      final work = await repository.byId(workId);
+      if (work != null && work.pictureId == pictureId) return work;
+    } else if (request.newMode != null) {
+      return null;
+    }
+    return repository.latestFor(pictureId);
   }
 
   /// Loads again after an error. A picture the CDN refused may have moved
@@ -371,7 +401,23 @@ class ColoringController extends AsyncNotifier<ColoringState> {
     final next = work.withSession(session, now: _now);
     _work = next;
     _dirty = false;
+    _previewDirty = true;
     unawaited(_repository.save(next));
+  }
+
+  /// Queues a preview of the saved work when it changed since the last one.
+  void _renderPreview(LoadedPicture picture) {
+    final session = _session;
+    final work = _work;
+    if (!_previewDirty || session == null || work == null) return;
+    _previewDirty = false;
+    _previews.renderAfterLeave(
+      workId: work.id,
+      sourceModified: work.modified,
+      map: picture.map,
+      colors: Uint32List.fromList(session.fill.colors),
+      linesClone: picture.linesImage.clone(),
+    );
   }
 
   void _emit() {
@@ -398,10 +444,10 @@ class ColoringController extends AsyncNotifier<ColoringState> {
       );
 }
 
-/// One controller per opened picture id; disposed when the screen leaves.
+/// One controller per [ColoringRequest]; disposed when the screen leaves.
 /// No automatic retry: errors go to the screen, which offers [retry].
 final coloringControllerProvider = AsyncNotifierProvider.autoDispose
-    .family<ColoringController, ColoringState, String>(
+    .family<ColoringController, ColoringState, ColoringRequest>(
       ColoringController.new,
       retry: (_, _) => null,
     );

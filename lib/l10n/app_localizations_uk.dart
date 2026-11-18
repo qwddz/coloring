@@ -252,4 +252,70 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get coloringHintTitle => 'Підказка';
+
+  @override
+  String get myWorks => 'Мої роботи';
+
+  @override
+  String get myWorksEmpty => 'Тут з\'являться твої розмальовки';
+
+  @override
+  String get myWorksToPictures => 'Обрати малюнок';
+
+  @override
+  String get workContinue => 'Продовжити';
+
+  @override
+  String get workNewWork => 'Нова розмальовка';
+
+  @override
+  String get workSaveToGallery => 'Зберегти в галерею';
+
+  @override
+  String get workShare => 'Поділитися';
+
+  @override
+  String get workSavedToGallery => 'Збережено в галерею';
+
+  @override
+  String get workSaveDenied => 'Дозволь доступ, щоб зберігати малюнки';
+
+  @override
+  String get workExportFailed =>
+      'Не вдалося підготувати малюнок. Спробуй ще раз';
+
+  @override
+  String get workExporting => 'Готуємо малюнок…';
+
+  @override
+  String get workPictureUnavailable => 'Цього малюнка немає';
+
+  @override
+  String get workCompleted => 'Завершено';
+
+  @override
+  String get pictureCompleted => 'Розмальовано';
+
+  @override
+  String get levelSimple => 'Проста';
+
+  @override
+  String get levelMedium => 'Середня';
+
+  @override
+  String get modePickerTitle => 'Як будемо розмальовувати?';
+
+  @override
+  String get modeFreeDescription => 'Обирай будь-які кольори';
+
+  @override
+  String get modeNumbersDescription => 'Фарбуй за цифрами';
+
+  @override
+  String get modeMagicDescription => 'Пензлик підкаже правильний колір';
+
+  @override
+  String categoryStars(int completed, int total) {
+    return 'Розмальовано $completed з $total';
+  }
 }
