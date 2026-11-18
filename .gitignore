@@ -58,6 +58,7 @@ key.properties
 
 # Image pipeline work files
 tools/coloring_pipeline/.venv/
+tools/audio/.venv/
 tools/coloring_pipeline/raw/
 tools/coloring_pipeline/processed/
 tools/coloring_pipeline/cdn/

@@ -172,5 +172,81 @@ class AppLocalizationsEn extends AppLocalizations {
       'New pictures for this category are coming soon';
 
   @override
-  String get coloringComingSoon => 'Coloring is coming soon';
+  String get coloringUndo => 'Undo';
+
+  @override
+  String get coloringEraser => 'Eraser';
+
+  @override
+  String get coloringClear => 'Start over';
+
+  @override
+  String get coloringClearTitle => 'Start over?';
+
+  @override
+  String get coloringClearMessage =>
+      'All colors will be removed from this picture.';
+
+  @override
+  String get coloringClearConfirm => 'Yes, clear';
+
+  @override
+  String get coloringClearCancel => 'No, keep it';
+
+  @override
+  String get coloringDone => 'Done';
+
+  @override
+  String get coloringModeFree => 'Free';
+
+  @override
+  String get coloringModeNumbers => 'By numbers';
+
+  @override
+  String get coloringModeMagic => 'Magic brush';
+
+  @override
+  String get coloringModeSwitch => 'Change mode';
+
+  @override
+  String get palettePictureColors => 'Picture colors';
+
+  @override
+  String get paletteRecent => 'Recent';
+
+  @override
+  String get paletteAllColors => 'All colors';
+
+  @override
+  String get paletteMagicHint =>
+      'Draw with your finger and the picture will color itself!';
+
+  @override
+  String paletteColorNumber(int number) {
+    return 'Color $number';
+  }
+
+  @override
+  String get coloringCompleteTitle => 'Great job!';
+
+  @override
+  String get coloringKeepColoring => 'Keep coloring';
+
+  @override
+  String get coloringBackToPictures => 'Back to pictures';
+
+  @override
+  String get coloringLoading => 'Getting the picture ready…';
+
+  @override
+  String get coloringLoadError => 'Couldn\'t open the picture';
+
+  @override
+  String get coloringNotFound => 'This picture is not available';
+
+  @override
+  String get coloringRetry => 'Try again';
+
+  @override
+  String get coloringHintTitle => 'Hint';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/coloring/perf/fill_latency_probe.dart';
 import '../features/settings/data/settings_controller.dart';
 import '../l10n/app_localizations.dart';
 import 'locale.dart';
@@ -23,6 +24,7 @@ class ColoringApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       localeListResolutionCallback: resolveAppLocale,
+      showPerformanceOverlay: coloringPerfOverlay,
     );
   }
 }

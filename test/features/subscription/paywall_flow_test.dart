@@ -7,6 +7,7 @@ import 'package:coloring/app/book_palette.dart';
 import 'package:coloring/app/router.dart';
 import 'package:coloring/features/catalog/catalog_grid.dart';
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
+import 'package:coloring/features/coloring/coloring_canvas.dart';
 import 'package:coloring/features/coloring/coloring_screen.dart';
 import 'package:coloring/features/subscription/data/purchase_providers.dart';
 import 'package:coloring/features/subscription/data/review_access.dart';
@@ -16,6 +17,7 @@ import 'package:coloring/features/subscription/paywall_screen.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../support/coloring_overrides.dart';
 import '../../support/test_manifest.dart';
 
 void main() {
@@ -44,6 +46,7 @@ void main() {
           parentalChallengeProvider.overrideWithValue(
             () => const ParentalChallenge(7, 8),
           ),
+          ...coloringScreenOverrides(),
         ],
         child: const ColoringApp(),
       ),
@@ -202,8 +205,8 @@ void main() {
     await tester.ensureVisible(find.text('Goat'));
     expect(lockOf('Goat'), findsNothing);
     await tester.tap(find.text('Goat'));
-    await tester.pumpAndSettle();
-    expect(find.text('Coloring is coming soon'), findsOneWidget);
+    await pumpColoringFrames(tester);
+    expect(find.byType(ColoringCanvas), findsOneWidget);
   });
 
   testWidgets('a cancelled purchase stays on the paywall', (tester) async {
@@ -337,9 +340,9 @@ void main() {
   testWidgets('a free coloring route opens without the gate', (tester) async {
     final router = await pumpApp(tester);
     router.push(coloringRoute('farm_piglet_picnic'));
-    await tester.pumpAndSettle();
+    await pumpColoringFrames(tester);
     expect(find.text('For grown-ups'), findsNothing);
-    expect(find.byType(ColoringScreen), findsOneWidget);
+    expect(find.byType(ColoringCanvas), findsOneWidget);
   });
 
   testWidgets('a refund locks the paid cards again', (tester) async {
@@ -407,8 +410,8 @@ void main() {
       await tester.ensureVisible(find.text('Goat'));
       expect(lockOf('Goat'), findsNothing);
       await tester.tap(find.text('Goat'));
-      await tester.pumpAndSettle();
-      expect(find.text('Coloring is coming soon'), findsOneWidget);
+      await pumpColoringFrames(tester);
+      expect(find.byType(ColoringCanvas), findsOneWidget);
     });
   });
 }

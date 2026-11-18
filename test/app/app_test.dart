@@ -9,6 +9,7 @@ import 'package:coloring/features/catalog/catalog_grid.dart';
 import 'package:coloring/features/catalog/categories_screen.dart';
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
 import 'package:coloring/features/catalog/domain/content_manifest.dart';
+import 'package:coloring/features/coloring/coloring_canvas.dart';
 import 'package:coloring/features/coloring/coloring_screen.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../support/coloring_overrides.dart';
 import '../support/test_manifest.dart';
 
 void main() {
@@ -43,6 +45,7 @@ void main() {
           sharedPreferencesProvider.overrideWithValue(prefs),
           // rootBundle caches loads across tests; read the file directly.
           manifestProvider.overrideWith((ref) async => manifest ?? bundled),
+          ...coloringScreenOverrides(),
         ],
         child: const ColoringApp(),
       ),
@@ -138,10 +141,10 @@ void main() {
     await tester.tap(find.text('On the farm'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Piglet'));
-    await tester.pumpAndSettle();
+    await pumpColoringFrames(tester);
     final screen = tester.widget<ColoringScreen>(find.byType(ColoringScreen));
     expect(screen.pictureId, 'farm_piglet_picnic');
-    expect(find.text('Coloring is coming soon'), findsOneWidget);
+    expect(find.byType(ColoringCanvas), findsOneWidget);
     await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
     expect(find.byType(ColoringScreen), findsNothing);

@@ -177,5 +177,80 @@ class AppLocalizationsRu extends AppLocalizations {
       'Новые картинки для этой категории скоро появятся';
 
   @override
-  String get coloringComingSoon => 'Раскрашивание скоро появится';
+  String get coloringUndo => 'Отменить';
+
+  @override
+  String get coloringEraser => 'Ластик';
+
+  @override
+  String get coloringClear => 'Начать сначала';
+
+  @override
+  String get coloringClearTitle => 'Начать сначала?';
+
+  @override
+  String get coloringClearMessage => 'С картинки исчезнут все цвета.';
+
+  @override
+  String get coloringClearConfirm => 'Да, очистить';
+
+  @override
+  String get coloringClearCancel => 'Нет, оставить';
+
+  @override
+  String get coloringDone => 'Готово';
+
+  @override
+  String get coloringModeFree => 'Свободный';
+
+  @override
+  String get coloringModeNumbers => 'По номерам';
+
+  @override
+  String get coloringModeMagic => 'Волшебная кисточка';
+
+  @override
+  String get coloringModeSwitch => 'Сменить режим';
+
+  @override
+  String get palettePictureColors => 'Цвета картинки';
+
+  @override
+  String get paletteRecent => 'Недавние';
+
+  @override
+  String get paletteAllColors => 'Все цвета';
+
+  @override
+  String get paletteMagicHint =>
+      'Проведи пальцем, и картинка раскрасится сама!';
+
+  @override
+  String paletteColorNumber(int number) {
+    return 'Цвет $number';
+  }
+
+  @override
+  String get coloringCompleteTitle => 'Отличная работа!';
+
+  @override
+  String get coloringKeepColoring => 'Раскрашивать дальше';
+
+  @override
+  String get coloringBackToPictures => 'К картинкам';
+
+  @override
+  String get coloringLoading => 'Готовим картинку…';
+
+  @override
+  String get coloringLoadError => 'Не удалось открыть картинку';
+
+  @override
+  String get coloringNotFound => 'Такой картинки нет';
+
+  @override
+  String get coloringRetry => 'Попробовать ещё раз';
+
+  @override
+  String get coloringHintTitle => 'Подсказка';
 }

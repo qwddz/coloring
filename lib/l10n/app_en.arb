@@ -82,5 +82,109 @@
   "vibration": "Vibration",
   "comingSoon": "Coming soon",
   "categoryComingSoon": "New pictures for this category are coming soon",
-  "coloringComingSoon": "Coloring is coming soon"
+  "coloringUndo": "Undo",
+  "@coloringUndo": {
+    "description": "Undo the last color"
+  },
+  "coloringEraser": "Eraser",
+  "@coloringEraser": {
+    "description": "Eraser that removes color from a region"
+  },
+  "coloringClear": "Start over",
+  "@coloringClear": {
+    "description": "Button that clears the whole picture"
+  },
+  "coloringClearTitle": "Start over?",
+  "@coloringClearTitle": {
+    "description": "Title of the clear confirmation dialog"
+  },
+  "coloringClearMessage": "All colors will be removed from this picture.",
+  "@coloringClearMessage": {
+    "description": "Body of the clear confirmation dialog"
+  },
+  "coloringClearConfirm": "Yes, clear",
+  "@coloringClearConfirm": {
+    "description": "Confirm button of the clear dialog"
+  },
+  "coloringClearCancel": "No, keep it",
+  "@coloringClearCancel": {
+    "description": "Cancel button of the clear dialog"
+  },
+  "coloringDone": "Done",
+  "@coloringDone": {
+    "description": "Button to finish the picture in free mode"
+  },
+  "coloringModeFree": "Free",
+  "@coloringModeFree": {
+    "description": "Name of the free coloring mode"
+  },
+  "coloringModeNumbers": "By numbers",
+  "@coloringModeNumbers": {
+    "description": "Name of the by-numbers coloring mode"
+  },
+  "coloringModeMagic": "Magic brush",
+  "@coloringModeMagic": {
+    "description": "Name of the magic brush coloring mode"
+  },
+  "coloringModeSwitch": "Change mode",
+  "@coloringModeSwitch": {
+    "description": "Tooltip of the mode switch button"
+  },
+  "palettePictureColors": "Picture colors",
+  "@palettePictureColors": {
+    "description": "Palette section with the picture's own colors"
+  },
+  "paletteRecent": "Recent",
+  "@paletteRecent": {
+    "description": "Palette section with recently used colors"
+  },
+  "paletteAllColors": "All colors",
+  "@paletteAllColors": {
+    "description": "Palette section with the base colors"
+  },
+  "paletteMagicHint": "Draw with your finger and the picture will color itself!",
+  "@paletteMagicHint": {
+    "description": "Hint shown instead of swatches in magic brush mode"
+  },
+  "paletteColorNumber": "Color {number}",
+  "@paletteColorNumber": {
+    "description": "Semantics label of a palette swatch",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "coloringCompleteTitle": "Great job!",
+  "@coloringCompleteTitle": {
+    "description": "Title of the completion overlay"
+  },
+  "coloringKeepColoring": "Keep coloring",
+  "@coloringKeepColoring": {
+    "description": "Completion overlay button that returns to the picture"
+  },
+  "coloringBackToPictures": "Back to pictures",
+  "@coloringBackToPictures": {
+    "description": "Completion overlay button that leaves the coloring screen"
+  },
+  "coloringLoading": "Getting the picture ready…",
+  "@coloringLoading": {
+    "description": "Shown while the picture is loading"
+  },
+  "coloringLoadError": "Couldn't open the picture",
+  "@coloringLoadError": {
+    "description": "Shown when the picture fails to load"
+  },
+  "coloringNotFound": "This picture is not available",
+  "@coloringNotFound": {
+    "description": "Shown when the picture id is unknown"
+  },
+  "coloringRetry": "Try again",
+  "@coloringRetry": {
+    "description": "Retry button on the coloring load error"
+  },
+  "coloringHintTitle": "Hint",
+  "@coloringHintTitle": {
+    "description": "Semantics label for the correct-color hint"
+  }
 }

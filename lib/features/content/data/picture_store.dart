@@ -223,14 +223,33 @@ class PictureStore {
     }
   }
 
+  /// A zip entry declaring more than this uncompressed is corrupt.
+  static const int maxEntryBytes = 32 << 20;
+
+  /// A zip declaring more than this uncompressed in total is corrupt.
+  static const int maxTotalBytes = 64 << 20;
+
   /// Unpacks the files of [zip] flat into [into]: folders inside the zip
   /// are ignored, hidden files (`.DS_Store`, `__MACOSX/._x`) skipped.
+  /// Declared sizes are checked before anything is inflated, so a zip bomb
+  /// is rejected as corrupt (decoding with `verify` holds each entry to its
+  /// declared size).
   static Future<void> _unpack(Uint8List zip, Directory into) async {
     final Archive archive;
     try {
       archive = ZipDecoder().decodeBytes(zip, verify: true);
     } on Object catch (e) {
       throw PictureLoadException(PictureLoadFailure.corrupt, e);
+    }
+    var total = 0;
+    for (final file in archive.files) {
+      if (file.size < 0 || file.size > maxEntryBytes) {
+        throw const PictureLoadException(PictureLoadFailure.corrupt);
+      }
+      total += file.size;
+    }
+    if (total > maxTotalBytes) {
+      throw const PictureLoadException(PictureLoadFailure.corrupt);
     }
     if (await into.exists()) await into.delete(recursive: true);
     await into.create(recursive: true);

@@ -139,6 +139,38 @@ void main() {
     expect(pictureFiles(), isEmpty);
   });
 
+  group('declared sizes', () {
+    /// A zip of the real layers plus a deflated filler of zeros; zeros
+    /// compress to almost nothing, like a zip bomb.
+    Uint8List withFiller(List<int> sizes) => zipOf({
+      ...content,
+      for (final (i, size) in sizes.indexed) 'filler$i.bin': Uint8List(size),
+    });
+
+    Future<void> expectCorrupt(Uint8List bomb) async {
+      cdn.files[path] = bomb;
+      await expectLater(
+        store.load(entryFor(bomb)),
+        failsWith(PictureLoadFailure.corrupt),
+      );
+      expect(pictureFiles(), isEmpty);
+    }
+
+    test('an entry over 32 MiB is corrupt', () async {
+      await expectCorrupt(withFiller([(32 << 20) + 1]));
+    });
+
+    test('entries over 64 MiB in total are corrupt', () async {
+      await expectCorrupt(withFiller([30 << 20, 30 << 20, 5 << 20]));
+    });
+
+    test('an entry of exactly 32 MiB is accepted', () async {
+      final ok = withFiller([32 << 20]);
+      cdn.files[path] = ok;
+      await expectLayers(await store.load(entryFor(ok)), content);
+    });
+  });
+
   test('a file that is not a zip is corrupt even with its checksum', () async {
     final notZip = utf8.encode('<html>not a zip</html>');
     cdn.files[path] = notZip;

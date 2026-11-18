@@ -388,11 +388,155 @@ abstract class AppLocalizations {
   /// **'New pictures for this category are coming soon'**
   String get categoryComingSoon;
 
-  /// No description provided for @coloringComingSoon.
+  /// Undo the last color
   ///
   /// In en, this message translates to:
-  /// **'Coloring is coming soon'**
-  String get coloringComingSoon;
+  /// **'Undo'**
+  String get coloringUndo;
+
+  /// Eraser that removes color from a region
+  ///
+  /// In en, this message translates to:
+  /// **'Eraser'**
+  String get coloringEraser;
+
+  /// Button that clears the whole picture
+  ///
+  /// In en, this message translates to:
+  /// **'Start over'**
+  String get coloringClear;
+
+  /// Title of the clear confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Start over?'**
+  String get coloringClearTitle;
+
+  /// Body of the clear confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'All colors will be removed from this picture.'**
+  String get coloringClearMessage;
+
+  /// Confirm button of the clear dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, clear'**
+  String get coloringClearConfirm;
+
+  /// Cancel button of the clear dialog
+  ///
+  /// In en, this message translates to:
+  /// **'No, keep it'**
+  String get coloringClearCancel;
+
+  /// Button to finish the picture in free mode
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get coloringDone;
+
+  /// Name of the free coloring mode
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get coloringModeFree;
+
+  /// Name of the by-numbers coloring mode
+  ///
+  /// In en, this message translates to:
+  /// **'By numbers'**
+  String get coloringModeNumbers;
+
+  /// Name of the magic brush coloring mode
+  ///
+  /// In en, this message translates to:
+  /// **'Magic brush'**
+  String get coloringModeMagic;
+
+  /// Tooltip of the mode switch button
+  ///
+  /// In en, this message translates to:
+  /// **'Change mode'**
+  String get coloringModeSwitch;
+
+  /// Palette section with the picture's own colors
+  ///
+  /// In en, this message translates to:
+  /// **'Picture colors'**
+  String get palettePictureColors;
+
+  /// Palette section with recently used colors
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get paletteRecent;
+
+  /// Palette section with the base colors
+  ///
+  /// In en, this message translates to:
+  /// **'All colors'**
+  String get paletteAllColors;
+
+  /// Hint shown instead of swatches in magic brush mode
+  ///
+  /// In en, this message translates to:
+  /// **'Draw with your finger and the picture will color itself!'**
+  String get paletteMagicHint;
+
+  /// Semantics label of a palette swatch
+  ///
+  /// In en, this message translates to:
+  /// **'Color {number}'**
+  String paletteColorNumber(int number);
+
+  /// Title of the completion overlay
+  ///
+  /// In en, this message translates to:
+  /// **'Great job!'**
+  String get coloringCompleteTitle;
+
+  /// Completion overlay button that returns to the picture
+  ///
+  /// In en, this message translates to:
+  /// **'Keep coloring'**
+  String get coloringKeepColoring;
+
+  /// Completion overlay button that leaves the coloring screen
+  ///
+  /// In en, this message translates to:
+  /// **'Back to pictures'**
+  String get coloringBackToPictures;
+
+  /// Shown while the picture is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Getting the picture ready…'**
+  String get coloringLoading;
+
+  /// Shown when the picture fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the picture'**
+  String get coloringLoadError;
+
+  /// Shown when the picture id is unknown
+  ///
+  /// In en, this message translates to:
+  /// **'This picture is not available'**
+  String get coloringNotFound;
+
+  /// Retry button on the coloring load error
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get coloringRetry;
+
+  /// Semantics label for the correct-color hint
+  ///
+  /// In en, this message translates to:
+  /// **'Hint'**
+  String get coloringHintTitle;
 }
 
 class _AppLocalizationsDelegate
