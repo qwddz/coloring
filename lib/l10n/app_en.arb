@@ -110,6 +110,10 @@
   "@coloringClearCancel": {
     "description": "Cancel button of the clear dialog"
   },
+  "coloringFind": "Find the next one",
+  "@coloringFind": {
+    "description": "Numbers mode button that zooms to a region of the selected number that is not colored yet"
+  },
   "coloringDone": "Done",
   "@coloringDone": {
     "description": "Button to finish the picture in free mode"

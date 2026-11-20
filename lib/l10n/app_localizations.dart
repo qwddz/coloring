@@ -430,6 +430,12 @@ abstract class AppLocalizations {
   /// **'No, keep it'**
   String get coloringClearCancel;
 
+  /// Numbers mode button that zooms to a region of the selected number that is not colored yet
+  ///
+  /// In en, this message translates to:
+  /// **'Find the next one'**
+  String get coloringFind;
+
   /// Button to finish the picture in free mode
   ///
   /// In en, this message translates to:

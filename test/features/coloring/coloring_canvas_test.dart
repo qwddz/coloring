@@ -289,17 +289,42 @@ void main() {
     });
   });
 
+  testWidgets('a finger down cancels a running find move and blocks find '
+      'until every finger lifts', (tester) async {
+    final game = await pumpCanvas(tester);
+    game.focusOn(const [4]);
+    expect(game.focusing, isTrue);
+    final g = await tester.createGesture();
+    await g.down(const Offset(125, 75));
+    expect(game.focusing, isFalse);
+    expect(game.gestureActive, isTrue);
+    game.focusOn(const [4]);
+    expect(game.focusing, isFalse, reason: 'a finger is down');
+
+    final second = await tester.createGesture(pointer: 7);
+    await second.down(const Offset(400, 300));
+    await g.up();
+    expect(game.gestureActive, isTrue, reason: 'one finger is still down');
+    await second.cancel();
+    expect(game.gestureActive, isFalse);
+
+    game.focusOn(const [4]);
+    expect(game.focusing, isTrue);
+    await tester.pump(const Duration(milliseconds: 500));
+  });
+
   testWidgets('labels hide below the size threshold and show when zoomed', (
     tester,
   ) async {
     // 80×60 canvas: 5 dp per image px, so a 1.5 px label radius is 7.5 dp.
+    // Max zoom stays 4x: 7.5 dp needs only ~1.07x to reach 8 dp.
     final game = await pumpCanvas(tester, canvas: const Size(80, 60));
     await tester.pump(_frame);
     expect(game.drawnLabels, 0, reason: 'labels are off');
 
     game.setLabelsEnabled(true);
     await tester.pump(_frame);
-    expect(game.drawnLabels, 0, reason: '7.5 dp < 10 dp');
+    expect(game.drawnLabels, 0, reason: '7.5 dp < 8 dp');
 
     game.viewport = game.viewport!.zoomAt(const Point(40, 30), 4);
     await tester.pump(_frame);

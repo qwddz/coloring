@@ -109,6 +109,59 @@ void main() {
     expect(v.origin.y, lessThanOrEqualTo(1e-9));
   });
 
+  group('per-picture max zoom', () {
+    Viewport wide({double maxZoom = defaultMaxZoom, double zoom = 1}) =>
+        Viewport(
+          canvasWidth: 1600,
+          canvasHeight: 900,
+          imageWidth: 2048,
+          imageHeight: 1536,
+          maxZoom: maxZoom,
+          zoom: zoom,
+        );
+
+    test('defaults to 4x', () {
+      expect(defaultMaxZoom, 4);
+      expect(vp(1600, 900).maxZoom, defaultMaxZoom);
+    });
+
+    test('every clamp uses the instance value and survives changes', () {
+      final v = wide(maxZoom: 7);
+      expect(wide(maxZoom: 7, zoom: 10).zoom, 7);
+      final zoomed = v.zoomAt(const Point(800, 450), 100);
+      expect(zoomed.zoom, 7);
+      expect(zoomed.maxZoom, 7);
+      expect(zoomed.panBy(const Point(5, 5)).maxZoom, 7);
+      expect(v.focusOn(const Point(1024, 768), 50).zoom, 7);
+    });
+
+    test('atMaxZoom', () {
+      expect(wide(maxZoom: 6).atMaxZoom, isFalse);
+      expect(wide(maxZoom: 6, zoom: 6).atMaxZoom, isTrue);
+      expect(wide(maxZoom: 6, zoom: 5.99).atMaxZoom, isFalse);
+      expect(vp(1600, 900).zoomAt(const Point(0, 0), 10).atMaxZoom, isTrue);
+    });
+  });
+
+  group('focusOn', () {
+    test('centers the image point at the zoom', () {
+      final v = vp(1600, 900).focusOn(const Point(700, 500), 3);
+      expect(v.zoom, 3);
+      final center = v.screenToImage(const Point(800, 450));
+      expect(center.x, closeTo(700, 1e-9));
+      expect(center.y, closeTo(500, 1e-9));
+    });
+
+    test('clamps the zoom and keeps the pan limits near an edge', () {
+      final v = vp(1600, 900);
+      expect(v.focusOn(const Point(1024, 768), 0.5).zoom, 1);
+      expect(v.focusOn(const Point(1024, 768), 0.5).pan, const Point(0.0, 0.0));
+      final corner = v.focusOn(const Point(0, 0), 2);
+      expect(corner.origin.x, closeTo(0, 1e-9));
+      expect(corner.origin.y, closeTo(0, 1e-9));
+    });
+  });
+
   test('imagePxPerDp is 1 / (baseScale * zoom)', () {
     final v = vp(1600, 900).zoomAt(const Point(800, 450), 2);
     expect(v.imagePxPerDp, closeTo(1 / (900 / 1536 * 2), 1e-12));

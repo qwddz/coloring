@@ -177,7 +177,7 @@ void main() {
     });
   });
 
-  testWidgets('tints only unfinished regions of the highlighted palette '
+  testWidgets('stripes only unfinished regions of the highlighted palette '
       'index and flashes a rejected region', (tester) async {
     await tester.runAsync(() async {
       await setUpRenderer();
@@ -186,8 +186,11 @@ void main() {
         ..highlightPalette = 1
         ..pulse = 0;
       var px = await _render(renderer, u);
-      // mix(white, (0.62, 0.70, 0.86), 0.25)
-      expect(px.at(40, 5), _near([231, 236, 246, 255]));
+      // Pixel centers: x + y = 46, 4 px from a period edge, inside a stripe:
+      // mix(white, (0.55, 0.55, 0.58), 0.45).
+      expect(px.at(40, 5), _near([203, 203, 207, 255]));
+      // x + y = 50, on a period edge: between stripes, still white.
+      expect(px.at(44, 5), [255, 255, 255, 255]);
       expect(px.at(5, 5), [255, 0, 0, 255]);
 
       u
@@ -195,7 +198,7 @@ void main() {
         ..flashId = 2
         ..flashAmount = 1;
       px = await _render(renderer, u);
-      expect(px.at(5, 5), [255, 0, 0, 255]); // correct: no tint
+      expect(px.at(5, 5), [255, 0, 0, 255]); // correct: no stripes
       expect(px.at(40, 5), _near([199, 214, 235, 255])); // flash color
 
       u.stateTexture!.dispose();

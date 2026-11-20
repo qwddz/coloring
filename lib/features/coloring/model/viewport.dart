@@ -1,7 +1,9 @@
 import 'dart:math';
 
 const double minZoom = 1;
-const double maxZoom = 4;
+
+/// Max zoom when the picture does not ask for more (see `maxZoomFor`).
+const double defaultMaxZoom = 4;
 
 /// Maps between image pixels and canvas (screen) logical pixels.
 ///
@@ -14,9 +16,11 @@ class Viewport {
     required this.canvasHeight,
     required this.imageWidth,
     required this.imageHeight,
+    this.maxZoom = defaultMaxZoom,
     double zoom = minZoom,
     Point<double> pan = const Point(0, 0),
-  }) : baseScale = min(canvasWidth / imageWidth, canvasHeight / imageHeight),
+  }) : assert(maxZoom >= minZoom),
+       baseScale = min(canvasWidth / imageWidth, canvasHeight / imageHeight),
        zoom = zoom.clamp(minZoom, maxZoom).toDouble(),
        pan = _clampPan(
          pan,
@@ -36,13 +40,19 @@ class Viewport {
   /// Scale that fits the whole image into the canvas.
   final double baseScale;
 
-  /// 1..4.
+  /// Upper zoom limit, [defaultMaxZoom] unless the picture needs more.
+  final double maxZoom;
+
+  /// [minZoom]..[maxZoom].
   final double zoom;
 
   /// Translation relative to the centered position (always zero at 1x).
   final Point<double> pan;
 
   double get scale => baseScale * zoom;
+
+  /// The zoom cannot grow any further.
+  bool get atMaxZoom => zoom >= maxZoom - 1e-6;
 
   /// Image pixels per logical pixel (dp).
   double get imagePxPerDp => 1 / scale;
@@ -80,6 +90,20 @@ class Viewport {
     );
   }
 
+  /// Centers image point [imagePoint] at [zoom] (clamped), as far as the
+  /// pan limits allow.
+  Viewport focusOn(Point<double> imagePoint, double zoom) {
+    final newZoom = zoom.clamp(minZoom, maxZoom).toDouble();
+    final newScale = baseScale * newZoom;
+    return _with(
+      newZoom,
+      Point(
+        (imageWidth / 2 - imagePoint.x) * newScale,
+        (imageHeight / 2 - imagePoint.y) * newScale,
+      ),
+    );
+  }
+
   Viewport panBy(Point<double> delta) =>
       _with(zoom, Point(pan.x + delta.x, pan.y + delta.y));
 
@@ -88,6 +112,7 @@ class Viewport {
     canvasHeight: canvasHeight,
     imageWidth: imageWidth,
     imageHeight: imageHeight,
+    maxZoom: maxZoom,
     zoom: zoom,
     pan: pan,
   );

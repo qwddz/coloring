@@ -194,6 +194,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coloringClearCancel => 'No, keep it';
 
   @override
+  String get coloringFind => 'Find the next one';
+
+  @override
   String get coloringDone => 'Done';
 
   @override

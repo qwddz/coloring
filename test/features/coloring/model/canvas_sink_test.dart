@@ -25,6 +25,9 @@ class _RecordingSink implements ColoringCanvasSink {
 
   @override
   void showHint(int regionId, int color) => calls.add('hint $regionId $color');
+
+  @override
+  void focusOn(List<int> regionIds) => calls.add('focus $regionIds');
 }
 
 void main() {
@@ -51,7 +54,8 @@ void main() {
       ..setHighlight(null)
       ..setLabelsEnabled(true)
       ..flashRejected(4)
-      ..showHint(2, 7);
+      ..showHint(2, 7)
+      ..focusOn(const [3, 1]);
     expect(sink.calls, [
       'fill 1 1.5 2.0',
       'fill 0 null null',
@@ -59,6 +63,7 @@ void main() {
       'labels true',
       'flash 4',
       'hint 2 7',
+      'focus [3, 1]',
     ]);
   });
 }

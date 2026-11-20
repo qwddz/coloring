@@ -311,6 +311,7 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
                           mode: state.mode,
                           canUndo: state.canUndo,
                           canFinish: state.canFinish,
+                          canFind: state.canFind,
                           eraserSelected: eraser,
                           onUndo: controller.undo,
                           onEraser: () => eraser
@@ -318,6 +319,7 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
                               : controller.selectEraser(),
                           onClear: controller.clearAll,
                           onDone: controller.finish,
+                          onFind: controller.findNext,
                           onModeChanged: controller.setMode,
                         ),
                         const SizedBox(height: _gap),

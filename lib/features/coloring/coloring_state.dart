@@ -56,4 +56,14 @@ class ColoringState {
 
   /// The picture's own colors, in palette order.
   List<int> get picturePalette => picture.meta.palette;
+
+  /// Numbers mode: the selected number still has regions to color, so
+  /// "find" has somewhere to go.
+  bool get canFind {
+    final index = selectedPaletteIndex;
+    return mode == ColoringMode.numbers &&
+        index != null &&
+        index < paletteProgress.length &&
+        !paletteProgress[index].done;
+  }
 }

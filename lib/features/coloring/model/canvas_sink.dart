@@ -51,4 +51,9 @@ abstract interface class ColoringCanvasSink {
 
   /// Free-mode long press: show [color] on [regionId] for 600 ms.
   void showHint(int regionId, int color);
+
+  /// Numbers-mode "find": moves the view to one of [regionIds] (unfinished
+  /// regions of the selected number, never empty) and zooms in until its
+  /// number shows.
+  void focusOn(List<int> regionIds);
 }

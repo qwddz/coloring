@@ -36,7 +36,7 @@ class FillUniforms {
   /// Color inside the wave front (the region's new color).
   int waveNewColor = 0;
 
-  /// Palette index tinted where not yet correct, -1 = none.
+  /// Palette index striped where not yet correct, -1 = none.
   int highlightPalette = -1;
 
   /// Highlight pulse 0..1.

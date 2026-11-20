@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class Calls {
-  int undo = 0, eraser = 0, clear = 0, done = 0;
+  int undo = 0, eraser = 0, clear = 0, done = 0, find = 0;
   final modes = <ColoringMode>[];
 }
 
@@ -17,6 +17,7 @@ Future<void> pump(
   ColoringMode mode = ColoringMode.free,
   bool canUndo = true,
   bool canFinish = true,
+  bool canFind = true,
   Locale locale = const Locale('en'),
   Size size = const Size(640, 360),
 }) async {
@@ -37,11 +38,13 @@ Future<void> pump(
               mode: mode,
               canUndo: canUndo,
               canFinish: canFinish,
+              canFind: canFind,
               eraserSelected: false,
               onUndo: () => calls.undo++,
               onEraser: () => calls.eraser++,
               onClear: () => calls.clear++,
               onDone: () => calls.done++,
+              onFind: () => calls.find++,
               onModeChanged: calls.modes.add,
             ),
           ),
@@ -89,6 +92,28 @@ void main() {
     expect(find.text('Done'), findsNothing);
     await pump(tester, calls, mode: ColoringMode.magic);
     expect(find.text('Done'), findsNothing);
+  });
+
+  testWidgets('find only in numbers mode and disabled without canFind', (
+    tester,
+  ) async {
+    final calls = Calls();
+    await pump(tester, calls);
+    expect(find.byTooltip('Find the next one'), findsNothing);
+    await pump(tester, calls, mode: ColoringMode.magic);
+    expect(find.byTooltip('Find the next one'), findsNothing);
+
+    await pump(tester, calls, mode: ColoringMode.numbers, canFind: false);
+    expect(find.byTooltip('Find the next one'), findsOneWidget);
+    await tester.tap(
+      find.byIcon(Icons.center_focus_strong),
+      warnIfMissed: false,
+    );
+    expect(calls.find, 0);
+
+    await pump(tester, calls, mode: ColoringMode.numbers);
+    await tester.tap(find.byIcon(Icons.center_focus_strong));
+    expect(calls.find, 1);
   });
 
   testWidgets('mode switch reports the chosen mode', (tester) async {

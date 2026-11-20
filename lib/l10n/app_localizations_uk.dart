@@ -197,6 +197,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get coloringClearCancel => 'Ні, залишити';
 
   @override
+  String get coloringFind => 'Знайти наступну';
+
+  @override
   String get coloringDone => 'Готово';
 
   @override

@@ -7,18 +7,21 @@ import '../../l10n/app_localizations.dart';
 import 'clear_confirm_dialog.dart';
 import 'model/coloring_mode.dart';
 
-/// Undo, eraser, clear all, done (free mode only) and the mode switch.
+/// Undo, eraser, clear all, the mode switch, then done (free mode) or find
+/// (numbers mode).
 /// Clear asks for confirmation here and calls [onClear] only when confirmed.
 class ColoringToolbar extends StatelessWidget {
   const ColoringToolbar({
     required this.mode,
     required this.canUndo,
     required this.canFinish,
+    required this.canFind,
     required this.eraserSelected,
     required this.onUndo,
     required this.onEraser,
     required this.onClear,
     required this.onDone,
+    required this.onFind,
     required this.onModeChanged,
     super.key,
   });
@@ -28,11 +31,15 @@ class ColoringToolbar extends StatelessWidget {
 
   /// Enables Done (free mode).
   final bool canFinish;
+
+  /// Enables Find (numbers mode).
+  final bool canFind;
   final bool eraserSelected;
   final VoidCallback onUndo;
   final VoidCallback onEraser;
   final VoidCallback onClear;
   final VoidCallback onDone;
+  final VoidCallback onFind;
   final ValueChanged<ColoringMode> onModeChanged;
 
   @override
@@ -101,6 +108,15 @@ class ColoringToolbar extends StatelessWidget {
           BookButton(
             label: l10n.coloringDone,
             onPressed: canFinish ? onDone : null,
+          ),
+        if (mode == ColoringMode.numbers)
+          _Dimmed(
+            enabled: canFind,
+            child: RoundIconButton(
+              icon: Icons.center_focus_strong,
+              tooltip: l10n.coloringFind,
+              onPressed: onFind,
+            ),
           ),
       ],
     );

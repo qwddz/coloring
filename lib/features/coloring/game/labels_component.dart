@@ -8,7 +8,9 @@ import 'coloring_game.dart';
 
 /// Region numbers (numbers mode only). Draws only regions whose label is
 /// big enough on screen ([labelVisible]), lies inside the visible part of
-/// the image, and still shows a number ([rules.showsNumber]). Painters are
+/// the image, and still shows a number ([rules.showsNumber]). At max zoom
+/// size no longer matters, so a region too small for the zoom cap still
+/// gets its number. Painters are
 /// cached per (number, whole-dp font size), so a frame allocates nothing
 /// once the cache is warm. The rejected region's label wiggles.
 class LabelsComponent extends Component with HasGameReference<ColoringGame> {
@@ -56,12 +58,13 @@ class LabelsComponent extends Component with HasGameReference<ColoringGame> {
     final bottom = (v.canvasHeight - oy) / scale;
     final flashId = g.flash.regionId;
     final wiggle = g.reducedMotion ? 0.0 : g.flash.wiggleDp;
+    final anySize = v.atMaxZoom;
 
     final regions = meta.regions;
     for (var i = 0; i < regions.length; i++) {
       final r = regions[i];
       final radius = r.labelRadius;
-      if (!labelVisible(radius, pxPerDp) ||
+      if (!(anySize || labelVisible(radius, pxPerDp)) ||
           r.labelX + radius < left ||
           r.labelX - radius > right ||
           r.labelY + radius < top ||

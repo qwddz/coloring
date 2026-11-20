@@ -16,13 +16,17 @@ precision highp float;
 //   11    uWaveRadius       wave radius, image px
 //   12-15 uWaveOld          color outside the wave (RGBA 0..1)
 //   16-19 uWaveNew          color inside the wave (RGBA 0..1)
-//   20    uHighlightPalette palette index to tint, -1 = none
+//   20    uHighlightPalette palette index to stripe, -1 = none
 //   21    uPulse            highlight pulse 0..1
 //   22    uFlashId          region of the reject flash, 0 = none
 //   23    uFlashAmount      flash strength 0..1
 // Samplers: 0 uRegions (id = R * 256 + G, 0 = line), 1 uState (opaque
 // (N + 1) x 2: row 0 display RGB, white when unfilled; row 1 R = palette
 // index, G = 255 when the region holds its correct color).
+//
+// The highlighted number's unfinished regions get gray diagonal stripes in
+// canvas space (constant width at any zoom), so they stand out against any
+// color already on the picture.
 
 uniform vec2 uSize;
 uniform vec2 uOrigin;
@@ -45,7 +49,11 @@ uniform sampler2D uState;
 out vec4 fragColor;
 
 const vec3 kPaper = vec3(1.0, 1.0, 1.0);
-const vec3 kTint = vec3(0.62, 0.70, 0.86);
+const vec3 kStripe = vec3(0.55, 0.55, 0.58);
+// Stripe period along x + y and stripe width (40 %), canvas px; soft edge.
+const float kStripePeriod = 10.0;
+const float kStripeHalfWidth = 2.0;
+const float kStripeEdge = 0.75;
 const vec3 kFlash = vec3(0.78, 0.84, 0.92);
 
 vec4 sampleState(float x, float row) {
@@ -93,7 +101,11 @@ void main() {
 
   if (uHighlightPalette > -0.5 && abs(paletteIndex - uHighlightPalette) < 0.5 &&
       !correct) {
-    c = mix(c, kTint, 0.25 + 0.2 * uPulse);
+    vec2 frag = FlutterFragCoord().xy;
+    // Distance from the stripe center, 0..period / 2.
+    float d = abs(mod(frag.x + frag.y, kStripePeriod) - kStripePeriod * 0.5);
+    float stripe = clamp((kStripeHalfWidth - d) / kStripeEdge + 0.5, 0.0, 1.0);
+    c = mix(c, kStripe, stripe * (0.45 + 0.25 * uPulse));
   }
 
   if (abs(id - uFlashId) < 0.5) {

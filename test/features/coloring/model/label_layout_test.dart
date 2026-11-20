@@ -1,12 +1,34 @@
 import 'package:coloring/features/coloring/model/label_layout.dart';
+import 'package:coloring/features/coloring/model/viewport.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('labelVisible', () {
-    test('threshold is 10 dp on screen', () {
-      expect(labelVisible(20, 2), isTrue); // exactly 10 dp
-      expect(labelVisible(19.9, 2), isFalse);
+    test('threshold is 8 dp on screen', () {
+      expect(labelVisible(16, 2), isTrue); // exactly 8 dp
+      expect(labelVisible(15.9, 2), isFalse);
       expect(labelVisible(100, 2), isTrue);
+    });
+  });
+
+  group('maxZoomFor', () {
+    test('is the zoom that brings the smallest label to 8 dp', () {
+      // 1 px at 1.25 dp/px is 1.25 dp at 1x: 8 / 1.25 = 6.4x.
+      expect(maxZoomFor(1, 1.25), closeTo(6.4, 1e-9));
+    });
+    test('never goes below the default max zoom', () {
+      expect(maxZoomFor(20, 1), defaultMaxZoom);
+    });
+    test('is capped at 8x', () {
+      expect(labelMaxZoomCap, 8);
+      expect(maxZoomFor(0.1, 0.5), labelMaxZoomCap);
+    });
+    test('invalid input gives the default', () {
+      expect(maxZoomFor(0, 1), defaultMaxZoom);
+      expect(maxZoomFor(-1, 1), defaultMaxZoom);
+      expect(maxZoomFor(double.infinity, 1), defaultMaxZoom);
+      expect(maxZoomFor(double.nan, 1), defaultMaxZoom);
+      expect(maxZoomFor(1, 0), defaultMaxZoom);
     });
   });
 

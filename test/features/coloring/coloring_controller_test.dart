@@ -792,6 +792,37 @@ void main() {
       expect(repo.saves.last.completed, isTrue);
     });
 
+    test(
+      'find focuses the unfinished regions of the selected number',
+      () async {
+        final c = makeContainer();
+        await open(c, freePictureId);
+        final controller = controllerOf(c, freePictureId);
+        final sink = RecordingSink();
+        controller.attachCanvas(sink);
+        controller.findNext();
+        expect(sink.focuses, isEmpty, reason: 'free mode');
+
+        controller
+          ..setMode(ColoringMode.numbers)
+          ..selectColor(red); // palette index 0: regions 1 and 4
+        expect(stateOf(c, freePictureId).canFind, isTrue);
+        controller.findNext();
+        expect(sink.focuses, [
+          [1, 4],
+        ]);
+
+        tapRegionOf(controller, 1);
+        controller.findNext();
+        expect(sink.focuses.last, [4]);
+
+        tapRegionOf(controller, 4);
+        expect(stateOf(c, freePictureId).canFind, isFalse);
+        controller.findNext();
+        expect(sink.focuses, hasLength(2), reason: 'nothing left to find');
+      },
+    );
+
     test('a long press in free mode shows a hint', () async {
       final c = makeContainer();
       await open(c, freePictureId);

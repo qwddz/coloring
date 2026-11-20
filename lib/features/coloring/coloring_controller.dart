@@ -302,6 +302,17 @@ class ColoringController extends AsyncNotifier<ColoringState> {
     ref.read(coloringFeedbackProvider).hint();
   }
 
+  /// Numbers-mode "find": moves the canvas to an unfinished region of the
+  /// selected number.
+  void findNext() {
+    final session = _session;
+    if (session == null || session.mode != ColoringMode.numbers) return;
+    final index = session.selectedPaletteIndex;
+    if (index == null) return;
+    final ids = session.unfinishedRegionsOf(index);
+    if (ids.isNotEmpty) _sink?.focusOn(ids);
+  }
+
   void undo() => _bulk(_session?.undo());
 
   void clearAll() => _bulk(_session?.clearAll());

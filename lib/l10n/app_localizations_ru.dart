@@ -198,6 +198,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get coloringClearCancel => 'Нет, оставить';
 
   @override
+  String get coloringFind => 'Найти следующую';
+
+  @override
   String get coloringDone => 'Готово';
 
   @override

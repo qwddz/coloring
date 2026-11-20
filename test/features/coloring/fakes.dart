@@ -206,6 +206,7 @@ class RecordingSink implements ColoringCanvasSink {
   final labels = <bool>[];
   final rejected = <int>[];
   final hints = <(int, int)>[];
+  final focuses = <List<int>>[];
   FillState? lastState;
 
   @override
@@ -230,4 +231,7 @@ class RecordingSink implements ColoringCanvasSink {
 
   @override
   void showHint(int regionId, int color) => hints.add((regionId, color));
+
+  @override
+  void focusOn(List<int> regionIds) => focuses.add(List.of(regionIds));
 }

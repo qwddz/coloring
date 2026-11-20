@@ -123,6 +123,13 @@ class ColoringSession {
   /// Whether region [id] shows its number in numbers mode.
   bool showsNumberOf(int id) => rules.showsNumber(fill, meta, id);
 
+  /// Regions of picture color [paletteIndex] that still show their number.
+  List<int> unfinishedRegionsOf(int paletteIndex) => [
+    for (final r in meta.regions)
+      if (r.paletteIndex == paletteIndex && rules.showsNumber(fill, meta, r.id))
+        r.id,
+  ];
+
   /// A tap at image point ([x], [y]).
   FillResult tap(double x, double y, {required double tolerance}) {
     final strokeCompleted = _commitStroke();

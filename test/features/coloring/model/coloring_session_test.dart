@@ -177,6 +177,17 @@ void main() {
       expect(s.paletteProgress[1].correct, 1);
     });
 
+    test('unfinishedRegionsOf lists the regions still showing a number', () {
+      final s = fixtureSession(mode: ColoringMode.numbers);
+      expect(s.unfinishedRegionsOf(0), [1, 4]);
+      expect(s.unfinishedRegionsOf(1), [2, 5]);
+      tapRegion(s, 1);
+      expect(s.unfinishedRegionsOf(0), [4]);
+      tapRegion(s, 4);
+      expect(s.unfinishedRegionsOf(0), isEmpty);
+      expect(s.unfinishedRegionsOf(2), [3]);
+    });
+
     test('free-mode colors still count as to do (D1) and get replaced', () {
       final s = fixtureSession()..selectColor(base);
       for (final id in fixturePaletteIndex.keys) {

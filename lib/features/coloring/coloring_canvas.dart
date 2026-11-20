@@ -83,6 +83,9 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
     final first = _pointers.isEmpty;
     _pointers.add(e.pointer);
     _longPressTimer?.cancel();
+    // A finger takes the view back from a running "find" move and blocks
+    // new ones until it lifts.
+    _game.gestureActive = true;
     // Magic mode has no long press: a held finger only waits for its stroke.
     if (first && !widget.brushDrags) {
       _downAt = e.timeStamp;
@@ -100,6 +103,7 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
 
   void _onUp(PointerUpEvent e) {
     _pointers.remove(e.pointer);
+    _game.gestureActive = _pointers.isNotEmpty;
     _longPressTimer?.cancel();
     _handle(
       _classifier.pointerUp(e.pointer, _point(e), e.timeStamp),
@@ -112,6 +116,7 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
   /// the controller never keeps a stroke running.
   void _onCancel(PointerCancelEvent e) {
     _pointers.remove(e.pointer);
+    _game.gestureActive = _pointers.isNotEmpty;
     _longPressTimer?.cancel();
     _handle(_classifier.pointerCancel(e.pointer));
   }
