@@ -6,6 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../catalog/data/manifest_provider.dart';
 import '../../catalog/domain/content_manifest.dart';
 import '../../coloring/model/work.dart';
+import '../../drawing/data/drawing_preview_service.dart';
+import '../../drawing/data/drawings_provider.dart';
+import '../../drawing/model/drawing_record.dart';
 import 'work_exporter.dart';
 import 'work_preview_service.dart';
 import 'works_provider.dart';
@@ -29,40 +32,59 @@ WorkMessage? workMessageFor(ExportOutcome outcome) => switch (outcome) {
 
 @immutable
 class MyWorksState {
-  const MyWorksState({this.exporting = false, this.backfilling = false});
+  const MyWorksState({this.exporting = false, this.backfills = 0});
 
   /// An export is running: the screen blocks input under a progress overlay.
   final bool exporting;
 
-  /// Missing previews are being drawn: their cards show a small spinner.
-  final bool backfilling;
+  /// How many preview backfills are running (coloring works and drawings
+  /// run their own).
+  final int backfills;
 
-  MyWorksState copyWith({bool? exporting, bool? backfilling}) => MyWorksState(
+  /// Missing previews are being drawn: their cards show a small spinner.
+  bool get backfilling => backfills > 0;
+
+  MyWorksState copyWith({bool? exporting, int? backfills}) => MyWorksState(
     exporting: exporting ?? this.exporting,
-    backfilling: backfilling ?? this.backfilling,
+    backfills: backfills ?? this.backfills,
   );
 }
 
 /// «Мои работы» screen state: clears leftover shared PNGs, draws missing
-/// previews once the works are listed (cancelled when the screen leaves) and
-/// runs one export at a time.
+/// previews of works and drawings once they are listed (cancelled when the
+/// screen leaves) and runs one export at a time.
 class MyWorksController extends Notifier<MyWorksState> {
   late WorkPreviewService _previews;
+  late DrawingPreviewService _drawingPreviews;
   bool _backfillStarted = false;
+  bool _drawingBackfillStarted = false;
 
   @override
   MyWorksState build() {
     final previews = _previews = ref.watch(workPreviewServiceProvider);
+    final drawingPreviews = _drawingPreviews = ref.watch(
+      drawingPreviewServiceProvider,
+    );
     _backfillStarted = false;
+    _drawingBackfillStarted = false;
     ref.onDispose(previews.cancelBackfill);
+    ref.onDispose(drawingPreviews.cancelBackfill);
     unawaited(ref.read(workExporterProvider).clearShareDirectory());
     ref.listen(worksProvider, (_, next) {
       if (next.value case final works?) _startBackfill(works);
+    });
+    ref.listen(drawingsProvider, (_, next) {
+      if (next.value case final drawings?) _startDrawingBackfill(drawings);
     });
     // Already listed (kept alive elsewhere): start after build returns.
     if (ref.read(worksProvider).value case final works?) {
       scheduleMicrotask(() {
         if (ref.mounted) _startBackfill(works);
+      });
+    }
+    if (ref.read(drawingsProvider).value case final drawings?) {
+      scheduleMicrotask(() {
+        if (ref.mounted) _startDrawingBackfill(drawings);
       });
     }
     return const MyWorksState();
@@ -72,15 +94,23 @@ class MyWorksController extends Notifier<MyWorksState> {
     if (_backfillStarted) return;
     _backfillStarted = true;
     if (!works.any((s) => s.previewStale)) return;
-    unawaited(_backfill(works));
+    unawaited(_counted(_previews.backfill(works)));
   }
 
-  Future<void> _backfill(List<WorkSummary> works) async {
-    state = state.copyWith(backfilling: true);
+  void _startDrawingBackfill(List<DrawingSummary> drawings) {
+    if (_drawingBackfillStarted) return;
+    _drawingBackfillStarted = true;
+    if (!drawings.any((s) => s.previewStale)) return;
+    unawaited(_counted(_drawingPreviews.backfill(drawings)));
+  }
+
+  /// Counts [backfill] in [MyWorksState.backfills] while it runs.
+  Future<void> _counted(Future<void> backfill) async {
+    state = state.copyWith(backfills: state.backfills + 1);
     try {
-      await _previews.backfill(works);
+      await backfill;
     } finally {
-      if (ref.mounted) state = state.copyWith(backfilling: false);
+      if (ref.mounted) state = state.copyWith(backfills: state.backfills - 1);
     }
   }
 
@@ -92,6 +122,15 @@ class MyWorksController extends Notifier<MyWorksState> {
   /// gate (`shareWorkThroughGate`).
   Future<WorkMessage?> share(Work work) =>
       _export((exporter) => exporter.share(work));
+
+  /// Saves [drawing] into the gallery (no parental gate, no access check).
+  Future<WorkMessage?> saveDrawingToGallery(DrawingRecord drawing) =>
+      _export((exporter) => exporter.saveDrawingToGallery(drawing));
+
+  /// Opens the share sheet with [drawing]. Call it only after the parental
+  /// gate (`shareDrawingThroughGate`).
+  Future<WorkMessage?> shareDrawing(DrawingRecord drawing) =>
+      _export((exporter) => exporter.shareDrawing(drawing));
 
   Future<WorkMessage?> _export(
     Future<ExportOutcome> Function(WorkExporter exporter) run,

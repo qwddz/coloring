@@ -13,6 +13,8 @@ import 'package:coloring/features/coloring/coloring_canvas.dart';
 import 'package:coloring/features/coloring/coloring_controller.dart';
 import 'package:coloring/features/coloring/coloring_screen.dart';
 import 'package:coloring/features/coloring/model/coloring_mode.dart';
+import 'package:coloring/features/drawing/drawing_screen.dart';
+import 'package:coloring/features/drawing/drawing_tile.dart';
 import 'package:coloring/features/gallery/my_works_screen.dart';
 import 'package:coloring/features/gallery/work_actions_dialog.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
@@ -262,5 +264,25 @@ void main() {
     await tester.tap(find.widgetWithText(BookButton, 'Back'));
     await tester.pumpAndSettle();
     expect(find.text('Cozy home'), findsOneWidget);
+  });
+
+  testWidgets('the drawing tile comes first on the home grid and opens '
+      '/draw', (tester) async {
+    await pumpApp(tester, const [Locale('en', 'US')]);
+    final tile = tester.getRect(find.byType(DrawingTile));
+    final firstCategory = tester.getRect(find.byType(PictureCard).first);
+    expect(tile.top, closeTo(firstCategory.top, 8));
+    expect(tile.left, lessThan(firstCategory.left));
+    await tester.tap(find.byType(DrawingTile));
+    // The drawing screen loads its sheet with real image work; only the
+    // route is checked here (test/features/drawing covers the screen).
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(router(tester).state.uri.toString(), '/draw');
+    expect(find.byType(DrawingScreen), findsOneWidget);
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byType(DrawingScreen), findsNothing);
   });
 }

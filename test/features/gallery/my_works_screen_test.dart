@@ -10,6 +10,8 @@ import 'package:coloring/features/coloring/coloring_controller.dart';
 import 'package:coloring/features/coloring/data/picture_loader.dart';
 import 'package:coloring/features/coloring/model/coloring_mode.dart';
 import 'package:coloring/features/coloring/model/work.dart';
+import 'package:coloring/features/drawing/data/drawings_provider.dart';
+import 'package:coloring/features/drawing/model/drawing_record.dart';
 import 'package:coloring/features/gallery/data/gallery_backend.dart';
 import 'package:coloring/features/gallery/data/share_backend.dart';
 import 'package:coloring/features/gallery/data/work_exporter.dart';
@@ -19,15 +21,18 @@ import 'package:coloring/features/gallery/gallery_routes.dart';
 import 'package:coloring/features/gallery/my_works_screen.dart';
 import 'package:coloring/features/progress/data/work_repository.dart';
 import 'package:coloring/features/subscription/data/purchase_providers.dart';
+import 'package:coloring/features/subscription/domain/parental_challenge.dart';
 import 'package:coloring/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../support/coloring_overrides.dart';
 import '../../support/test_manifest.dart';
 import '../coloring/fakes.dart';
 import '../coloring/model/fixtures.dart';
+import '../drawing/fakes.dart';
 import 'fake_preview_service.dart';
 import 'fakes.dart';
 
@@ -46,9 +51,37 @@ class SlowPreviewService extends FakePreviewService {
   }
 }
 
+/// A drawing backfill that runs until [done] completes.
+class SlowDrawingPreviewService extends FakeDrawingPreviewService {
+  final done = Completer<void>();
+
+  @override
+  Future<void> backfill(List<DrawingSummary> drawings) async {
+    await super.backfill(drawings);
+    await done.future;
+  }
+}
+
+/// Drawings whose next [failures] listings fail.
+class FlakyDrawingRepository extends InMemoryDrawingRepository {
+  int failures = 0;
+
+  @override
+  Future<List<DrawingRecord>> list() async {
+    if (failures > 0) {
+      failures--;
+      listCalls++;
+      throw StateError('disk');
+    }
+    return super.list();
+  }
+}
+
 void main() {
   late InMemoryWorkRepository works;
   late FakePreviewService previews;
+  late FlakyDrawingRepository drawings;
+  late FakeDrawingPreviewService drawingPreviews;
   late FakeGalleryBackend gallery;
   late FakeShareBackend share;
   late Directory temp;
@@ -57,6 +90,8 @@ void main() {
   setUp(() {
     works = InMemoryWorkRepository();
     previews = FakePreviewService();
+    drawings = FlakyDrawingRepository();
+    drawingPreviews = FakeDrawingPreviewService();
     gallery = FakeGalleryBackend();
     share = FakeShareBackend();
     temp = Directory.systemTemp.createTempSync('my_works');
@@ -82,6 +117,24 @@ void main() {
     );
   }
 
+  DrawingRecord drawingOf(String id, int minute) {
+    final modified = DateTime.utc(2026, 11, 18, 10, minute);
+    return DrawingRecord(
+      id: id,
+      created: modified,
+      modified: modified,
+      width: 4,
+      height: 3,
+      raster: DrawingRecord.rasterName(id, modified),
+    );
+  }
+
+  Future<DrawingRecord> saveDrawing(String id, int minute) async {
+    final record = drawingOf(id, minute);
+    await drawings.save(record, Future.value(Uint8List(1)));
+    return record;
+  }
+
   Future<void> pumpScreen(WidgetTester tester, {bool settle = true}) async {
     tester.view.physicalSize = const Size(2400, 1080);
     tester.view.devicePixelRatio = dpr;
@@ -95,6 +148,10 @@ void main() {
           path: '/coloring/:id',
           builder: (_, state) => Scaffold(body: Text('stub ${state.uri}')),
         ),
+        GoRoute(
+          path: '/draw',
+          builder: (_, state) => Scaffold(body: Text('stub ${state.uri}')),
+        ),
       ],
     );
     addTearDown(router.dispose);
@@ -106,6 +163,10 @@ void main() {
           workRepositoryProvider.overrideWithValue(works),
           workPreviewServiceProvider.overrideWithValue(previews),
           pictureLoaderProvider.overrideWithValue(FakePictureLoader()),
+          ...drawingScreenOverrides(
+            drawings: drawings,
+            drawingPreviews: drawingPreviews,
+          ),
           galleryBackendProvider.overrideWithValue(gallery),
           shareBackendProvider.overrideWithValue(share),
           shareDirectoryProvider.overrideWithValue(
@@ -113,6 +174,9 @@ void main() {
           ),
           coloringClockProvider.overrideWithValue(
             () => DateTime(2026, 11, 18, 9, 5, 7),
+          ),
+          parentalChallengeProvider.overrideWithValue(
+            () => const ParentalChallenge(3, 4),
           ),
         ],
         child: MaterialApp.router(
@@ -381,5 +445,116 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(spinner, findsNothing);
+  });
+
+  group('drawings', () {
+    const drawingCaption = 'Drawing, Nov 18, 2026';
+
+    testWidgets('drawing cards join the works, newest first', (tester) async {
+      await works.save(workOf(goat, 1));
+      await saveDrawing('d-2', 2);
+      await works.save(workOf(piglet, 3, completed: true));
+      await pumpScreen(tester);
+      expect(captions(tester), ['Piglet', drawingCaption, 'Goat']);
+      expect(find.text('Your colorings will appear here'), findsNothing);
+    });
+
+    testWidgets('only drawings: no empty message', (tester) async {
+      await saveDrawing('d-1', 1);
+      await pumpScreen(tester);
+      expect(captions(tester), [drawingCaption]);
+      expect(find.text('Your colorings will appear here'), findsNothing);
+    });
+
+    testWidgets('Continue opens the drawing', (tester) async {
+      final drawing = await saveDrawing('d-1', 1);
+      await pumpScreen(tester);
+      await openActions(tester, drawingCaption);
+      await tester.tap(find.widgetWithText(BookButton, 'Continue'));
+      await tester.pumpAndSettle();
+      expect(find.text('stub /draw?work=${drawing.id}'), findsOneWidget);
+    });
+
+    testWidgets('New drawing opens a new sheet', (tester) async {
+      await saveDrawing('d-1', 1);
+      await pumpScreen(tester);
+      await openActions(tester, drawingCaption);
+      await tester.tap(find.widgetWithText(BookButton, 'New drawing'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('stub /draw?new='), findsOneWidget);
+      expect(find.textContaining('work='), findsNothing);
+    });
+
+    testWidgets('Share asks the parental gate', (tester) async {
+      await saveDrawing('d-1', 1);
+      await pumpScreen(tester);
+      await openActions(tester, drawingCaption);
+      await tester.tap(find.widgetWithText(BookButton, 'Share'));
+      await tester.pumpAndSettle();
+      expect(find.text('For grown-ups'), findsOneWidget);
+      expect(share.shared, isEmpty);
+    });
+
+    testWidgets('stale drawing previews are backfilled; leaving cancels it', (
+      tester,
+    ) async {
+      final fresh = await saveDrawing('d-fresh', 1);
+      await saveDrawing('d-stale', 2);
+      await drawings.savePreview(fresh.id, fresh.modified, Uint8List(1));
+      await pumpScreen(tester);
+      expect(drawingPreviews.backfills, hasLength(1));
+      expect(
+        drawingPreviews.backfills.single.map((s) => s.record.id),
+        containsAll(['d-fresh', 'd-stale']),
+      );
+      router.go('/');
+      await tester.pumpAndSettle();
+      expect(drawingPreviews.cancelBackfillCalls, 1);
+    });
+
+    testWidgets('the spinner stays while one of two backfills runs', (
+      tester,
+    ) async {
+      final slowWorks = previews = SlowPreviewService();
+      final slowDrawings = drawingPreviews = SlowDrawingPreviewService();
+      await works.save(workOf(piglet, 1));
+      await saveDrawing('d-1', 2);
+      await pumpScreen(tester, settle: false);
+      Future<void> frames() async {
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(milliseconds: 16));
+        }
+      }
+
+      await frames();
+      final spinners = find.descendant(
+        of: find.byType(PictureCard),
+        matching: find.byType(CircularProgressIndicator),
+      );
+      expect(spinners, findsNWidgets(2));
+      slowDrawings.done.complete();
+      await frames();
+      expect(spinners, findsNWidgets(2));
+      slowWorks.done.complete();
+      await frames();
+      expect(spinners, findsNothing);
+    });
+
+    testWidgets('retry after an error reloads works and drawings', (
+      tester,
+    ) async {
+      await works.save(workOf(piglet, 1));
+      await saveDrawing('d-1', 2);
+      drawings.failures = 1;
+      await pumpScreen(tester);
+      expect(find.text("Couldn't load the pictures"), findsOneWidget);
+      final workLists = works.listCalls;
+      final drawingLists = drawings.listCalls;
+      await tester.tap(find.widgetWithText(BookButton, 'Try again'));
+      await tester.pumpAndSettle();
+      expect(works.listCalls, greaterThan(workLists));
+      expect(drawings.listCalls, greaterThan(drawingLists));
+      expect(captions(tester), [drawingCaption, 'Piglet']);
+    });
   });
 }

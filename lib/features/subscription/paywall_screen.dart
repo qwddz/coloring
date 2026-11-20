@@ -27,18 +27,19 @@ const paywallGatePassed = #paywallGatePassed;
 
 /// Asks the parental gate, then opens the paywall. Repeated taps while the
 /// gate is up are ignored, so only one gate and one paywall open. With
-/// [pictureId], that picture opens after the purchase.
-Future<void> openPaywallThroughGate(
+/// [pictureId], that picture opens after the purchase. Completes once the
+/// paywall closed, with whether it was shown (false when the gate failed).
+Future<bool> openPaywallThroughGate(
   BuildContext context,
   WidgetRef ref, {
   String? pictureId,
 }) async {
-  if (await showParentalGate(context, ref) && context.mounted) {
-    await context.push(
-      paywallRoute(pictureId: pictureId),
-      extra: paywallGatePassed,
-    );
-  }
+  if (!await showParentalGate(context, ref) || !context.mounted) return false;
+  await context.push(
+    paywallRoute(pictureId: pictureId),
+    extra: paywallGatePassed,
+  );
+  return true;
 }
 
 /// Sells the "Full version". Never shown without the parental gate: opened
@@ -177,6 +178,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                                     style: theme.textTheme.titleMedium,
                                     textAlign: TextAlign.center,
                                   ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  l10n.fullVersionDrawingTools,
+                                  style: bodyStyle,
+                                  textAlign: TextAlign.center,
+                                ),
                                 const SizedBox(height: 8),
                                 Text(
                                   l10n.oneTimePurchase,

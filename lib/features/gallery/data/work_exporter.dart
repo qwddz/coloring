@@ -9,6 +9,8 @@ import '../../catalog/domain/content_manifest.dart';
 import '../../coloring/coloring_controller.dart';
 import '../../coloring/data/picture_loader.dart';
 import '../../coloring/model/work.dart';
+import '../../drawing/data/drawing_repository.dart';
+import '../../drawing/model/drawing_record.dart';
 import '../../subscription/data/purchase_providers.dart';
 import 'gallery_backend.dart';
 import 'share_backend.dart';
@@ -24,9 +26,9 @@ final shareDirectoryProvider = Provider<Future<Directory> Function()>(
       () async => Directory('${(await getTemporaryDirectory()).path}/share'),
 );
 
-/// Renders a work at the picture's full size and hands the PNG to the
-/// gallery or the share sheet. Share is not gated here: the screen asks the
-/// parental gate first.
+/// Renders a work at the picture's full size (or reads a drawing's raster)
+/// and hands the PNG to the gallery or the share sheet. Share is not gated
+/// here: the screen asks the parental gate first.
 class WorkExporter {
   WorkExporter(this._ref);
 
@@ -38,12 +40,57 @@ class WorkExporter {
     final png = await _render(work);
     if (png == null) return ExportOutcome.unavailable;
     if (png.isEmpty) return ExportOutcome.failed;
-    final name = 'animosaic_colors_${work.pictureId}_${_stamp()}';
+    return _saveToGallery(
+      png,
+      id: work.id,
+      name: 'animosaic_colors_${work.pictureId}_${_stamp()}',
+    );
+  }
+
+  /// Writes `<temp>/share/<workId>.png`, opens the share sheet with it and
+  /// deletes it once the sheet returns.
+  Future<ExportOutcome> share(Work work) async {
+    final png = await _render(work);
+    if (png == null) return ExportOutcome.unavailable;
+    if (png.isEmpty) return ExportOutcome.failed;
+    return _share(png, id: work.id);
+  }
+
+  /// Saves the drawing's raster into the gallery album. Neither gated nor
+  /// access-checked: drawings belong to the player.
+  Future<ExportOutcome> saveDrawingToGallery(DrawingRecord drawing) async {
+    final png = await _rasterOf(drawing);
+    if (png == null) return ExportOutcome.unavailable;
+    return _saveToGallery(
+      png,
+      id: drawing.id,
+      name: 'animosaic_colors_drawing_${_stamp()}',
+    );
+  }
+
+  /// Shares the drawing's raster as `<temp>/share/<drawingId>.png`, deleted
+  /// once the sheet returns.
+  Future<ExportOutcome> shareDrawing(DrawingRecord drawing) async {
+    final png = await _rasterOf(drawing);
+    if (png == null) return ExportOutcome.unavailable;
+    return _share(png, id: drawing.id);
+  }
+
+  Future<Uint8List?> _rasterOf(DrawingRecord drawing) async {
+    final png = await _ref.read(drawingRepositoryProvider).rasterOf(drawing.id);
+    return png == null || png.isEmpty ? null : png;
+  }
+
+  Future<ExportOutcome> _saveToGallery(
+    Uint8List png, {
+    required String id,
+    required String name,
+  }) async {
     final GallerySaveResult result;
     try {
       result = await _ref.read(galleryBackendProvider).savePng(png, name: name);
     } on Object catch (e) {
-      debugPrint('Saving ${work.id} to the gallery failed: $e');
+      debugPrint('Saving $id to the gallery failed: $e');
       return ExportOutcome.failed;
     }
     return switch (result) {
@@ -53,23 +100,18 @@ class WorkExporter {
     };
   }
 
-  /// Writes `<temp>/share/<workId>.png`, opens the share sheet with it and
-  /// deletes it once the sheet returns.
-  Future<ExportOutcome> share(Work work) async {
-    final png = await _render(work);
-    if (png == null) return ExportOutcome.unavailable;
-    if (png.isEmpty) return ExportOutcome.failed;
+  Future<ExportOutcome> _share(Uint8List png, {required String id}) async {
     File? file;
     try {
       await _clearing;
       final directory = await _ref.read(shareDirectoryProvider)();
       await directory.create(recursive: true);
-      file = File('${directory.path}/${work.id}.png');
+      file = File('${directory.path}/$id.png');
       await file.writeAsBytes(png, flush: true);
       await _ref.read(shareBackendProvider).sharePng(file);
       return ExportOutcome.shared;
     } on Object catch (e) {
-      debugPrint('Sharing ${work.id} failed: $e');
+      debugPrint('Sharing $id failed: $e');
       return ExportOutcome.failed;
     } finally {
       if (file != null) await _deleteQuietly(file);

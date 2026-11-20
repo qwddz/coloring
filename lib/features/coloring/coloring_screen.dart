@@ -1,10 +1,10 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/immersive_mode.dart';
 import '../../app/widgets/book_button.dart';
 import '../../app/widgets/paper_background.dart';
 import '../../app/widgets/round_icon_button.dart';
@@ -53,9 +53,6 @@ class ColoringScreen extends ConsumerStatefulWidget {
 }
 
 class _ColoringScreenState extends ConsumerState<ColoringScreen> {
-  /// Coloring screens alive right now; full screen is left only at zero.
-  static var _activeScreens = 0;
-
   /// The panel is never narrower than this.
   static const _minPanelWidth = 200.0;
   static const _gap = 8.0;
@@ -73,16 +70,13 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
   @override
   void initState() {
     super.initState();
-    _activeScreens++;
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    ImmersiveMode.enter();
   }
 
   @override
   void dispose() {
     _detachGame();
-    if (--_activeScreens == 0) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    }
+    ImmersiveMode.leave();
     super.dispose();
   }
 

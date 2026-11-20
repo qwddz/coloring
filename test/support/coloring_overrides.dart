@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:coloring/features/coloring/coloring_screen.dart';
 import 'package:coloring/features/coloring/data/picture_loader.dart';
 import 'package:coloring/features/coloring/game/fill_renderer.dart';
+import 'package:coloring/features/drawing/data/drawing_preview_service.dart';
+import 'package:coloring/features/drawing/data/drawing_repository.dart';
 import 'package:coloring/features/gallery/data/gallery_backend.dart';
 import 'package:coloring/features/gallery/data/share_backend.dart';
 import 'package:coloring/features/gallery/data/work_exporter.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../features/coloring/fakes.dart';
+import '../features/drawing/fakes.dart';
 import '../features/gallery/fake_preview_service.dart';
 import '../features/gallery/fakes.dart';
 
@@ -20,13 +23,20 @@ import '../features/gallery/fakes.dart';
 /// fixture picture, works stay in memory, fills are drawn flat and previews
 /// are only recorded (in [previews] when given). Exports go to fake
 /// gallery and share backends ([gallery], [share] when given); shared files
-/// land in a folder of the system temp directory.
+/// land in a folder of the system temp directory. Drawings stay in memory
+/// too ([drawingScreenOverrides]), so «Мои работы» can list them.
 List<Override> coloringScreenOverrides({
   FakePreviewService? previews,
   InMemoryWorkRepository? works,
   FakeGalleryBackend? gallery,
   FakeShareBackend? share,
+  InMemoryDrawingRepository? drawings,
+  FakeDrawingPreviewService? drawingPreviews,
 }) => [
+  ...drawingScreenOverrides(
+    drawings: drawings,
+    drawingPreviews: drawingPreviews,
+  ),
   pictureLoaderProvider.overrideWithValue(FakePictureLoader()),
   workRepositoryProvider.overrideWithValue(works ?? InMemoryWorkRepository()),
   workPreviewServiceProvider.overrideWithValue(
@@ -40,6 +50,21 @@ List<Override> coloringScreenOverrides({
   shareBackendProvider.overrideWithValue(share ?? FakeShareBackend()),
   shareDirectoryProvider.overrideWithValue(
     () async => Directory('${Directory.systemTemp.path}/coloring_test_share'),
+  ),
+];
+
+/// Drawings kept in [drawings] (in memory) with previews only recorded in
+/// [drawingPreviews]. Already part of [coloringScreenOverrides]; use it alone
+/// in tests that need no coloring overrides.
+List<Override> drawingScreenOverrides({
+  InMemoryDrawingRepository? drawings,
+  FakeDrawingPreviewService? drawingPreviews,
+}) => [
+  drawingRepositoryProvider.overrideWithValue(
+    drawings ?? InMemoryDrawingRepository(),
+  ),
+  drawingPreviewServiceProvider.overrideWithValue(
+    drawingPreviews ?? FakeDrawingPreviewService(),
   ),
 ];
 

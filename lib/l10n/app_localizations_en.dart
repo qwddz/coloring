@@ -317,4 +317,111 @@ class AppLocalizationsEn extends AppLocalizations {
   String categoryStars(int completed, int total) {
     return '$completed of $total colored';
   }
+
+  @override
+  String get drawingTileTitle => 'Drawing';
+
+  @override
+  String get drawingLoading => 'Getting the paper ready…';
+
+  @override
+  String get drawingLoadError => 'The sheet did not open';
+
+  @override
+  String get drawingToolPencil => 'Pencil';
+
+  @override
+  String get drawingToolFelt => 'Felt-tip';
+
+  @override
+  String get drawingToolMarker => 'Marker';
+
+  @override
+  String get drawingToolEraser => 'Eraser';
+
+  @override
+  String get drawingToolRainbow => 'Rainbow';
+
+  @override
+  String get drawingToolPastel => 'Pastel';
+
+  @override
+  String get drawingToolWatercolor => 'Watercolor';
+
+  @override
+  String get drawingToolAirbrush => 'Airbrush';
+
+  @override
+  String get drawingToolNeon => 'Neon';
+
+  @override
+  String get drawingToolStars => 'Stars';
+
+  @override
+  String get drawingToolHearts => 'Hearts';
+
+  @override
+  String get drawingToolFill => 'Fill';
+
+  @override
+  String get drawingUndo => 'Undo';
+
+  @override
+  String get drawingRedo => 'Redo';
+
+  @override
+  String get drawingClear => 'Clear the sheet';
+
+  @override
+  String get drawingClearTitle => 'Clear the sheet?';
+
+  @override
+  String get drawingClearMessage => 'The whole drawing will be wiped.';
+
+  @override
+  String get drawingNewSheet => 'New sheet';
+
+  @override
+  String get drawingMirrorOff => 'Mirror: off';
+
+  @override
+  String get drawingMirrorOn => 'Mirror: on';
+
+  @override
+  String get drawingBrushSize => 'Brush size';
+
+  @override
+  String get drawingSizeSmall => 'Small';
+
+  @override
+  String get drawingSizeMedium => 'Medium';
+
+  @override
+  String get drawingSizeLarge => 'Large';
+
+  @override
+  String get drawingSizeHuge => 'Huge';
+
+  @override
+  String get drawingTools => 'Tools';
+
+  @override
+  String get drawingColors => 'Colors';
+
+  @override
+  String drawingToolLocked(String tool) {
+    return '$tool: full version only';
+  }
+
+  @override
+  String drawingWorkTitle(String date) {
+    return 'Drawing, $date';
+  }
+
+  @override
+  String get workNewDrawing => 'New drawing';
+
+  @override
+  String get fullVersionDrawingTools =>
+      'All brushes, stamps, fill and mirror in Drawing';
 }

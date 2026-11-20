@@ -27,6 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../support/coloring_overrides.dart';
 import '../../support/test_manifest.dart';
 import '../coloring/fakes.dart';
 import '../coloring/model/fixtures.dart';
@@ -91,6 +92,7 @@ void main() {
           workRepositoryProvider.overrideWithValue(works),
           workPreviewServiceProvider.overrideWithValue(FakePreviewService()),
           pictureLoaderProvider.overrideWithValue(FakePictureLoader()),
+          ...drawingScreenOverrides(),
           galleryBackendProvider.overrideWithValue(gallery),
           shareBackendProvider.overrideWithValue(share),
           shareDirectoryProvider.overrideWithValue(

@@ -282,5 +282,151 @@
         "type": "int"
       }
     }
+  },
+  "drawingTileTitle": "Drawing",
+  "@drawingTileTitle": {
+    "description": "Title of the drawing tile on the home screen"
+  },
+  "drawingLoading": "Getting the paper ready…",
+  "@drawingLoading": {
+    "description": "Shown while the drawing sheet loads"
+  },
+  "drawingLoadError": "The sheet did not open",
+  "@drawingLoadError": {
+    "description": "Shown when the drawing sheet fails to load"
+  },
+  "drawingToolPencil": "Pencil",
+  "@drawingToolPencil": {
+    "description": "Drawing tool name"
+  },
+  "drawingToolFelt": "Felt-tip",
+  "@drawingToolFelt": {
+    "description": "Drawing tool name"
+  },
+  "drawingToolMarker": "Marker",
+  "@drawingToolMarker": {
+    "description": "Drawing tool name: translucent marker"
+  },
+  "drawingToolEraser": "Eraser",
+  "@drawingToolEraser": {
+    "description": "Drawing tool name"
+  },
+  "drawingToolRainbow": "Rainbow",
+  "@drawingToolRainbow": {
+    "description": "Drawing tool name: the color changes along the stroke"
+  },
+  "drawingToolPastel": "Pastel",
+  "@drawingToolPastel": {
+    "description": "Drawing tool name: chalk texture"
+  },
+  "drawingToolWatercolor": "Watercolor",
+  "@drawingToolWatercolor": {
+    "description": "Drawing tool name"
+  },
+  "drawingToolAirbrush": "Airbrush",
+  "@drawingToolAirbrush": {
+    "description": "Drawing tool name"
+  },
+  "drawingToolNeon": "Neon",
+  "@drawingToolNeon": {
+    "description": "Drawing tool name: glowing line"
+  },
+  "drawingToolStars": "Stars",
+  "@drawingToolStars": {
+    "description": "Drawing tool name: star stamps"
+  },
+  "drawingToolHearts": "Hearts",
+  "@drawingToolHearts": {
+    "description": "Drawing tool name: heart stamps"
+  },
+  "drawingToolFill": "Fill",
+  "@drawingToolFill": {
+    "description": "Drawing tool name: fills a closed area"
+  },
+  "drawingUndo": "Undo",
+  "@drawingUndo": {
+    "description": "Undo button label"
+  },
+  "drawingRedo": "Redo",
+  "@drawingRedo": {
+    "description": "Redo button label"
+  },
+  "drawingClear": "Clear the sheet",
+  "@drawingClear": {
+    "description": "Button that wipes the drawing sheet"
+  },
+  "drawingClearTitle": "Clear the sheet?",
+  "@drawingClearTitle": {
+    "description": "Title of the clear-sheet confirmation"
+  },
+  "drawingClearMessage": "The whole drawing will be wiped.",
+  "@drawingClearMessage": {
+    "description": "Message of the clear-sheet confirmation"
+  },
+  "drawingNewSheet": "New sheet",
+  "@drawingNewSheet": {
+    "description": "Button that starts a new drawing"
+  },
+  "drawingMirrorOff": "Mirror: off",
+  "@drawingMirrorOff": {
+    "description": "Mirror symmetry toggle, switched off"
+  },
+  "drawingMirrorOn": "Mirror: on",
+  "@drawingMirrorOn": {
+    "description": "Mirror symmetry toggle, switched on"
+  },
+  "drawingBrushSize": "Brush size",
+  "@drawingBrushSize": {
+    "description": "Label of the brush size selector"
+  },
+  "drawingSizeSmall": "Small",
+  "@drawingSizeSmall": {
+    "description": "Brush size name"
+  },
+  "drawingSizeMedium": "Medium",
+  "@drawingSizeMedium": {
+    "description": "Brush size name"
+  },
+  "drawingSizeLarge": "Large",
+  "@drawingSizeLarge": {
+    "description": "Brush size name"
+  },
+  "drawingSizeHuge": "Huge",
+  "@drawingSizeHuge": {
+    "description": "Brush size name"
+  },
+  "drawingTools": "Tools",
+  "@drawingTools": {
+    "description": "Label of the tools group in the drawing panel"
+  },
+  "drawingColors": "Colors",
+  "@drawingColors": {
+    "description": "Label of the colors group in the drawing panel"
+  },
+  "drawingToolLocked": "{tool}: full version only",
+  "@drawingToolLocked": {
+    "description": "Semantics label of a locked drawing tool",
+    "placeholders": {
+      "tool": {
+        "type": "String"
+      }
+    }
+  },
+  "drawingWorkTitle": "Drawing, {date}",
+  "@drawingWorkTitle": {
+    "description": "Title of a drawing in My works; date is formatted by the caller",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "workNewDrawing": "New drawing",
+  "@workNewDrawing": {
+    "description": "Button that starts a fresh drawing sheet"
+  },
+  "fullVersionDrawingTools": "All brushes, stamps, fill and mirror in Drawing",
+  "@fullVersionDrawingTools": {
+    "description": "Line on the paywall about the drawing tools"
   }
 }

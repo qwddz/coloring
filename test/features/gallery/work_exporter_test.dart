@@ -7,6 +7,8 @@ import 'package:coloring/features/coloring/coloring_controller.dart';
 import 'package:coloring/features/coloring/data/picture_loader.dart';
 import 'package:coloring/features/coloring/model/coloring_mode.dart';
 import 'package:coloring/features/coloring/model/work.dart';
+import 'package:coloring/features/drawing/data/drawing_repository.dart';
+import 'package:coloring/features/drawing/model/drawing_record.dart';
 import 'package:coloring/features/gallery/data/gallery_backend.dart';
 import 'package:coloring/features/gallery/data/share_backend.dart';
 import 'package:coloring/features/gallery/data/work_exporter.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../support/test_manifest.dart';
 import '../coloring/fakes.dart';
 import '../coloring/model/fixtures.dart';
+import '../drawing/fakes.dart';
 import 'fakes.dart';
 
 const free = 'farm_piglet_picnic';
@@ -46,6 +49,7 @@ void main() {
   late FakeGalleryBackend gallery;
   late FakeShareBackend share;
   late FakePictureLoader loader;
+  late InMemoryDrawingRepository drawings;
   // Listeners currently on fullAccessProvider.
   var accessListeners = 0;
 
@@ -55,6 +59,7 @@ void main() {
     gallery = FakeGalleryBackend();
     share = FakeShareBackend();
     loader = FakePictureLoader();
+    drawings = InMemoryDrawingRepository();
   });
 
   tearDown(() => temp.deleteSync(recursive: true));
@@ -77,6 +82,7 @@ void main() {
           return Stream.value(fullAccess);
         }),
         pictureLoaderProvider.overrideWithValue(pictureLoader ?? loader),
+        drawingRepositoryProvider.overrideWithValue(drawings),
         galleryBackendProvider.overrideWithValue(gallery),
         shareBackendProvider.overrideWithValue(shareBackend ?? share),
         shareDirectoryProvider.overrideWithValue(
@@ -256,6 +262,86 @@ void main() {
       }
       expect(accessListeners, 0);
       expect(loader.loadedIds, isEmpty);
+    });
+  });
+
+  group('drawings', () {
+    final modified = DateTime.utc(2026, 11, 18, 12);
+    final drawing = DrawingRecord(
+      id: 'd-1',
+      created: modified,
+      modified: modified,
+      width: 4,
+      height: 3,
+      raster: DrawingRecord.rasterName('d-1', modified),
+    );
+    final raster = Uint8List.fromList([137, 80, 78, 71, 1, 2, 3]);
+
+    testWidgets('save to gallery passes the raster under a drawing name', (
+      tester,
+    ) async {
+      await tester.runAsync(() async {
+        await drawings.save(drawing, Future.value(raster));
+        // No access check: a locked catalog changes nothing for drawings.
+        final outcome = await exporter().saveDrawingToGallery(drawing);
+        expect(outcome, ExportOutcome.saved);
+        expect(gallery.savedNames, [
+          'animosaic_colors_drawing_20261118_090507',
+        ]);
+        expect(gallery.savedBytes.single, raster);
+        expect(loader.loadedIds, isEmpty);
+      });
+    });
+
+    testWidgets('denied and failed results propagate', (tester) async {
+      await tester.runAsync(() async {
+        await drawings.save(drawing, Future.value(raster));
+        gallery.result = GallerySaveResult.denied;
+        expect(
+          await exporter().saveDrawingToGallery(drawing),
+          ExportOutcome.denied,
+        );
+        gallery.result = GallerySaveResult.failed;
+        expect(
+          await exporter().saveDrawingToGallery(drawing),
+          ExportOutcome.failed,
+        );
+      });
+    });
+
+    testWidgets('share writes share/<id>.png, then deletes it', (tester) async {
+      await tester.runAsync(() async {
+        await drawings.save(drawing, Future.value(raster));
+        expect(await exporter().shareDrawing(drawing), ExportOutcome.shared);
+        expect(share.shared.single.path, '${temp.path}/share/d-1.png');
+        expect(share.sharedBytes.single, raster);
+        expect(Directory('${temp.path}/share').listSync(), isEmpty);
+      });
+    });
+
+    testWidgets('a missing raster is unavailable', (tester) async {
+      await tester.runAsync(() async {
+        final e = exporter();
+        expect(
+          await e.saveDrawingToGallery(drawing),
+          ExportOutcome.unavailable,
+        );
+        expect(await e.shareDrawing(drawing), ExportOutcome.unavailable);
+        expect(gallery.savedBytes, isEmpty);
+        expect(share.shared, isEmpty);
+      });
+    });
+
+    testWidgets('a share backend error is failed and leaves no file', (
+      tester,
+    ) async {
+      await tester.runAsync(() async {
+        await drawings.save(drawing, Future.value(raster));
+        final outcome = await exporter(shareBackend: ThrowingShare())
+            .shareDrawing(drawing);
+        expect(outcome, ExportOutcome.failed);
+        expect(Directory('${temp.path}/share').listSync(), isEmpty);
+      });
     });
   });
 }

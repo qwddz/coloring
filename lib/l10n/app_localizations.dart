@@ -669,6 +669,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{completed} of {total} colored'**
   String categoryStars(int completed, int total);
+
+  /// Title of the drawing tile on the home screen
+  ///
+  /// In en, this message translates to:
+  /// **'Drawing'**
+  String get drawingTileTitle;
+
+  /// Shown while the drawing sheet loads
+  ///
+  /// In en, this message translates to:
+  /// **'Getting the paper ready…'**
+  String get drawingLoading;
+
+  /// Shown when the drawing sheet fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'The sheet did not open'**
+  String get drawingLoadError;
+
+  /// Drawing tool name
+  ///
+  /// In en, this message translates to:
+  /// **'Pencil'**
+  String get drawingToolPencil;
+
+  /// Drawing tool name
+  ///
+  /// In en, this message translates to:
+  /// **'Felt-tip'**
+  String get drawingToolFelt;
+
+  /// Drawing tool name: translucent marker
+  ///
+  /// In en, this message translates to:
+  /// **'Marker'**
+  String get drawingToolMarker;
+
+  /// Drawing tool name
+  ///
+  /// In en, this message translates to:
+  /// **'Eraser'**
+  String get drawingToolEraser;
+
+  /// Drawing tool name: the color changes along the stroke
+  ///
+  /// In en, this message translates to:
+  /// **'Rainbow'**
+  String get drawingToolRainbow;
+
+  /// Drawing tool name: chalk texture
+  ///
+  /// In en, this message translates to:
+  /// **'Pastel'**
+  String get drawingToolPastel;
+
+  /// Drawing tool name
+  ///
+  /// In en, this message translates to:
+  /// **'Watercolor'**
+  String get drawingToolWatercolor;
+
+  /// Drawing tool name
+  ///
+  /// In en, this message translates to:
+  /// **'Airbrush'**
+  String get drawingToolAirbrush;
+
+  /// Drawing tool name: glowing line
+  ///
+  /// In en, this message translates to:
+  /// **'Neon'**
+  String get drawingToolNeon;
+
+  /// Drawing tool name: star stamps
+  ///
+  /// In en, this message translates to:
+  /// **'Stars'**
+  String get drawingToolStars;
+
+  /// Drawing tool name: heart stamps
+  ///
+  /// In en, this message translates to:
+  /// **'Hearts'**
+  String get drawingToolHearts;
+
+  /// Drawing tool name: fills a closed area
+  ///
+  /// In en, this message translates to:
+  /// **'Fill'**
+  String get drawingToolFill;
+
+  /// Undo button label
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get drawingUndo;
+
+  /// Redo button label
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get drawingRedo;
+
+  /// Button that wipes the drawing sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the sheet'**
+  String get drawingClear;
+
+  /// Title of the clear-sheet confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the sheet?'**
+  String get drawingClearTitle;
+
+  /// Message of the clear-sheet confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'The whole drawing will be wiped.'**
+  String get drawingClearMessage;
+
+  /// Button that starts a new drawing
+  ///
+  /// In en, this message translates to:
+  /// **'New sheet'**
+  String get drawingNewSheet;
+
+  /// Mirror symmetry toggle, switched off
+  ///
+  /// In en, this message translates to:
+  /// **'Mirror: off'**
+  String get drawingMirrorOff;
+
+  /// Mirror symmetry toggle, switched on
+  ///
+  /// In en, this message translates to:
+  /// **'Mirror: on'**
+  String get drawingMirrorOn;
+
+  /// Label of the brush size selector
+  ///
+  /// In en, this message translates to:
+  /// **'Brush size'**
+  String get drawingBrushSize;
+
+  /// Brush size name
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get drawingSizeSmall;
+
+  /// Brush size name
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get drawingSizeMedium;
+
+  /// Brush size name
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get drawingSizeLarge;
+
+  /// Brush size name
+  ///
+  /// In en, this message translates to:
+  /// **'Huge'**
+  String get drawingSizeHuge;
+
+  /// Label of the tools group in the drawing panel
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get drawingTools;
+
+  /// Label of the colors group in the drawing panel
+  ///
+  /// In en, this message translates to:
+  /// **'Colors'**
+  String get drawingColors;
+
+  /// Semantics label of a locked drawing tool
+  ///
+  /// In en, this message translates to:
+  /// **'{tool}: full version only'**
+  String drawingToolLocked(String tool);
+
+  /// Title of a drawing in My works; date is formatted by the caller
+  ///
+  /// In en, this message translates to:
+  /// **'Drawing, {date}'**
+  String drawingWorkTitle(String date);
+
+  /// Button that starts a fresh drawing sheet
+  ///
+  /// In en, this message translates to:
+  /// **'New drawing'**
+  String get workNewDrawing;
+
+  /// Line on the paywall about the drawing tools
+  ///
+  /// In en, this message translates to:
+  /// **'All brushes, stamps, fill and mirror in Drawing'**
+  String get fullVersionDrawingTools;
 }
 
 class _AppLocalizationsDelegate

@@ -322,4 +322,111 @@ class AppLocalizationsRu extends AppLocalizations {
   String categoryStars(int completed, int total) {
     return 'Раскрашено $completed из $total';
   }
+
+  @override
+  String get drawingTileTitle => 'Рисовалка';
+
+  @override
+  String get drawingLoading => 'Готовим лист…';
+
+  @override
+  String get drawingLoadError => 'Лист не открылся';
+
+  @override
+  String get drawingToolPencil => 'Карандаш';
+
+  @override
+  String get drawingToolFelt => 'Фломастер';
+
+  @override
+  String get drawingToolMarker => 'Маркер';
+
+  @override
+  String get drawingToolEraser => 'Ластик';
+
+  @override
+  String get drawingToolRainbow => 'Радуга';
+
+  @override
+  String get drawingToolPastel => 'Пастель';
+
+  @override
+  String get drawingToolWatercolor => 'Акварель';
+
+  @override
+  String get drawingToolAirbrush => 'Аэрограф';
+
+  @override
+  String get drawingToolNeon => 'Неон';
+
+  @override
+  String get drawingToolStars => 'Звёздочки';
+
+  @override
+  String get drawingToolHearts => 'Сердечки';
+
+  @override
+  String get drawingToolFill => 'Заливка';
+
+  @override
+  String get drawingUndo => 'Отменить';
+
+  @override
+  String get drawingRedo => 'Повторить';
+
+  @override
+  String get drawingClear => 'Очистить лист';
+
+  @override
+  String get drawingClearTitle => 'Очистить лист?';
+
+  @override
+  String get drawingClearMessage => 'Весь рисунок исчезнет.';
+
+  @override
+  String get drawingNewSheet => 'Новый лист';
+
+  @override
+  String get drawingMirrorOff => 'Зеркало: выкл.';
+
+  @override
+  String get drawingMirrorOn => 'Зеркало: вкл.';
+
+  @override
+  String get drawingBrushSize => 'Размер кисти';
+
+  @override
+  String get drawingSizeSmall => 'Маленький';
+
+  @override
+  String get drawingSizeMedium => 'Средний';
+
+  @override
+  String get drawingSizeLarge => 'Большой';
+
+  @override
+  String get drawingSizeHuge => 'Огромный';
+
+  @override
+  String get drawingTools => 'Инструменты';
+
+  @override
+  String get drawingColors => 'Цвета';
+
+  @override
+  String drawingToolLocked(String tool) {
+    return '$tool: в полной версии';
+  }
+
+  @override
+  String drawingWorkTitle(String date) {
+    return 'Рисунок, $date';
+  }
+
+  @override
+  String get workNewDrawing => 'Новый рисунок';
+
+  @override
+  String get fullVersionDrawingTools =>
+      'Все кисти, штампы, заливка и зеркало в рисовалке';
 }

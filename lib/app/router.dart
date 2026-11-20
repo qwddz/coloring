@@ -6,6 +6,10 @@ import '../features/catalog/categories_screen.dart';
 import '../features/catalog/category_screen.dart';
 import '../features/catalog/data/manifest_provider.dart';
 import '../features/coloring/coloring_screen.dart';
+import '../features/drawing/drawing_controller.dart';
+import '../features/drawing/drawing_route.dart';
+import '../features/drawing/drawing_screen.dart';
+import '../features/drawing/model/drawing_record.dart';
 import '../features/gallery/gallery_routes.dart';
 import '../features/gallery/my_works_screen.dart';
 import '../features/settings/about_screen.dart';
@@ -32,6 +36,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: myWorksRoute,
         pageBuilder: (context, state) =>
             _fadePage(state, const MyWorksScreen()),
+      ),
+      GoRoute(
+        path: '/draw',
+        // A `?work=` that is no drawing id becomes a new sheet with its id
+        // in the URL, so rebuilding the page keeps one request.
+        redirect: (context, state) {
+          final workId = state.uri.queryParameters['work'];
+          if (workId == null || DrawingRecord.isPlainId(workId)) return null;
+          return drawRoute(newSheet: true, now: ref.read(drawingClockProvider));
+        },
+        pageBuilder: (context, state) {
+          final request = DrawingRequest.fromRoute(state.uri.queryParameters);
+          return _fadePage(
+            state,
+            DrawingScreen(key: ValueKey(request), request: request),
+          );
+        },
       ),
       GoRoute(
         path: '/settings',

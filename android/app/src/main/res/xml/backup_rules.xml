@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 6-11 Auto Backup: drawings can exceed the 25 MB quota and would
+     switch off the whole backup. -->
+<full-backup-content>
+    <exclude domain="root" path="app_flutter/drawings/"/>
+</full-backup-content>

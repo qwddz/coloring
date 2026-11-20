@@ -7,11 +7,13 @@ import '../../app/widgets/paper_background.dart';
 import '../../app/widgets/round_icon_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../content/content_config.dart';
+import '../drawing/drawing_tile.dart';
 import '../content/thumb_image.dart';
 import '../gallery/gallery_routes.dart';
 import '../progress/data/progress_store.dart';
 import '../progress/domain/category_progress.dart';
 import 'catalog_grid.dart';
+import 'data/category_access.dart';
 import 'data/manifest_provider.dart';
 import 'domain/content_manifest.dart';
 
@@ -54,9 +56,10 @@ class CategoriesScreen extends ConsumerWidget {
                 // Data first: a reload keeps the previous catalog on screen.
                 child: switch (manifest) {
                   AsyncValue(:final value?) => CatalogGrid(
-                    itemCount: value.categories.length,
+                    itemCount: value.categories.length + 1,
                     itemBuilder: (context, index) {
-                      final category = value.categories[index];
+                      if (index == 0) return const DrawingTile();
+                      final category = value.categories[index - 1];
                       return _CategoryCard(
                         index: index,
                         category: category,
@@ -68,12 +71,26 @@ class CategoriesScreen extends ConsumerWidget {
                       );
                     },
                   ),
-                  AsyncError() => CatalogMessage(
-                    text: l10n.catalogLoadError,
-                    actionLabel: l10n.retry,
-                    onAction: () => ref.invalidate(manifestProvider),
+                  // The drawing tile stays reachable while the catalog
+                  // loads or fails.
+                  AsyncError() => CatalogGrid(
+                    itemCount: 2,
+                    itemBuilder: (context, index) => index == 0
+                        ? const DrawingTile()
+                        : SingleChildScrollView(
+                            child: CatalogMessage(
+                              text: l10n.catalogLoadError,
+                              actionLabel: l10n.retry,
+                              onAction: () => ref.invalidate(manifestProvider),
+                            ),
+                          ),
                   ),
-                  _ => const Center(child: CircularProgressIndicator()),
+                  _ => CatalogGrid(
+                    itemCount: 2,
+                    itemBuilder: (context, index) => index == 0
+                        ? const DrawingTile()
+                        : const Center(child: CircularProgressIndicator()),
+                  ),
                 },
               ),
             ],
@@ -103,6 +120,7 @@ class _CategoryCard extends ConsumerWidget {
         ? null
         : categoryProgress(category, progress);
     final language = Localizations.localeOf(context).languageCode;
+    final locked = ref.watch(categoryLockedProvider(category.id));
     return PictureCard(
       index: index,
       image: thumb,
@@ -139,7 +157,8 @@ class _CategoryCard extends ConsumerWidget {
             ),
         ],
       ),
-      // A category without pictures yet says so on its card.
+      // A category without pictures yet says so on its card; one with only
+      // full-version pictures shows a lock (it still opens).
       badge: category.pictures.isEmpty
           ? DecoratedBox(
               decoration: BoxDecoration(
@@ -152,6 +171,25 @@ class _CategoryCard extends ConsumerWidget {
                   l10n.comingSoon,
                   style: Theme.of(context).textTheme.labelMedium
                       ?.copyWith(color: BookPalette.textMuted),
+                ),
+              ),
+            )
+          : locked
+          ? Semantics(
+              label: l10n.lockedPicture,
+              excludeSemantics: true,
+              child: const DecoratedBox(
+                decoration: BoxDecoration(
+                  color: BookPalette.primary,
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Icon(
+                    Icons.lock_rounded,
+                    size: 18,
+                    color: BookPalette.card,
+                  ),
                 ),
               ),
             )

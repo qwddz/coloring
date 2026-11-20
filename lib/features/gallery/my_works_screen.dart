@@ -7,19 +7,23 @@ import '../../app/widgets/paper_background.dart';
 import '../../app/widgets/round_icon_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../catalog/catalog_grid.dart';
+import '../drawing/data/drawings_provider.dart';
+import 'data/gallery_items_provider.dart';
 import 'data/my_works_controller.dart';
 import 'data/works_provider.dart';
+import 'drawing_actions_dialog.dart';
 import 'work_actions_dialog.dart';
 import 'work_preview_image.dart';
 
-/// «Мои работы»: every saved work, newest first. A tap opens its actions.
+/// «Мои работы»: every saved coloring work and drawing, newest first. A tap
+/// opens its actions.
 class MyWorksScreen extends ConsumerWidget {
   const MyWorksScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final works = ref.watch(worksProvider);
+    final items = ref.watch(galleryItemsProvider);
     final state = ref.watch(myWorksControllerProvider);
     void leave() => context.canPop() ? context.pop() : context.go('/');
     return Scaffold(
@@ -40,7 +44,7 @@ class MyWorksScreen extends ConsumerWidget {
                     ),
                   ),
                   Expanded(
-                    child: switch (works) {
+                    child: switch (items) {
                       AsyncValue(:final value?) when value.isEmpty =>
                         CatalogMessage(
                           text: l10n.myWorksEmpty,
@@ -49,16 +53,25 @@ class MyWorksScreen extends ConsumerWidget {
                         ),
                       AsyncValue(:final value?) => CatalogGrid(
                         itemCount: value.length,
-                        itemBuilder: (context, index) => _WorkCard(
-                          index: index,
-                          summary: value[index],
-                          backfilling: state.backfilling,
-                        ),
+                        itemBuilder: (context, index) => switch (value[index]) {
+                          ColoringItem(:final summary) => _WorkCard(
+                            index: index,
+                            summary: summary,
+                            backfilling: state.backfilling,
+                          ),
+                          DrawingItem(:final summary) => _DrawingCard(
+                            index: index,
+                            summary: summary,
+                            backfilling: state.backfilling,
+                          ),
+                        },
                       ),
                       AsyncError() => CatalogMessage(
                         text: l10n.catalogLoadError,
                         actionLabel: l10n.retry,
-                        onAction: () => ref.invalidate(worksProvider),
+                        onAction: () => ref
+                          ..invalidate(worksProvider)
+                          ..invalidate(drawingsProvider),
                       ),
                       _ => const Center(child: CircularProgressIndicator()),
                     },
@@ -127,6 +140,48 @@ class _WorkCard extends ConsumerWidget {
                 semanticLabel: l10n.workCompleted,
               ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DrawingCard extends ConsumerWidget {
+  const _DrawingCard({
+    required this.index,
+    required this.summary,
+    required this.backfilling,
+  });
+
+  final int index;
+  final DrawingSummary summary;
+  final bool backfilling;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final preview = summary.preview;
+    return LayoutBuilder(
+      builder: (context, constraints) => PictureCard(
+        index: index,
+        image: preview == null
+            ? null
+            : workPreviewImage(
+                preview.file,
+                logicalWidth: constraints.maxWidth,
+                devicePixelRatio: MediaQuery.devicePixelRatioOf(context),
+              ),
+        badge: preview == null && backfilling
+            ? const SizedBox.square(
+                dimension: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : null,
+        onTap: () => openDrawingActions(context, ref, summary),
+        caption: Text(
+          drawingTitle(context, summary.record),
+          style: Theme.of(context).textTheme.titleMedium
+              ?.copyWith(color: BookPalette.text),
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

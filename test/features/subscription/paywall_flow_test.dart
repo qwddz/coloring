@@ -430,16 +430,31 @@ void main() {
     expect(find.text(r'Buy for $4.99'), findsOneWidget);
   });
 
+  testWidgets('the paywall lists the drawing tools', (tester) async {
+    final router = await pumpApp(tester);
+    router.push(paywallRoute(), extra: paywallGatePassed);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('All brushes, stamps, fill and mirror in Drawing'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('restore on the paywall: nothing, then a purchase', (
     tester,
   ) async {
     final router = await pumpApp(tester);
     router.push(paywallRoute(), extra: paywallGatePassed);
     await tester.pumpAndSettle();
+    // The paywall card is taller than a phone screen.
+    await tester.ensureVisible(find.text('Restore purchases'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Restore purchases'));
     await tester.pumpAndSettle();
     expect(find.text('No purchases to restore'), findsOneWidget);
     store.restorable = true;
+    await tester.ensureVisible(find.text('Restore purchases'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Restore purchases'));
     await tester.pumpAndSettle();
     expect(find.byType(PaywallScreen), findsNothing);
@@ -514,6 +529,8 @@ void main() {
     });
 
     Future<void> enterCode(WidgetTester tester, String code) async {
+      await tester.ensureVisible(find.text('I have an access code'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('I have an access code'));
       await tester.pumpAndSettle();
       expect(find.text('Access code'), findsOneWidget);
