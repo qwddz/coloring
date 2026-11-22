@@ -10,7 +10,6 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export GEMINI_API_KEY=...                       # ключ Gemini API
 export CP_CHARACTERS=/путь/к/картинкам/animosaic   # файлы <character_id>.webp из Animosaic
-export CP_CDN_BASE_URL=https://.../coloring        # базовый URL платного контента
 ```
 
 При первой сборке rembg скачает модель `isnet-general-use` (около 180 МБ).
@@ -37,7 +36,7 @@ python run.py status                       # где что находится
 - Брак автопроверки сразу удаляется и при следующем запуске генерируется заново; копия лежит в `work/rejected/`. Флаг `--keep-failed` оставляет такие картинки на ручную проверку (удобно на пробной партии).
 - После трёх неудач сцена пропускается: поменяйте текст сцены в `scenes.csv` и выполните `python run.py reset ID`.
 - После правки порогов в `cpipe/config.py` не нужно генерировать заново: `python run.py recheck` перепроверит контуры, `python run.py build` пересоберёт данные.
-- `dist/` загружается на CDN целиком (`<category>/<id>.zip`, превью, `manifest.json`).
+- `dist/` загружается командой `python upload.py` (сначала `--dry-run`) в бакет R2 пазлов под префикс `colors/`: `<category>/<id>.zip`, превью, последним `manifest.json`. Корень бакета (манифест и картинки пазлов) не трогается. Ключи `R2_*` — в `.env`. Адреса в манифесте относительные; приложение собирается с `CDN_BASE_URL=https://cdn.animosaic.app/colors`.
 
 ## Что лежит где
 

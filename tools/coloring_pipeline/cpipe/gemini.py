@@ -1,5 +1,6 @@
 """Gemini API calls. The API key comes from GEMINI_API_KEY (or GOOGLE_API_KEY)."""
 import io
+import json
 import time
 from pathlib import Path
 from PIL import Image
@@ -55,6 +56,11 @@ def lineart_request(scene, with_anchor=True):
 def colored_request(scene, lineart_png):
     refs = [character_image(c) for c in scene.characters]
     prompt = _template('colored.txt', character_refs_colored=_refs_text(len(refs), first_index=2))
+    notes = config.PROMPTS / 'colored_notes.json'  # per-picture color hints for shapes the line art cannot split
+    if notes.exists():
+        note = json.loads(notes.read_text(encoding='utf-8')).get(scene.id)
+        if note:
+            prompt += '\n' + note
     return [Path(lineart_png)] + refs, prompt
 
 

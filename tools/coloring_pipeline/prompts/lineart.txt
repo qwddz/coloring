@@ -16,8 +16,16 @@ Style rules:
 - a complete cozy background made of simple, medium-sized objects; no tiny details,
   no dots, small stars or wallpaper patterns
 - the scene is physically consistent: what is seen through a window stays inside the window frame;
-  no trees, sky or other outdoor objects inside a room
+  no trees, sky, clouds, rain, snow or other outdoor objects inside a room; weather is only
+  visible through the window glass
+- bodies and tails never pass through objects: a tail under a blanket stays hidden under it,
+  every tail ends in one clear, simple, rounded tip
 - the animal has the correct number of legs, paws, fins and tails for its species, no extra limbs
+- every color marking of the animal (face mask, light muzzle, chest or belly patch, spots, patches,
+  stripes, inner ears, a differently colored head) is drawn as its own closed outlined shape, so that
+  each color area of the animal can be filled separately
+- separate things in the background (a lake, a flower bed, smoke, sun rays, clouds) are closed shapes
+  of their own, never left open into the sky or the grass
 - no scary poses, no sharp teeth
 - no text, no letters, no border, no watermark
 {level_clause}

@@ -1,5 +1,10 @@
 Image 1 is a coloring page. {character_refs_colored}
 Color image 1 with flat, cheerful colors, using the colors of the character reference for the animal.
 Keep every black line exactly where it is, do not add, move or remove any lines.
-One flat color per shape, no gradients, no shading, no texture.
+One flat color per closed shape: fill every shape of image 1 with exactly one color, from edge to edge.
+Do not paint markings, patches, stripes or spots that are not outlined in image 1; if the animal's
+pattern has no outline, choose the one main color for that shape. Clouds and eye whites are pure white.
+Paired parts (ears, eyes, paws, hands, wings) are colored exactly the same way on both sides.
+Do not add any objects, plants or details that are not drawn in image 1.
+No gradients, no shading, no texture.
 Keep the same framing and size as image 1.

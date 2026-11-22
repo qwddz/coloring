@@ -46,7 +46,8 @@ def export(scenes):
                     zf.write(src / f, f)
             shutil.copy2(src / 'thumb.webp', cdir / f'{s.id}_thumb.webp')
             shutil.copy2(src / 'thumb_locked.webp', cdir / f'{s.id}_thumb_locked.webp')
-            base = f'{config.CDN_BASE_URL}/{s.category}/{s.id}'
+            # relative to the app's CDN_BASE_URL (resolveCdnUrl), so moving the CDN needs no re-export
+            base = f'{s.category}/{s.id}'
             entry.update(url=f'{base}.zip', thumbUrl=f'{base}_thumb.webp',
                          thumbLockedUrl=f'{base}_thumb_locked.webp', sha256=_sha256(z))
         cats[s.category]['pictures'].append(entry)

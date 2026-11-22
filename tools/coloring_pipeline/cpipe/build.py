@@ -77,12 +77,33 @@ def _hex_from_lab8(lab8):
     return '#%02x%02x%02x' % tuple(int(c) for c in rgb)
 
 
-def _palette(colors_lab8, weights, k):
-    X = np.array([_lab_real(c) for c in colors_lab8], np.float32)
-    k = max(1, min(k, len(np.unique(X.round(0), axis=0))))
+def _kmeans(X, weights, k):
     rep = np.repeat(X, np.maximum(1, (weights / weights.sum() * 4000).astype(int)), axis=0)
     _, _, cent = cv2.kmeans(rep, k, None, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER, 50, 0.5),
                             4, cv2.KMEANS_PP_CENTERS)
+    return cent
+
+
+def _palette(colors_lab8, weights, k):
+    X = np.array([_lab_real(c) for c in colors_lab8], np.float32)
+    k = max(1, min(k, len(np.unique(X.round(0), axis=0))))
+    # white regions (clouds, eye whites) keep a white of their own instead of merging into cream
+    white = (X[:, 0] > config.PALETTE_WHITE_MIN_L) & (np.hypot(X[:, 1], X[:, 2]) < config.PALETTE_WHITE_MAX_CHROMA)
+    if k > 2 and white.any() and (~white).any() and weights[white].sum() > config.PALETTE_WHITE_MIN_SHARE * weights.sum():
+        rest = X[~white]
+        kr = max(1, min(k - 1, len(np.unique(rest.round(0), axis=0))))
+        cent = np.vstack([np.average(X[white], axis=0, weights=weights[white])[None],
+                          _kmeans(rest, weights[~white], kr)]).astype(np.float32)
+    else:
+        cent = _kmeans(X, weights, k)
+    # a visible region still far from every palette color (a yellow sun next to tan sand) gets its own color
+    share = weights / weights.sum()
+    for _ in range(config.PALETTE_EXTRA_MAX):
+        err = np.sqrt(((X[:, None] - cent[None]) ** 2).sum(2).min(1))
+        bad = (err > config.PALETTE_EXTRA_DELTA_E) & (share > config.PALETTE_EXTRA_MIN_SHARE)
+        if not bad.any():
+            break
+        cent = np.vstack([cent, X[int(np.argmax(np.where(bad, err * share, 0)))][None]]).astype(np.float32)
     cent = cent[np.argsort(-cent[:, 0])]  # light to dark
     assign = [int(((cent - x) ** 2).sum(1).argmin()) for x in X]
     to8 = lambda c: np.array([c[0] * 2.55, c[1] + 128, c[2] + 128])
@@ -127,14 +148,21 @@ def build(scene, la, colored_path, out_dir):
     # character mask: QA and palette weights
     mask = character_mask(colored)
     bg = int(remap[la.get('background', 0)]) if la.get('background', 0) else 0
-    weights = geo['area'][1:].astype(np.float32)
+    # sqrt(area): small distinct regions (eye whites, beaks, mouths) keep their own palette color
+    weights = np.sqrt(geo['area'][1:].astype(np.float32))
     if mask is not None:
         share = float(mask.mean())
         lo, hi = config.QA_CHARACTER_SHARE
         if not lo <= share <= hi:
             fails.append(f'персонаж занимает {share:.0%} кадра, нужно {lo:.0%}-{hi:.0%}')
         if bg:
-            over = float((mask & (reg == bg)).sum() / max(mask.sum(), 1))
+            # a gap shows as character colors inside the background region; rembg also grabs water,
+            # sky rays or smoke painted in the background's own color, which is not a leak
+            on_bg = mask & (reg == bg)
+            bg_col = col[bg] * np.float32([100 / 255, 1, 1]) - np.float32([0, 128, 128])
+            px = lab[on_bg].astype(np.float32) * np.float32([100 / 255, 1, 1]) - np.float32([0, 128, 128])
+            foreign = np.sqrt(((px - bg_col) ** 2).sum(1)) > config.QA_BG_LEAK_DELTA_E
+            over = float(foreign.sum() / max(mask.sum(), 1))
             if over > config.QA_BG_ON_CHARACTER_MAX:
                 fails.append(f'фон затекает в персонажа ({over:.0%} маски): разрыв в контуре персонажа')
         inside = np.bincount(reg.ravel(), weights=mask.ravel().astype(np.float64), minlength=n + 1)[1:]

@@ -1,1 +1,1 @@
-medium: a complete background with a moderate number of objects and a simple pattern on one or two items, around 150 closed shapes in total (count every separate area to color)
+medium: a complete background with a moderate number of objects and a simple pattern on at most one item, around 120 closed shapes in total (count every separate area to color); never draw piles or rows of many small things (fruit, leaves, pumpkins, presents, flowers, cookies): show at most three or four of them, drawn large

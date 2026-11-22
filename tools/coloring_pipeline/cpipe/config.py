@@ -14,7 +14,6 @@ STYLE_ANCHOR = Path(os.environ.get('CP_STYLE_ANCHOR', PROJECT / 'docs' / 'colori
 # folder with Animosaic puzzle images named <character_id>.webp / .png / .jpg
 CHARACTER_IMAGES = Path(os.environ.get('CP_CHARACTERS', ROOT / 'characters'))
 APP_ASSETS = Path(os.environ.get('CP_APP_ASSETS', PROJECT / 'assets'))
-CDN_BASE_URL = os.environ.get('CP_CDN_BASE_URL', 'https://cdn.example.com/coloring')
 
 # Gemini. Check model ids in the current Gemini API docs before running.
 GEMINI_MODEL = os.environ.get('CP_GEMINI_MODEL', 'gemini-nano-banana-2.1')
@@ -32,8 +31,8 @@ MIN_REGION_PX = 150         # smaller areas join the neighbor they touch most
 
 # automatic QA, per level
 QA = {
-    'simple': dict(regions=(40, 180), min_radius_px=20, min_radius_share=0.25, palette=10),
-    'medium': dict(regions=(80, 180), min_radius_px=15, min_radius_share=0.25, palette=12),
+    'simple': dict(regions=(40, 180), min_radius_px=20, min_radius_share=0.25, palette=12),
+    'medium': dict(regions=(80, 180), min_radius_px=15, min_radius_share=0.25, palette=14),
 }
 QA_GRAY_SHARE_MAX = 0.005   # gray pixels away from lines = shading or hatching
 QA_LARGEST_SHARE_MAX = 0.25 # any region except the background bigger than this = leak through a gap
@@ -41,9 +40,16 @@ QA_LINE_WIDTH_TOL = 0.35    # median line width within +-35% of the style anchor
 QA_ALIGN_MIN = 0.85         # share of line-art lines found again in the colored version
 QA_CHARACTER_SHARE = (0.08, 0.70)
 QA_BG_ON_CHARACTER_MAX = 0.03  # share of the character mask covered by the background region
+QA_BG_LEAK_DELTA_E = 40        # background-region pixels this far from the background color count as a leak
 
 # colors
 DARK_PREFILL_L = 20         # small regions darker than this (Lab L, 0-100) are drawn black in lines.png
 DARK_PREFILL_MAX_SHARE = 0.005
 CHARACTER_PALETTE_WEIGHT = 6.0
+PALETTE_WHITE_MIN_L = 92        # regions this light and gray get a white palette color of their own
+PALETTE_WHITE_MAX_CHROMA = 6
+PALETTE_WHITE_MIN_SHARE = 0.002 # share of the palette weight
+PALETTE_EXTRA_MAX = 3           # extra palette colors for visible regions far from every color
+PALETTE_EXTRA_DELTA_E = 15
+PALETTE_EXTRA_MIN_SHARE = 0.004 # share of the palette weight
 THUMB = (400, 300)
