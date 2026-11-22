@@ -64,8 +64,8 @@ List<String> _pngChunks(Uint8List bytes) {
 void main() {
   final ids = _pictureIds();
 
-  test('finds all 10 bundled pictures', () {
-    expect(ids, hasLength(10));
+  test('finds all 30 bundled pictures', () {
+    expect(ids, hasLength(30));
   });
 
   testWidgets('loads every bundled picture', (tester) async {

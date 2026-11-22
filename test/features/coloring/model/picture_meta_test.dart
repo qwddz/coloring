@@ -19,20 +19,20 @@ void main() {
       expect(meta.height, 1536);
       expect(meta.level, 'simple');
       expect(meta.regionCount, 141);
-      expect(meta.palette, hasLength(10));
+      expect(meta.palette, hasLength(12));
       expect(meta.backgroundId, 137);
-      expect(meta.palette.first, 0xFFF7EACE);
+      expect(meta.palette.first, 0xFFFEFEFE);
       for (var id = 1; id <= meta.regionCount; id++) {
         expect(meta.region(id).id, id);
       }
       final r1 = meta.region(1);
-      expect(r1.paletteIndex, 7);
-      expect(r1.number, 8);
+      expect(r1.paletteIndex, 9);
+      expect(r1.number, 10);
       expect(r1.color, 0xFFBE4037);
       expect(r1.area, 1570);
       expect([r1.bboxX, r1.bboxY, r1.bboxWidth, r1.bboxHeight], [0, 0, 63, 28]);
       expect([r1.labelX, r1.labelY, r1.labelRadius], [50.0, 12.0, 13.0]);
-      expect(meta.correctColorOf(1), meta.palette[7]);
+      expect(meta.correctColorOf(1), meta.palette[9]);
     });
 
     test('accepts regions listed out of order', () {

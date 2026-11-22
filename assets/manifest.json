@@ -1,5 +1,5 @@
 {
- "version": 5,
+ "version": 6,
  "minAppVersion": "1.0.0",
  "categories": [
   {
@@ -24,6 +24,141 @@
      "free": true,
      "asset": "coloring/free/home_fox_cocoa/",
      "thumb": "thumbs/home_fox_cocoa.webp"
+    },
+    {
+     "id": "home_kitten_yarn",
+     "title": {
+      "uk": "Кошеня з клубком",
+      "en": "Kitten with yarn",
+      "ru": "Котёнок с клубком"
+     },
+     "characters": [
+      "felines_kitten_box"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/home_kitten_yarn/",
+     "thumb": "thumbs/home_kitten_yarn.webp"
+    },
+    {
+     "id": "home_puppy_bath",
+     "title": {
+      "uk": "Цуценя у ванні",
+      "en": "Puppy bath time",
+      "ru": "Щенок в ванне"
+     },
+     "characters": [
+      "pets_puppy_basket"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/home_puppy_bath/",
+     "thumb": "thumbs/home_puppy_bath.webp"
+    },
+    {
+     "id": "home_red_panda_bed",
+     "title": {
+      "uk": "Червона панда спить",
+      "en": "Sleepy red panda",
+      "ru": "Красная панда спит"
+     },
+     "characters": [
+      "jungle_red_panda"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/home_red_panda_bed/",
+     "thumb": "thumbs/home_red_panda_bed.webp"
+    },
+    {
+     "id": "home_bunny_book",
+     "title": {
+      "uk": "Зайчик читає книжку",
+      "en": "Bunny reads a book",
+      "ru": "Зайчик читает книжку"
+     },
+     "characters": [
+      "pets_bunny_playroom"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/home_bunny_book/",
+     "thumb": "thumbs/home_bunny_book.webp"
+    },
+    {
+     "id": "home_sloth_beanbag",
+     "title": {
+      "uk": "Лінивець дрімає",
+      "en": "Sleepy sloth",
+      "ru": "Ленивец дремлет"
+     },
+     "characters": [
+      "jungle_sloth_vine"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/home_sloth_beanbag/",
+     "thumb": "thumbs/home_sloth_beanbag.webp"
+    },
+    {
+     "id": "home_otter_tidy",
+     "title": {
+      "uk": "Видра прибирає",
+      "en": "Otter tidies up",
+      "ru": "Выдра делает уборку"
+     },
+     "characters": [
+      "jungle_otter_river"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/home_otter_tidy/",
+     "thumb": "thumbs/home_otter_tidy.webp"
+    },
+    {
+     "id": "home_cat_window",
+     "title": {
+      "uk": "Котик біля вікна",
+      "en": "Cat by the window",
+      "ru": "Котик у окна"
+     },
+     "characters": [
+      "felines_british_armchair"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/home_cat_window/",
+     "thumb": "thumbs/home_cat_window.webp"
+    },
+    {
+     "id": "home_sheep_knitting",
+     "title": {
+      "uk": "Овечка в'яже шарф",
+      "en": "Sheep knits a scarf",
+      "ru": "Овечка вяжет шарф"
+     },
+     "characters": [
+      "farm_sheep_hill"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/home_sheep_knitting/",
+     "thumb": "thumbs/home_sheep_knitting.webp"
+    },
+    {
+     "id": "home_snake_cushion",
+     "title": {
+      "uk": "Змійка на подушці",
+      "en": "Snake on a cushion",
+      "ru": "Змейка на подушке"
+     },
+     "characters": [
+      "snakes_corn_snake_flowers"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/home_snake_cushion/",
+     "thumb": "thumbs/home_snake_cushion.webp"
     }
    ]
   },
@@ -49,6 +184,142 @@
      "free": true,
      "asset": "coloring/free/food_pig_pie/",
      "thumb": "thumbs/food_pig_pie.webp"
+    },
+    {
+     "id": "food_kitten_donut",
+     "title": {
+      "uk": "Кошеня з пончиком",
+      "en": "Kitten with a donut",
+      "ru": "Котёнок с пончиком"
+     },
+     "characters": [
+      "felines_kitten_window"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/food_kitten_donut/",
+     "thumb": "thumbs/food_kitten_donut.webp"
+    },
+    {
+     "id": "food_chick_pancakes",
+     "title": {
+      "uk": "Курча і млинці",
+      "en": "Chick and pancakes",
+      "ru": "Цыплёнок и блинчики"
+     },
+     "characters": [
+      "farm_chick_eggs"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/food_chick_pancakes/",
+     "thumb": "thumbs/food_chick_pancakes.webp"
+    },
+    {
+     "id": "food_lemur_cake",
+     "title": {
+      "uk": "Лемур прикрашає торт",
+      "en": "Lemur decorates a cake",
+      "ru": "Лемур украшает торт"
+     },
+     "characters": [
+      "jungle_lemur_branch"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/food_lemur_cake/",
+     "thumb": "thumbs/food_lemur_cake.webp"
+    },
+    {
+     "id": "food_capybara_watermelon",
+     "title": {
+      "uk": "Капібара і кавун",
+      "en": "Capybara and watermelon",
+      "ru": "Капибара и арбуз"
+     },
+     "characters": [
+      "jungle_capybara_pond"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/food_capybara_watermelon/",
+     "thumb": "thumbs/food_capybara_watermelon.webp"
+    },
+    {
+     "id": "food_mouse_cheese",
+     "title": {
+      "uk": "Мишка і сир",
+      "en": "Mouse and cheese",
+      "ru": "Мышка и сыр"
+     },
+     "characters": [
+      "pets_mouse_ladder"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/food_mouse_cheese/",
+     "thumb": "thumbs/food_mouse_cheese.webp"
+    },
+    {
+     "id": "food_elephant_tea",
+     "title": {
+      "uk": "Чаювання в слоненяти",
+      "en": "Elephant's tea party",
+      "ru": "Чаепитие у слонёнка"
+     },
+     "characters": [
+      "savanna_elephant_calf",
+      "pets_budgie_perch"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/food_elephant_tea/",
+     "thumb": "thumbs/food_elephant_tea.webp"
+    },
+    {
+     "id": "food_hippo_spaghetti",
+     "title": {
+      "uk": "Бегемотик їсть спагеті",
+      "en": "Hippo eats spaghetti",
+      "ru": "Бегемотик ест спагетти"
+     },
+     "characters": [
+      "savanna_hippo_river"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/food_hippo_spaghetti/",
+     "thumb": "thumbs/food_hippo_spaghetti.webp"
+    },
+    {
+     "id": "food_toucan_fruit",
+     "title": {
+      "uk": "Тукан і фрукти",
+      "en": "Toucan's fruit bowl",
+      "ru": "Тукан и фрукты"
+     },
+     "characters": [
+      "jungle_toucan_branch"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/food_toucan_fruit/",
+     "thumb": "thumbs/food_toucan_fruit.webp"
+    },
+    {
+     "id": "food_spider_cupcakes",
+     "title": {
+      "uk": "Павучок і капкейки",
+      "en": "Spider's cupcakes",
+      "ru": "Паучок и капкейки"
+     },
+     "characters": [
+      "spiders_jumping_daisy"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/food_spider_cupcakes/",
+     "thumb": "thumbs/food_spider_cupcakes.webp"
     }
    ]
   },
@@ -71,9 +342,164 @@
       "pets_hamster_seeds"
      ],
      "level": "simple",
-     "free": true,
-     "asset": "coloring/free/autumn_hamster_leaves/",
-     "thumb": "thumbs/autumn_hamster_leaves.webp"
+     "free": false,
+     "url": "autumn/autumn_hamster_leaves.zip",
+     "thumbUrl": "autumn/autumn_hamster_leaves_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_hamster_leaves_thumb_locked.webp",
+     "sha256": "272df5007d8894e8e7582c349851749ae88f48533ddc76ca3ab5b86bbdf80b0d"
+    },
+    {
+     "id": "autumn_hedgehog_apple",
+     "title": {
+      "uk": "Їжачок з яблуком",
+      "en": "Hedgehog with an apple",
+      "ru": "Ёжик с яблоком"
+     },
+     "characters": [
+      "desert_hedgehog_flowers"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "autumn/autumn_hedgehog_apple.zip",
+     "thumbUrl": "autumn/autumn_hedgehog_apple_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_hedgehog_apple_thumb_locked.webp",
+     "sha256": "10255ef88715c324a151d9520ee7e4516ed400793cdb96b13902f372c1a0318d"
+    },
+    {
+     "id": "autumn_spitz_puddle",
+     "title": {
+      "uk": "Шпіц у чобітках",
+      "en": "Puppy in rain boots",
+      "ru": "Шпиц в сапожках"
+     },
+     "characters": [
+      "canines_spitz_puddle"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "autumn/autumn_spitz_puddle.zip",
+     "thumbUrl": "autumn/autumn_spitz_puddle_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_spitz_puddle_thumb_locked.webp",
+     "sha256": "70d17f5083bc8a54f3ee8849fefc3cdb062a10fa5cef71bc415f9f9d90d3c22d"
+    },
+    {
+     "id": "autumn_lynx_mushrooms",
+     "title": {
+      "uk": "Рисеня по гриби",
+      "en": "Lynx picks mushrooms",
+      "ru": "Рысёнок за грибами"
+     },
+     "characters": [
+      "felines_lynx_forest"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "autumn/autumn_lynx_mushrooms.zip",
+     "thumbUrl": "autumn/autumn_lynx_mushrooms_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_lynx_mushrooms_thumb_locked.webp",
+     "sha256": "897a3084c3f1d4159d3d23268b42c2516d81b90d2055809948e8caae6bfbe148"
+    },
+    {
+     "id": "autumn_goose_apples",
+     "title": {
+      "uk": "Гуска збирає яблука",
+      "en": "Goose picks apples",
+      "ru": "Гусь собирает яблоки"
+     },
+     "characters": [
+      "farm_goose_orchard"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "autumn/autumn_goose_apples.zip",
+     "thumbUrl": "autumn/autumn_goose_apples_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_goose_apples_thumb_locked.webp",
+     "sha256": "2622e1303e60c77f8f7ec9515513beeb638a51fb6dafad070da3de6fd92d9cfd"
+    },
+    {
+     "id": "autumn_owl_hollow",
+     "title": {
+      "uk": "Совеня в дуплі",
+      "en": "Owl in a tree hollow",
+      "ru": "Совёнок в дупле"
+     },
+     "characters": [
+      "desert_burrowing_owl"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "autumn/autumn_owl_hollow.zip",
+     "thumbUrl": "autumn/autumn_owl_hollow_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_owl_hollow_thumb_locked.webp",
+     "sha256": "54012f97ce6043210f29c554d26488eeac3df3e48a91b99bc882293597b3aade"
+    },
+    {
+     "id": "autumn_turkey_pumpkins",
+     "title": {
+      "uk": "Індик і гарбузи",
+      "en": "Turkey and pumpkins",
+      "ru": "Индюк и тыквы"
+     },
+     "characters": [
+      "farm_turkey_autumn"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "autumn/autumn_turkey_pumpkins.zip",
+     "thumbUrl": "autumn/autumn_turkey_pumpkins_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_turkey_pumpkins_thumb_locked.webp",
+     "sha256": "32624d1a8b0ebe78ac2c8cb3598530fdea5dbbcc2a310e3ebfdbee0e119617a9"
+    },
+    {
+     "id": "autumn_wolf_kite",
+     "title": {
+      "uk": "Вовченя з повітряним змієм",
+      "en": "Wolf pup flies a kite",
+      "ru": "Волчонок с воздушным змеем"
+     },
+     "characters": [
+      "canines_wolf_pup_den"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "autumn/autumn_wolf_kite.zip",
+     "thumbUrl": "autumn/autumn_wolf_kite_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_wolf_kite_thumb_locked.webp",
+     "sha256": "0396f695070d2500f26c947af8c80a1fb904e56b0b717d9a2c230f56bbd13177"
+    },
+    {
+     "id": "autumn_pallas_leaves",
+     "title": {
+      "uk": "Манул згрібає листя",
+      "en": "Pallas's cat rakes leaves",
+      "ru": "Манул сгребает листья"
+     },
+     "characters": [
+      "felines_pallas_cat"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "autumn/autumn_pallas_leaves.zip",
+     "thumbUrl": "autumn/autumn_pallas_leaves_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_pallas_leaves_thumb_locked.webp",
+     "sha256": "a283365b168f992c9fd4390b708655b83c986da8a5cdc99316fa9162d33cbab0"
+    },
+    {
+     "id": "autumn_spider_pumpkin",
+     "title": {
+      "uk": "Павучок на гарбузі",
+      "en": "Spider on a pumpkin",
+      "ru": "Паучок на тыкве"
+     },
+     "characters": [
+      "spiders_pumpkin_patch"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "autumn/autumn_spider_pumpkin.zip",
+     "thumbUrl": "autumn/autumn_spider_pumpkin_thumb.webp",
+     "thumbLockedUrl": "autumn/autumn_spider_pumpkin_thumb_locked.webp",
+     "sha256": "acc333d076f0c96835ed0f34ae122f871c07e063b65480cdb62df7b6008bf11d"
     }
    ]
   },
@@ -96,9 +522,164 @@
       "jungle_monkey_banana"
      ],
      "level": "medium",
-     "free": true,
-     "asset": "coloring/free/winter_monkey_snowman/",
-     "thumb": "thumbs/winter_monkey_snowman.webp"
+     "free": false,
+     "url": "winter/winter_monkey_snowman.zip",
+     "thumbUrl": "winter/winter_monkey_snowman_thumb.webp",
+     "thumbLockedUrl": "winter/winter_monkey_snowman_thumb_locked.webp",
+     "sha256": "743477abb1b928a2c070f3f6bc7e403472fe2a25fc09fcb54574bd13ce1774d2"
+    },
+    {
+     "id": "winter_penguin_skates",
+     "title": {
+      "uk": "Пінгвін на ковзанах",
+      "en": "Penguin on skates",
+      "ru": "Пингвин на коньках"
+     },
+     "characters": [
+      "sea_penguin_slide"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "winter/winter_penguin_skates.zip",
+     "thumbUrl": "winter/winter_penguin_skates_thumb.webp",
+     "thumbLockedUrl": "winter/winter_penguin_skates_thumb_locked.webp",
+     "sha256": "17d8cbf9c12c911c687e094ec94102bd7f80d1f06d5066467055b0739c1286c1"
+    },
+    {
+     "id": "winter_corgi_presents",
+     "title": {
+      "uk": "Коргі з подарунками",
+      "en": "Corgi with presents",
+      "ru": "Корги с подарками"
+     },
+     "characters": [
+      "canines_corgi_park"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "winter/winter_corgi_presents.zip",
+     "thumbUrl": "winter/winter_corgi_presents_thumb.webp",
+     "thumbLockedUrl": "winter/winter_corgi_presents_thumb_locked.webp",
+     "sha256": "d66e6839a73d43e2f20fcaa1be9554100eb4788714a4512b68a86f3742df626c"
+    },
+    {
+     "id": "winter_cat_fireplace",
+     "title": {
+      "uk": "Котик біля каміна",
+      "en": "Cat by the fireplace",
+      "ru": "Котик у камина"
+     },
+     "characters": [
+      "felines_ragdoll_fireplace"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "winter/winter_cat_fireplace.zip",
+     "thumbUrl": "winter/winter_cat_fireplace_thumb.webp",
+     "thumbLockedUrl": "winter/winter_cat_fireplace_thumb_locked.webp",
+     "sha256": "64606fadd1af63f5fbf1da583fc063bb9f5671a8828cdebf611e3ee9c81ebf07"
+    },
+    {
+     "id": "winter_seal_sled",
+     "title": {
+      "uk": "Тюлень на санчатах",
+      "en": "Seal on a sled",
+      "ru": "Тюлень на санках"
+     },
+     "characters": [
+      "sea_seal_ice"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "winter/winter_seal_sled.zip",
+     "thumbUrl": "winter/winter_seal_sled_thumb.webp",
+     "thumbLockedUrl": "winter/winter_seal_sled_thumb_locked.webp",
+     "sha256": "3662dcd5eb7c4382af814a74d4f60c52c65e63c24680a578de17e133a991e0d0"
+    },
+    {
+     "id": "winter_husky_tree",
+     "title": {
+      "uk": "Хаскі везе ялинку",
+      "en": "Husky brings a tree",
+      "ru": "Хаски везёт ёлку"
+     },
+     "characters": [
+      "canines_husky_sled"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "winter/winter_husky_tree.zip",
+     "thumbUrl": "winter/winter_husky_tree_thumb.webp",
+     "thumbLockedUrl": "winter/winter_husky_tree_thumb_locked.webp",
+     "sha256": "8ca30f92e8a102177adcb65e236609d0f626fcc293f6f76de19c4faa97b7ce91"
+    },
+    {
+     "id": "winter_lamb_snowflakes",
+     "title": {
+      "uk": "Ягнятко і сніжинки",
+      "en": "Lamb catches snowflakes",
+      "ru": "Ягнёнок и снежинки"
+     },
+     "characters": [
+      "farm_lamb_snow"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "winter/winter_lamb_snowflakes.zip",
+     "thumbUrl": "winter/winter_lamb_snowflakes_thumb.webp",
+     "thumbLockedUrl": "winter/winter_lamb_snowflakes_thumb_locked.webp",
+     "sha256": "9bee44c6b1127cf8aafc8acd1eb85c46b1b8b8082055bb31e2bca25e0f4b4b7c"
+    },
+    {
+     "id": "winter_tiger_skiing",
+     "title": {
+      "uk": "Тигреня на лижах",
+      "en": "Tiger cub skiing",
+      "ru": "Тигрёнок на лыжах"
+     },
+     "characters": [
+      "felines_tiger_cub_taiga"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "winter/winter_tiger_skiing.zip",
+     "thumbUrl": "winter/winter_tiger_skiing_thumb.webp",
+     "thumbLockedUrl": "winter/winter_tiger_skiing_thumb_locked.webp",
+     "sha256": "2607c034b2c0805609c49f154570b7e407b319453a8e31780f81fd6067389a33"
+    },
+    {
+     "id": "winter_walrus_gift",
+     "title": {
+      "uk": "Морж з подарунком",
+      "en": "Walrus with a gift",
+      "ru": "Морж с подарком"
+     },
+     "characters": [
+      "sea_walrus_rocks"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "winter/winter_walrus_gift.zip",
+     "thumbUrl": "winter/winter_walrus_gift_thumb.webp",
+     "thumbLockedUrl": "winter/winter_walrus_gift_thumb_locked.webp",
+     "sha256": "e6f2b4af407adb73be31d3d43371fdd8f150353d23ee13fa16ed6df49f918790"
+    },
+    {
+     "id": "winter_chinchilla_gingerbread",
+     "title": {
+      "uk": "Пряниковий будиночок",
+      "en": "Gingerbread house",
+      "ru": "Пряничный домик"
+     },
+     "characters": [
+      "pets_chinchilla_shelf"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "winter/winter_chinchilla_gingerbread.zip",
+     "thumbUrl": "winter/winter_chinchilla_gingerbread_thumb.webp",
+     "thumbLockedUrl": "winter/winter_chinchilla_gingerbread_thumb_locked.webp",
+     "sha256": "7984b3a7c04648420ccab8b610b09ab940687fcf75b74d5032b50925d0da2ac8"
     }
    ]
   },
@@ -111,6 +692,125 @@
    },
    "pictures": [
     {
+     "id": "spring_bunny_watering",
+     "title": {
+      "uk": "Кролик поливає квіти",
+      "en": "Bunny waters flowers",
+      "ru": "Кролик поливает цветы"
+     },
+     "characters": [
+      "pets_dwarf_rabbit_balcony"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "spring/spring_bunny_watering.zip",
+     "thumbUrl": "spring/spring_bunny_watering_thumb.webp",
+     "thumbLockedUrl": "spring/spring_bunny_watering_thumb_locked.webp",
+     "sha256": "f9e9b256f8db6f1f1be879ff416ef10c617e90db74e1ed02e0fe11edf3cd89c1"
+    },
+    {
+     "id": "spring_duckling_boat",
+     "title": {
+      "uk": "Каченя і кораблик",
+      "en": "Duckling and a paper boat",
+      "ru": "Утёнок и кораблик"
+     },
+     "characters": [
+      "farm_duckling_puddle"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "spring/spring_duckling_boat.zip",
+     "thumbUrl": "spring/spring_duckling_boat_thumb.webp",
+     "thumbLockedUrl": "spring/spring_duckling_boat_thumb_locked.webp",
+     "sha256": "ad8fca660b176bb29aaba4713f48cf83affb047ee3ee20a0eb1f60ccdeedaedc"
+    },
+    {
+     "id": "spring_foal_wreath",
+     "title": {
+      "uk": "Лоша у віночку",
+      "en": "Foal with a flower crown",
+      "ru": "Жеребёнок в веночке"
+     },
+     "characters": [
+      "farm_foal_spring"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "spring/spring_foal_wreath.zip",
+     "thumbUrl": "spring/spring_foal_wreath_thumb.webp",
+     "thumbLockedUrl": "spring/spring_foal_wreath_thumb_locked.webp",
+     "sha256": "834d82c7b9aaa29a51e5a66d274b8dd324fb2da2e8c3e8a069ef1cde8829811f"
+    },
+    {
+     "id": "spring_kitten_butterfly",
+     "title": {
+      "uk": "Кошеня і метелик",
+      "en": "Kitten and a butterfly",
+      "ru": "Котёнок и бабочка"
+     },
+     "characters": [
+      "felines_kitten_leaves"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "spring/spring_kitten_butterfly.zip",
+     "thumbUrl": "spring/spring_kitten_butterfly_thumb.webp",
+     "thumbLockedUrl": "spring/spring_kitten_butterfly_thumb_locked.webp",
+     "sha256": "dad1ab7793217426eef67c7ab6ca516c4bbe1c60fa5187f83a2f6eb37bd24ee4"
+    },
+    {
+     "id": "spring_shiba_tree",
+     "title": {
+      "uk": "Сіба садить деревце",
+      "en": "Shiba plants a tree",
+      "ru": "Сиба сажает деревце"
+     },
+     "characters": [
+      "canines_shiba_blossoms"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "spring/spring_shiba_tree.zip",
+     "thumbUrl": "spring/spring_shiba_tree_thumb.webp",
+     "thumbLockedUrl": "spring/spring_shiba_tree_thumb_locked.webp",
+     "sha256": "0201cf78a49bf669652178d9010508658413b15d186d75bebf387ef0cab33868"
+    },
+    {
+     "id": "spring_lovebirds_birdhouse",
+     "title": {
+      "uk": "Нерозлучники в шпаківні",
+      "en": "Lovebirds' birdhouse",
+      "ru": "Неразлучники в скворечнике"
+     },
+     "characters": [
+      "pets_lovebird_balcony"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "spring/spring_lovebirds_birdhouse.zip",
+     "thumbUrl": "spring/spring_lovebirds_birdhouse_thumb.webp",
+     "thumbLockedUrl": "spring/spring_lovebirds_birdhouse_thumb_locked.webp",
+     "sha256": "9073c1dcbe07960c8fda0a74efd57173e7ba5005bf435aed14c6521bb3c52235"
+    },
+    {
+     "id": "spring_tortoise_flowerpot",
+     "title": {
+      "uk": "Черепашка з квіткою",
+      "en": "Tortoise with a flower",
+      "ru": "Черепашка с цветком"
+     },
+     "characters": [
+      "pets_tortoise_garden"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "spring/spring_tortoise_flowerpot.zip",
+     "thumbUrl": "spring/spring_tortoise_flowerpot_thumb.webp",
+     "thumbLockedUrl": "spring/spring_tortoise_flowerpot_thumb_locked.webp",
+     "sha256": "b4a91ac8e42ca619f844df27b6c49e7975385d22fee24a65adcdc7ad2b1a11ba"
+    },
+    {
      "id": "spring_spider_umbrella",
      "title": {
       "uk": "Павучок з парасолькою",
@@ -121,9 +821,45 @@
       "spiders_peacock_leaf"
      ],
      "level": "simple",
-     "free": true,
-     "asset": "coloring/free/spring_spider_umbrella/",
-     "thumb": "thumbs/spring_spider_umbrella.webp"
+     "free": false,
+     "url": "spring/spring_spider_umbrella.zip",
+     "thumbUrl": "spring/spring_spider_umbrella_thumb.webp",
+     "thumbLockedUrl": "spring/spring_spider_umbrella_thumb_locked.webp",
+     "sha256": "4eaed12cb8018fae6dc67f31cd6572f48f932f66767a5fb6d113a32d64d929ba"
+    },
+    {
+     "id": "spring_snake_garden",
+     "title": {
+      "uk": "Вужик у саду",
+      "en": "Snake in the garden",
+      "ru": "Ужик в саду"
+     },
+     "characters": [
+      "snakes_garter_garden"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "spring/spring_snake_garden.zip",
+     "thumbUrl": "spring/spring_snake_garden_thumb.webp",
+     "thumbLockedUrl": "spring/spring_snake_garden_thumb_locked.webp",
+     "sha256": "a38044b1b3555c6b956520272def43cc8cf84e34f73f16e92839deda77a8e767"
+    },
+    {
+     "id": "spring_guinea_pig_seeds",
+     "title": {
+      "uk": "Свинка на грядці",
+      "en": "Guinea pig gardener",
+      "ru": "Свинка на грядке"
+     },
+     "characters": [
+      "pets_guinea_pig_lawn"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "spring/spring_guinea_pig_seeds.zip",
+     "thumbUrl": "spring/spring_guinea_pig_seeds_thumb.webp",
+     "thumbLockedUrl": "spring/spring_guinea_pig_seeds_thumb_locked.webp",
+     "sha256": "7507b8c50a852e94b907561f1959dea1766b8becfd1fc5d822cb77daa054e2b6"
     }
    ]
   },
@@ -146,9 +882,164 @@
       "savanna_giraffe"
      ],
      "level": "medium",
-     "free": true,
-     "asset": "coloring/free/summer_giraffe_beach/",
-     "thumb": "thumbs/summer_giraffe_beach.webp"
+     "free": false,
+     "url": "summer/summer_giraffe_beach.zip",
+     "thumbUrl": "summer/summer_giraffe_beach_thumb.webp",
+     "thumbLockedUrl": "summer/summer_giraffe_beach_thumb_locked.webp",
+     "sha256": "06ac2ae7bfee5f8586ff2d689b8c89005304427ec7e0cf6a6d4c8a35600a9850"
+    },
+    {
+     "id": "summer_crab_castle",
+     "title": {
+      "uk": "Краб будує замок",
+      "en": "Crab builds a castle",
+      "ru": "Краб строит замок"
+     },
+     "characters": [
+      "sea_crab_beach"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "summer/summer_crab_castle.zip",
+     "thumbUrl": "summer/summer_crab_castle_thumb.webp",
+     "thumbLockedUrl": "summer/summer_crab_castle_thumb_locked.webp",
+     "sha256": "e42590821647f85fd8929433a55910428188da93d839c9d2d9413fa8e033a1a2"
+    },
+    {
+     "id": "summer_fennec_icecream",
+     "title": {
+      "uk": "Фенек з морозивом",
+      "en": "Fennec with ice cream",
+      "ru": "Фенек с мороженым"
+     },
+     "characters": [
+      "desert_fennec_dunes"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "summer/summer_fennec_icecream.zip",
+     "thumbUrl": "summer/summer_fennec_icecream_thumb.webp",
+     "thumbLockedUrl": "summer/summer_fennec_icecream_thumb_locked.webp",
+     "sha256": "fb326ffddf0a4a50b74044afa0f10c0896002e977543b671369957344638faa0"
+    },
+    {
+     "id": "summer_sea_lion_float",
+     "title": {
+      "uk": "Морський котик і м'яч",
+      "en": "Sea lion and a ball",
+      "ru": "Морской котик и мяч"
+     },
+     "characters": [
+      "sea_sea_lion_rock"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "summer/summer_sea_lion_float.zip",
+     "thumbUrl": "summer/summer_sea_lion_float_thumb.webp",
+     "thumbLockedUrl": "summer/summer_sea_lion_float_thumb_locked.webp",
+     "sha256": "1434e38f0b2003d95216ab1b9273c6be863eb9ca0e6a1c86aa4337f23909d62d"
+    },
+    {
+     "id": "summer_flamingo_pool",
+     "title": {
+      "uk": "Фламінго в басейні",
+      "en": "Flamingo at the pool",
+      "ru": "Фламинго в бассейне"
+     },
+     "characters": [
+      "savanna_flamingo_lake"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "summer/summer_flamingo_pool.zip",
+     "thumbUrl": "summer/summer_flamingo_pool_thumb.webp",
+     "thumbLockedUrl": "summer/summer_flamingo_pool_thumb_locked.webp",
+     "sha256": "5fe3a3f66455206d19ac55cc1640d8976abdd8e9e71cbd4b7d6450899f043f4d"
+    },
+    {
+     "id": "summer_dolphin_ball",
+     "title": {
+      "uk": "Дельфін з м'ячем",
+      "en": "Dolphin with a ball",
+      "ru": "Дельфин с мячом"
+     },
+     "characters": [
+      "sea_dolphin_waves"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "summer/summer_dolphin_ball.zip",
+     "thumbUrl": "summer/summer_dolphin_ball_thumb.webp",
+     "thumbLockedUrl": "summer/summer_dolphin_ball_thumb_locked.webp",
+     "sha256": "643d106b8f333a69b6f6d68a488b14923537882d7c87eaa94a7777eecb2bb301"
+    },
+    {
+     "id": "summer_dog_surf",
+     "title": {
+      "uk": "Песик на серфі",
+      "en": "Surfing puppy",
+      "ru": "Пёсик на сёрфе"
+     },
+     "characters": [
+      "canines_jack_russell_beach"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "summer/summer_dog_surf.zip",
+     "thumbUrl": "summer/summer_dog_surf_thumb.webp",
+     "thumbLockedUrl": "summer/summer_dog_surf_thumb_locked.webp",
+     "sha256": "cee94326c013dfdebd95178e4dc9c2b33f4b96f5a3a43305671075746f1ac8f8"
+    },
+    {
+     "id": "summer_hare_strawberries",
+     "title": {
+      "uk": "Зайчик і полуниця",
+      "en": "Hare and strawberries",
+      "ru": "Зайчик и клубника"
+     },
+     "characters": [
+      "desert_jackrabbit"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "summer/summer_hare_strawberries.zip",
+     "thumbUrl": "summer/summer_hare_strawberries_thumb.webp",
+     "thumbLockedUrl": "summer/summer_hare_strawberries_thumb_locked.webp",
+     "sha256": "8af1a04ad91b730fae5ee86fab0a9dab362ce7ed753610d32290cdf607d0a7f5"
+    },
+    {
+     "id": "summer_puppy_camping",
+     "title": {
+      "uk": "Цуценя в поході",
+      "en": "Puppy goes camping",
+      "ru": "Щенок в походе"
+     },
+     "characters": [
+      "canines_labrador_lake"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "summer/summer_puppy_camping.zip",
+     "thumbUrl": "summer/summer_puppy_camping_thumb.webp",
+     "thumbLockedUrl": "summer/summer_puppy_camping_thumb_locked.webp",
+     "sha256": "ce9993809778d1de323f8de4eb53082a13398e22da5daa5639d0fa38ba93a7e8"
+    },
+    {
+     "id": "summer_zebra_sprinkler",
+     "title": {
+      "uk": "Зебра і поливалка",
+      "en": "Zebra and the sprinkler",
+      "ru": "Зебра и поливалка"
+     },
+     "characters": [
+      "savanna_zebra_foal"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "summer/summer_zebra_sprinkler.zip",
+     "thumbUrl": "summer/summer_zebra_sprinkler_thumb.webp",
+     "thumbLockedUrl": "summer/summer_zebra_sprinkler_thumb_locked.webp",
+     "sha256": "b6ae2a5f3c68435bcc355f0d8567bb2cde287c2b0e55c689b9bc8d12f093bd32"
     }
    ]
   },
@@ -171,9 +1062,164 @@
       "sea_turtle"
      ],
      "level": "simple",
-     "free": true,
-     "asset": "coloring/free/underwater_turtle_cafe/",
-     "thumb": "thumbs/underwater_turtle_cafe.webp"
+     "free": false,
+     "url": "underwater/underwater_turtle_cafe.zip",
+     "thumbUrl": "underwater/underwater_turtle_cafe_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_turtle_cafe_thumb_locked.webp",
+     "sha256": "9abff5ad578055d8a738e42585525e0dc23ffc9ab59f9edda16cafd40545d2b9"
+    },
+    {
+     "id": "underwater_octopus_drums",
+     "title": {
+      "uk": "Восьминіг-барабанщик",
+      "en": "Octopus drummer",
+      "ru": "Осьминог-барабанщик"
+     },
+     "characters": [
+      "sea_octopus_reef"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "underwater/underwater_octopus_drums.zip",
+     "thumbUrl": "underwater/underwater_octopus_drums_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_octopus_drums_thumb_locked.webp",
+     "sha256": "9faaed27b8e043ce40d30f16aca0a222e4cf068b25b943258b9f13a58eaa61a6"
+    },
+    {
+     "id": "underwater_clownfish_home",
+     "title": {
+      "uk": "Рибка-клоун удома",
+      "en": "Clownfish at home",
+      "ru": "Рыбка-клоун дома"
+     },
+     "characters": [
+      "sea_clownfish_anemone"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "underwater/underwater_clownfish_home.zip",
+     "thumbUrl": "underwater/underwater_clownfish_home_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_clownfish_home_thumb_locked.webp",
+     "sha256": "f17015f60cdb064226f23f65191d13f8523454abb15d4b951843a7c3aff97451"
+    },
+    {
+     "id": "underwater_seahorse_bubbles",
+     "title": {
+      "uk": "Морський коник і бульбашки",
+      "en": "Seahorse blows bubbles",
+      "ru": "Морской конёк и пузыри"
+     },
+     "characters": [
+      "sea_seahorse_seagrass"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "underwater/underwater_seahorse_bubbles.zip",
+     "thumbUrl": "underwater/underwater_seahorse_bubbles_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_seahorse_bubbles_thumb_locked.webp",
+     "sha256": "15f7a706d9a0576da994361c96abdb1a6a4827bf842646395444762155a49d85"
+    },
+    {
+     "id": "underwater_beluga_story",
+     "title": {
+      "uk": "Білуха читає казку",
+      "en": "Beluga's story time",
+      "ru": "Белуха читает сказку"
+     },
+     "characters": [
+      "sea_beluga_bubbles"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "underwater/underwater_beluga_story.zip",
+     "thumbUrl": "underwater/underwater_beluga_story_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_beluga_story_thumb_locked.webp",
+     "sha256": "1d2276bc4958657a6cb639ff5541d06781ad25092d786b4be209bb7873a45ea3"
+    },
+    {
+     "id": "underwater_pufferfish_bubble",
+     "title": {
+      "uk": "Рибка-кулька",
+      "en": "Puffy pufferfish",
+      "ru": "Рыбка-шарик"
+     },
+     "characters": [
+      "sea_pufferfish_coral"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "underwater/underwater_pufferfish_bubble.zip",
+     "thumbUrl": "underwater/underwater_pufferfish_bubble_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_pufferfish_bubble_thumb_locked.webp",
+     "sha256": "e6953d220f293f2e2bb93bc150eb9ea946d0c8f13715efbea6acbcaad11802d8"
+    },
+    {
+     "id": "underwater_manatee_garden",
+     "title": {
+      "uk": "Ламантин у садку",
+      "en": "Manatee's garden",
+      "ru": "Ламантин в саду"
+     },
+     "characters": [
+      "sea_manatee_lagoon"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "underwater/underwater_manatee_garden.zip",
+     "thumbUrl": "underwater/underwater_manatee_garden_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_manatee_garden_thumb_locked.webp",
+     "sha256": "396ab8527dca7467bea4c8c4c99069f90fb3cbed8e62ce2bc307ef63d62840e7"
+    },
+    {
+     "id": "underwater_manta_ride",
+     "title": {
+      "uk": "Скат катає рибок",
+      "en": "Manta ray gives a ride",
+      "ru": "Скат катает рыбок"
+     },
+     "characters": [
+      "sea_manta_ray"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "underwater/underwater_manta_ride.zip",
+     "thumbUrl": "underwater/underwater_manta_ride_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_manta_ride_thumb_locked.webp",
+     "sha256": "d92f19dd96b1d074b869f2bd5a1dac38348218c4dd92393652eab294f7b983f2"
+    },
+    {
+     "id": "underwater_jellyfish_dance",
+     "title": {
+      "uk": "Медуза танцює",
+      "en": "Dancing jellyfish",
+      "ru": "Медуза танцует"
+     },
+     "characters": [
+      "sea_jellyfish_glow"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "underwater/underwater_jellyfish_dance.zip",
+     "thumbUrl": "underwater/underwater_jellyfish_dance_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_jellyfish_dance_thumb_locked.webp",
+     "sha256": "9706945d4953ea17d3f6e3d0040547b08a61ff3d260131c1fc330af8ac3a6234"
+    },
+    {
+     "id": "underwater_baby_shark_shells",
+     "title": {
+      "uk": "Акуленя збирає мушлі",
+      "en": "Baby shark collects shells",
+      "ru": "Акулёнок собирает ракушки"
+     },
+     "characters": [
+      "sharks_baby_shark_shells"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "underwater/underwater_baby_shark_shells.zip",
+     "thumbUrl": "underwater/underwater_baby_shark_shells_thumb.webp",
+     "thumbLockedUrl": "underwater/underwater_baby_shark_shells_thumb_locked.webp",
+     "sha256": "b673b5049e6cb0682ac3f9581cef5862458a4ed3ed4aa03fb9c2e9b9a7b1730a"
     }
    ]
   },
@@ -186,19 +1232,155 @@
    },
    "pictures": [
     {
-     "id": "farm_python_picnic",
+     "id": "farm_hens_swing",
      "title": {
-      "uk": "Пітон на пікніку",
-      "en": "Python's picnic",
-      "ru": "Питон на пикнике"
+      "uk": "Курочки на гойдалці",
+      "en": "Hens on a swing",
+      "ru": "Курочки на качелях"
      },
      "characters": [
-      "snakes_python_tree"
+      "farm_hen_chicks"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/farm_hens_swing/",
+     "thumb": "thumbs/farm_hens_swing.webp"
+    },
+    {
+     "id": "farm_calf_wheelbarrow",
+     "title": {
+      "uk": "Теля у візку",
+      "en": "Calf in a wheelbarrow",
+      "ru": "Телёнок в тачке"
+     },
+     "characters": [
+      "farm_calf_barn"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/farm_calf_wheelbarrow/",
+     "thumb": "thumbs/farm_calf_wheelbarrow.webp"
+    },
+    {
+     "id": "farm_llama_garden",
+     "title": {
+      "uk": "Лама на городі",
+      "en": "Llama's garden",
+      "ru": "Лама на огороде"
+     },
+     "characters": [
+      "farm_llama_gate"
      ],
      "level": "medium",
      "free": true,
-     "asset": "coloring/free/farm_python_picnic/",
-     "thumb": "thumbs/farm_python_picnic.webp"
+     "asset": "coloring/free/farm_llama_garden/",
+     "thumb": "thumbs/farm_llama_garden.webp"
+    },
+    {
+     "id": "farm_donkey_apples",
+     "title": {
+      "uk": "Віслючок з яблуками",
+      "en": "Donkey with apples",
+      "ru": "Ослик с яблоками"
+     },
+     "characters": [
+      "farm_donkey_cart"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/farm_donkey_apples/",
+     "thumb": "thumbs/farm_donkey_apples.webp"
+    },
+    {
+     "id": "farm_goat_hay",
+     "title": {
+      "uk": "Козеня на сіні",
+      "en": "Goat kid in the hay",
+      "ru": "Козлёнок на сене"
+     },
+     "characters": [
+      "farm_goat_kid_hay"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/farm_goat_hay/",
+     "thumb": "thumbs/farm_goat_hay.webp"
+    },
+    {
+     "id": "farm_duck_ducklings",
+     "title": {
+      "uk": "Качка з каченятами",
+      "en": "Duck and ducklings",
+      "ru": "Утка с утятами"
+     },
+     "characters": [
+      "farm_duck_pond"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/farm_duck_ducklings/",
+     "thumb": "thumbs/farm_duck_ducklings.webp"
+    },
+    {
+     "id": "farm_rooster_fence",
+     "title": {
+      "uk": "Півник на паркані",
+      "en": "Rooster on a fence",
+      "ru": "Петушок на заборе"
+     },
+     "characters": [
+      "farm_rooster_fence"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/farm_rooster_fence/",
+     "thumb": "thumbs/farm_rooster_fence.webp"
+    },
+    {
+     "id": "farm_cow_milk",
+     "title": {
+      "uk": "Корівка з молоком",
+      "en": "Cow with milk",
+      "ru": "Коровка с молоком"
+     },
+     "characters": [
+      "farm_cow_meadow"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/farm_cow_milk/",
+     "thumb": "thumbs/farm_cow_milk.webp"
+    },
+    {
+     "id": "farm_collie_sheep",
+     "title": {
+      "uk": "Цуценя і овечка",
+      "en": "Puppy and sheep",
+      "ru": "Щенок и овечка"
+     },
+     "characters": [
+      "canines_border_collie_hills",
+      "farm_black_sheep"
+     ],
+     "level": "simple",
+     "free": true,
+     "asset": "coloring/free/farm_collie_sheep/",
+     "thumb": "thumbs/farm_collie_sheep.webp"
+    },
+    {
+     "id": "farm_horse_hay",
+     "title": {
+      "uk": "Конячка везе сіно",
+      "en": "Horse with a hay cart",
+      "ru": "Лошадка везёт сено"
+     },
+     "characters": [
+      "farm_horse_wheat"
+     ],
+     "level": "medium",
+     "free": true,
+     "asset": "coloring/free/farm_horse_hay/",
+     "thumb": "thumbs/farm_horse_hay.webp"
     }
    ]
   },
@@ -211,6 +1393,108 @@
    },
    "pictures": [
     {
+     "id": "hobbies_lion_painting",
+     "title": {
+      "uk": "Левеня малює",
+      "en": "Lion cub paints",
+      "ru": "Львёнок рисует"
+     },
+     "characters": [
+      "savanna_lion_cub"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "hobbies/hobbies_lion_painting.zip",
+     "thumbUrl": "hobbies/hobbies_lion_painting_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_lion_painting_thumb_locked.webp",
+     "sha256": "fe58b26309356ee9de06c5f556adec99f8f2b0ef1680c3d5c79a7dfe3d2ae1c8"
+    },
+    {
+     "id": "hobbies_frog_violin",
+     "title": {
+      "uk": "Жабка-скрипалька",
+      "en": "Frog plays the violin",
+      "ru": "Лягушка-скрипачка"
+     },
+     "characters": [
+      "jungle_tree_frog"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "hobbies/hobbies_frog_violin.zip",
+     "thumbUrl": "hobbies/hobbies_frog_violin_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_frog_violin_thumb_locked.webp",
+     "sha256": "5a2064d62841d2317b22008347ce52b906347b7038c77a8bafc7494ba0d50ccd"
+    },
+    {
+     "id": "hobbies_meerkat_telescope",
+     "title": {
+      "uk": "Сурикат-зіркар",
+      "en": "Meerkat stargazer",
+      "ru": "Сурикат-звездочёт"
+     },
+     "characters": [
+      "desert_meerkat_burrow"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "hobbies/hobbies_meerkat_telescope.zip",
+     "thumbUrl": "hobbies/hobbies_meerkat_telescope_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_meerkat_telescope_thumb_locked.webp",
+     "sha256": "cb99f6bf7c872c99ac7547980d2447642d7db7e50b573d03cf059d910e7f318d"
+    },
+    {
+     "id": "hobbies_dalmatian_bike",
+     "title": {
+      "uk": "Далматинець на велосипеді",
+      "en": "Dalmatian rides a bike",
+      "ru": "Далматинец на велосипеде"
+     },
+     "characters": [
+      "canines_dalmatian_garden"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "hobbies/hobbies_dalmatian_bike.zip",
+     "thumbUrl": "hobbies/hobbies_dalmatian_bike_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_dalmatian_bike_thumb_locked.webp",
+     "sha256": "0ef860582dd99fcc40c03f2706190dfe0c0d8cf5e1c3b74102aee17c1329e504"
+    },
+    {
+     "id": "hobbies_pug_piano",
+     "title": {
+      "uk": "Мопс грає на піаніно",
+      "en": "Pug plays the piano",
+      "ru": "Мопс играет на пианино"
+     },
+     "characters": [
+      "canines_pug_balloons"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "hobbies/hobbies_pug_piano.zip",
+     "thumbUrl": "hobbies/hobbies_pug_piano_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_pug_piano_thumb_locked.webp",
+     "sha256": "0ab28c8687b45644a9be5f51eeec5b78c99d4c6e7e653d34e590db9e34bf3448"
+    },
+    {
+     "id": "hobbies_dachshund_pottery",
+     "title": {
+      "uk": "Такса ліпить вазу",
+      "en": "Dachshund makes a pot",
+      "ru": "Такса лепит вазу"
+     },
+     "characters": [
+      "canines_dachshund_picnic"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "hobbies/hobbies_dachshund_pottery.zip",
+     "thumbUrl": "hobbies/hobbies_dachshund_pottery_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_dachshund_pottery_thumb_locked.webp",
+     "sha256": "d12967e556c251132e0936e6e5ef7c63941e63b58b978e4d580f809bd11fd441"
+    },
+    {
      "id": "hobbies_shark_guitar",
      "title": {
       "uk": "Акула з укулеле",
@@ -221,9 +1505,62 @@
       "sharks_whale_shark_plankton"
      ],
      "level": "simple",
-     "free": true,
-     "asset": "coloring/free/hobbies_shark_guitar/",
-     "thumb": "thumbs/hobbies_shark_guitar.webp"
+     "free": false,
+     "url": "hobbies/hobbies_shark_guitar.zip",
+     "thumbUrl": "hobbies/hobbies_shark_guitar_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_shark_guitar_thumb_locked.webp",
+     "sha256": "062f8e823e337bb94d94d4614224ae673606335fe0ee38c073c3425524ea892a"
+    },
+    {
+     "id": "hobbies_orangutan_fishing",
+     "title": {
+      "uk": "Орангутан на рибалці",
+      "en": "Orangutan goes fishing",
+      "ru": "Орангутан на рыбалке"
+     },
+     "characters": [
+      "jungle_orangutan_rain"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "hobbies/hobbies_orangutan_fishing.zip",
+     "thumbUrl": "hobbies/hobbies_orangutan_fishing_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_orangutan_fishing_thumb_locked.webp",
+     "sha256": "f379faa21c151ce717753e690725aa4fde9e673f62b83eac6d3d7f8300657108"
+    },
+    {
+     "id": "hobbies_ferret_fort",
+     "title": {
+      "uk": "Тхорик читає книжку",
+      "en": "Ferret reads in a fort",
+      "ru": "Хорёк читает книжку"
+     },
+     "characters": [
+      "pets_ferret_blanket"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "hobbies/hobbies_ferret_fort.zip",
+     "thumbUrl": "hobbies/hobbies_ferret_fort_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_ferret_fort_thumb_locked.webp",
+     "sha256": "caf0ecfdd1957559eb3a9eec96de5564cd2e594482e5f4b3aa6849ce3d00e64c"
+    },
+    {
+     "id": "hobbies_gorilla_greenhouse",
+     "title": {
+      "uk": "Горила-садівник",
+      "en": "Gorilla gardener",
+      "ru": "Горилла-садовод"
+     },
+     "characters": [
+      "jungle_gorilla_ferns"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "hobbies/hobbies_gorilla_greenhouse.zip",
+     "thumbUrl": "hobbies/hobbies_gorilla_greenhouse_thumb.webp",
+     "thumbLockedUrl": "hobbies/hobbies_gorilla_greenhouse_thumb_locked.webp",
+     "sha256": "f2cbb5f5c34600f0227f292337510b5ab7124bf59385acc1fffdf640180cbe5f"
     }
    ]
   },
@@ -246,9 +1583,164 @@
       "desert_camel"
      ],
      "level": "medium",
-     "free": true,
-     "asset": "coloring/free/travel_camel_camera/",
-     "thumb": "thumbs/travel_camel_camera.webp"
+     "free": false,
+     "url": "travel/travel_camel_camera.zip",
+     "thumbUrl": "travel/travel_camel_camera_thumb.webp",
+     "thumbLockedUrl": "travel/travel_camel_camera_thumb_locked.webp",
+     "sha256": "d774e48e58d092bada83aeec22845932fc40a67aca09580effdae73785a55e68"
+    },
+    {
+     "id": "travel_samoyed_balloon",
+     "title": {
+      "uk": "Песик на повітряній кулі",
+      "en": "Balloon ride",
+      "ru": "Пёс на воздушном шаре"
+     },
+     "characters": [
+      "canines_samoyed_cosmos"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "travel/travel_samoyed_balloon.zip",
+     "thumbUrl": "travel/travel_samoyed_balloon_thumb.webp",
+     "thumbLockedUrl": "travel/travel_samoyed_balloon_thumb_locked.webp",
+     "sha256": "f01aca3890693263b8a40942eb0287db916144b0eb7248f20f2e561df9d94860"
+    },
+    {
+     "id": "travel_cat_suitcase",
+     "title": {
+      "uk": "Котик у валізі",
+      "en": "Cat in a suitcase",
+      "ru": "Котик в чемодане"
+     },
+     "characters": [
+      "felines_siamese_cushion"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "travel/travel_cat_suitcase.zip",
+     "thumbUrl": "travel/travel_cat_suitcase_thumb.webp",
+     "thumbLockedUrl": "travel/travel_cat_suitcase_thumb_locked.webp",
+     "sha256": "af18e398a4d65c98e1f92d33e9bc3c679ebfcbd1266673f4c23df9799ee5d3d2"
+    },
+    {
+     "id": "travel_poodle_car",
+     "title": {
+      "uk": "Пудель за кермом",
+      "en": "Poodle road trip",
+      "ru": "Пудель за рулём"
+     },
+     "characters": [
+      "canines_poodle_roses"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "travel/travel_poodle_car.zip",
+     "thumbUrl": "travel/travel_poodle_car_thumb.webp",
+     "thumbLockedUrl": "travel/travel_poodle_car_thumb_locked.webp",
+     "sha256": "4f1a6f4cd2f47a893fad3a52b215fe317a37520cabd962811b1546e4b2d4d612"
+    },
+    {
+     "id": "travel_tortoise_sailboat",
+     "title": {
+      "uk": "Черепаха під вітрилом",
+      "en": "Tortoise sets sail",
+      "ru": "Черепаха под парусом"
+     },
+     "characters": [
+      "desert_tortoise_cactus"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "travel/travel_tortoise_sailboat.zip",
+     "thumbUrl": "travel/travel_tortoise_sailboat_thumb.webp",
+     "thumbLockedUrl": "travel/travel_tortoise_sailboat_thumb_locked.webp",
+     "sha256": "b4119cc1e85a426dc599c81d92839cbbb0ba78fd7d9f0f8afeb3a5e840e322f5"
+    },
+    {
+     "id": "travel_parrot_plane",
+     "title": {
+      "uk": "Папуга-льотчик",
+      "en": "Parrot pilot",
+      "ru": "Попугай-лётчик"
+     },
+     "characters": [
+      "pets_grey_parrot_ring"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "travel/travel_parrot_plane.zip",
+     "thumbUrl": "travel/travel_parrot_plane_thumb.webp",
+     "thumbLockedUrl": "travel/travel_parrot_plane_thumb_locked.webp",
+     "sha256": "1068fad287877d624e102997cccf325fa777b56ee39519377a08cac04baed903"
+    },
+    {
+     "id": "travel_rhino_train",
+     "title": {
+      "uk": "Носоріг-машиніст",
+      "en": "Rhino train driver",
+      "ru": "Носорог-машинист"
+     },
+     "characters": [
+      "savanna_rhino_mud"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "travel/travel_rhino_train.zip",
+     "thumbUrl": "travel/travel_rhino_train_thumb.webp",
+     "thumbLockedUrl": "travel/travel_rhino_train_thumb_locked.webp",
+     "sha256": "4f9c8ab11359991c547949b5f0c58a077b3d814f9f95441e10033663261aefab"
+    },
+    {
+     "id": "travel_beagle_station",
+     "title": {
+      "uk": "Бігль на вокзалі",
+      "en": "Beagle at the station",
+      "ru": "Бигль на вокзале"
+     },
+     "characters": [
+      "canines_beagle_clover"
+     ],
+     "level": "simple",
+     "free": false,
+     "url": "travel/travel_beagle_station.zip",
+     "thumbUrl": "travel/travel_beagle_station_thumb.webp",
+     "thumbLockedUrl": "travel/travel_beagle_station_thumb_locked.webp",
+     "sha256": "1e1d16f8980176a8d5e77ebc5428de345325f256ef9020ed69ddaa983f6654e4"
+    },
+    {
+     "id": "travel_saint_bernard_hike",
+     "title": {
+      "uk": "Сенбернар у горах",
+      "en": "Saint Bernard in the Alps",
+      "ru": "Сенбернар в горах"
+     },
+     "characters": [
+      "canines_saint_bernard_alps"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "travel/travel_saint_bernard_hike.zip",
+     "thumbUrl": "travel/travel_saint_bernard_hike_thumb.webp",
+     "thumbLockedUrl": "travel/travel_saint_bernard_hike_thumb_locked.webp",
+     "sha256": "b050bfb615156b5c41955be90eb9dcc5149be79eca491fac4948abf4d866dcf3"
+    },
+    {
+     "id": "travel_tapir_raft",
+     "title": {
+      "uk": "Тапір на плоту",
+      "en": "Tapir on a raft",
+      "ru": "Тапир на плоту"
+     },
+     "characters": [
+      "jungle_tapir_river"
+     ],
+     "level": "medium",
+     "free": false,
+     "url": "travel/travel_tapir_raft.zip",
+     "thumbUrl": "travel/travel_tapir_raft_thumb.webp",
+     "thumbLockedUrl": "travel/travel_tapir_raft_thumb_locked.webp",
+     "sha256": "e1877cc80d118a390f69af67c0e232aad83d8220ead76622138334d611107e40"
     }
    ]
   }

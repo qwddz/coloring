@@ -25,12 +25,10 @@ flutter test                                      # all tests
 flutter test test/features/content/               # one folder
 flutter test --plain-name "<test name>"           # one test by name
 flutter emulators --launch Medium_Phone_API_37.0  # phone emulator (20:9)
-flutter emulators --launch Phone_API_29      # Android 10 (gallery save with legacy storage)
-flutter emulators --launch Phone_API_24      # Android 7 (minSdk, runtime storage permission)
 flutter emulators --launch Tablet_API_37          # tablet emulator (2560x1600, 16:10, Android 16+)
 flutter devices                                   # list devices / emulators
 flutter run -d <device-id>                        # run (fake store, bundled content only)
-flutter run -d <device-id> --dart-define=CDN_BASE_URL=<url> --dart-define=REVENUECAT_API_KEY=<key>  # CDN content, real store
+flutter run -d <device-id> --dart-define=CDN_BASE_URL=https://cdn.animosaic.app/colors --dart-define=REVENUECAT_API_KEY=<key>  # CDN content, real store
 flutter run --profile -d <device-id>              # fill latency (<50 ms) and 60 FPS checks
 flutter run --profile -d <device-id> --dart-define=COLORING_PERF_LOG=true      # log tap-to-pixels latency (`coloring.perf`, p50/p95 every 20 taps)
 flutter run --profile -d <device-id> --dart-define=COLORING_PERF_OVERLAY=true  # performance overlay + FPS counter on the canvas
@@ -50,7 +48,7 @@ The upload key lives outside the project folder, in `~/keys/coloring/` (create i
 COLORING_KEY_PROPERTIES=~/keys/coloring/key.properties flutter build appbundle --release \
   --build-number=$(date -u +%y%m%d%H) \
   --obfuscate --split-debug-info=build/symbols \
-  --dart-define=CDN_BASE_URL=<cdn url> \
+  --dart-define=CDN_BASE_URL=https://cdn.animosaic.app/colors \
   --dart-define=REVENUECAT_API_KEY=$(grep '^REVENUECAT_GOOGLE_API_KEY=' .env | cut -d= -f2-) \
   --dart-define=REVIEW_CODE_SHA256=$(grep '^REVIEW_CODE=' .env | cut -d= -f2- | tr -cd 'A-Z0-9' | shasum -a 256 | cut -c1-64)
 ```

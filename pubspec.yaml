@@ -81,16 +81,36 @@ flutter:
     - assets/audio/
     # coloring-assets:begin (written by tools/coloring_pipeline export)
     - assets/thumbs/
-    - assets/coloring/free/autumn_hamster_leaves/
-    - assets/coloring/free/farm_python_picnic/
+    - assets/coloring/free/farm_calf_wheelbarrow/
+    - assets/coloring/free/farm_collie_sheep/
+    - assets/coloring/free/farm_cow_milk/
+    - assets/coloring/free/farm_donkey_apples/
+    - assets/coloring/free/farm_duck_ducklings/
+    - assets/coloring/free/farm_goat_hay/
+    - assets/coloring/free/farm_hens_swing/
+    - assets/coloring/free/farm_horse_hay/
+    - assets/coloring/free/farm_llama_garden/
+    - assets/coloring/free/farm_rooster_fence/
+    - assets/coloring/free/food_capybara_watermelon/
+    - assets/coloring/free/food_chick_pancakes/
+    - assets/coloring/free/food_elephant_tea/
+    - assets/coloring/free/food_hippo_spaghetti/
+    - assets/coloring/free/food_kitten_donut/
+    - assets/coloring/free/food_lemur_cake/
+    - assets/coloring/free/food_mouse_cheese/
     - assets/coloring/free/food_pig_pie/
-    - assets/coloring/free/hobbies_shark_guitar/
+    - assets/coloring/free/food_spider_cupcakes/
+    - assets/coloring/free/food_toucan_fruit/
+    - assets/coloring/free/home_bunny_book/
+    - assets/coloring/free/home_cat_window/
     - assets/coloring/free/home_fox_cocoa/
-    - assets/coloring/free/spring_spider_umbrella/
-    - assets/coloring/free/summer_giraffe_beach/
-    - assets/coloring/free/travel_camel_camera/
-    - assets/coloring/free/underwater_turtle_cafe/
-    - assets/coloring/free/winter_monkey_snowman/
+    - assets/coloring/free/home_kitten_yarn/
+    - assets/coloring/free/home_otter_tidy/
+    - assets/coloring/free/home_puppy_bath/
+    - assets/coloring/free/home_red_panda_bed/
+    - assets/coloring/free/home_sheep_knitting/
+    - assets/coloring/free/home_sloth_beanbag/
+    - assets/coloring/free/home_snake_cushion/
     # coloring-assets:end
 
   shaders:
