@@ -183,6 +183,11 @@ void main() {
       'Stars',
       'Hearts',
       'Fill',
+      'Wax crayon',
+      'Chalk',
+      'Dots',
+      'Glitter',
+      'Calligraphy',
     ]) {
       expect(
         find.byTooltip('$name: full version only'),
@@ -190,8 +195,8 @@ void main() {
         reason: name,
       );
     }
-    // Seven tools and the mirror.
-    expect(find.byIcon(Icons.lock_rounded), findsNWidgets(8));
+    // Twelve tools and the mirror.
+    expect(find.byIcon(Icons.lock_rounded), findsNWidgets(13));
   });
 
   testWidgets('no locks with the full version', (tester) async {

@@ -364,6 +364,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drawingToolFill => 'Fill';
 
   @override
+  String get drawingToolCrayon => 'Wax crayon';
+
+  @override
+  String get drawingToolChalk => 'Chalk';
+
+  @override
+  String get drawingToolDotted => 'Dots';
+
+  @override
+  String get drawingToolGlitter => 'Glitter';
+
+  @override
+  String get drawingToolCalligraphy => 'Calligraphy';
+
+  @override
   String get drawingUndo => 'Undo';
 
   @override

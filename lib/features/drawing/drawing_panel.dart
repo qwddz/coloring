@@ -235,6 +235,11 @@ String drawingToolName(AppLocalizations l10n, DrawingTool tool) =>
       DrawingTool.stampStar => l10n.drawingToolStars,
       DrawingTool.stampHeart => l10n.drawingToolHearts,
       DrawingTool.fill => l10n.drawingToolFill,
+      DrawingTool.crayon => l10n.drawingToolCrayon,
+      DrawingTool.chalk => l10n.drawingToolChalk,
+      DrawingTool.dotted => l10n.drawingToolDotted,
+      DrawingTool.glitter => l10n.drawingToolGlitter,
+      DrawingTool.calligraphy => l10n.drawingToolCalligraphy,
     };
 
 IconData _iconOf(DrawingTool tool) => switch (tool) {
@@ -250,6 +255,11 @@ IconData _iconOf(DrawingTool tool) => switch (tool) {
   DrawingTool.stampStar => Icons.star_rounded,
   DrawingTool.stampHeart => Icons.favorite_rounded,
   DrawingTool.fill => Icons.format_color_fill_rounded,
+  DrawingTool.crayon => Icons.create_rounded,
+  DrawingTool.chalk => Icons.draw_rounded,
+  DrawingTool.dotted => Icons.more_horiz_rounded,
+  DrawingTool.glitter => Icons.auto_awesome_rounded,
+  DrawingTool.calligraphy => Icons.history_edu_rounded,
 };
 
 class _ToolButton extends ConsumerWidget {

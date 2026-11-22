@@ -343,6 +343,26 @@
   "@drawingToolFill": {
     "description": "Drawing tool name: fills a closed area"
   },
+  "drawingToolCrayon": "Wax crayon",
+  "@drawingToolCrayon": {
+    "description": "Drawing tool name: waxy crayon texture"
+  },
+  "drawingToolChalk": "Chalk",
+  "@drawingToolChalk": {
+    "description": "Drawing tool name: pale powdery chalk"
+  },
+  "drawingToolDotted": "Dots",
+  "@drawingToolDotted": {
+    "description": "Drawing tool name: a line of evenly spaced dots"
+  },
+  "drawingToolGlitter": "Glitter",
+  "@drawingToolGlitter": {
+    "description": "Drawing tool name: sparkly sprinkle of the color"
+  },
+  "drawingToolCalligraphy": "Calligraphy",
+  "@drawingToolCalligraphy": {
+    "description": "Drawing tool name: flat nib, thin and thick lines"
+  },
   "drawingUndo": "Undo",
   "@drawingUndo": {
     "description": "Undo button label"

@@ -13,7 +13,10 @@ const int drawingCanvasHeight = 1536;
 const int drawingWhite = 0xFFFFFFFF;
 
 /// Cells of the generated brush sprite atlas.
-enum BrushSprite { hard, soft, grain0, grain1, grain2, grain3, blot, dot }
+///
+/// `flat` is a thin capsule (a calligraphy nib), appended last so the cells
+/// of the older sprites keep their places.
+enum BrushSprite { hard, soft, grain0, grain1, grain2, grain3, blot, dot, flat }
 
 /// Where a dab's color comes from.
 enum BrushColorMode { selected, white, rainbow }
@@ -62,7 +65,11 @@ class BrushSpec {
     this.kind = BrushKind.dabs,
     this.bleed = false,
     this.sprayDensity = 0,
+    this.minSprayDots = 1,
     this.dotScale = 0,
+    this.colorJitter = 0,
+    this.sparkle = 0,
+    this.fixedRotation = 0,
     this.stamp,
   });
 
@@ -102,10 +109,23 @@ class BrushSpec {
   final bool bleed;
 
   /// Airbrush: each sample point sprays `round(sprayDensity × radius)` dots
-  /// (at least 1) of radius `max(1, dotScale × radius)` uniformly in the
+  /// (at least [minSprayDots]) of radius `max(1, dotScale × radius)` uniformly in the
   /// disk of the stroke radius. 0 = no spray.
   final double sprayDensity;
+  final int minSprayDots;
   final double dotScale;
+
+  /// Spray only: each dot's color is moved toward white or black by up to
+  /// this much (0..1), uniform in ±[colorJitter] (glitter).
+  final double colorJitter;
+
+  /// Spray only: chance (0..1) that a dot is a pale cream sparkle
+  /// (`sparkleColor`), drawn `sparkleScale` times bigger.
+  final double sparkle;
+
+  /// Rotation in radians added to every dab (calligraphy's nib angle);
+  /// negated in the mirror copy like the jitter.
+  final double fixedRotation;
 
   /// The outline for [BrushKind.stamps].
   final StampShape? stamp;
@@ -122,8 +142,10 @@ class BrushSpec {
 enum ToolGroup { basic, fun, artistic, magic }
 
 const double _deg20 = 20 * pi / 180;
+const double _deg45 = 45 * pi / 180;
 
-/// The drawing tools in panel order; persisted by [name].
+/// The drawing tools in panel order; persisted by [name] (never by index),
+/// so new tools go next to their group.
 enum DrawingTool {
   pencil(
     ToolGroup.basic,
@@ -186,6 +208,36 @@ enum DrawingTool {
       scatter: 0.08,
     ),
   ),
+  crayon(
+    ToolGroup.artistic,
+    isFree: false,
+    spec: BrushSpec(
+      passes: [BrushPass(sprite: BrushSprite.grain0)],
+      radiusFactor: 0.8,
+      spacing: 0.15,
+      dabAlpha: 0.75,
+      layerOpacity: 0.85,
+      spriteVariants: 4,
+      rotationJitter: pi,
+      sizeJitter: 0.05,
+      scatter: 0.04,
+    ),
+  ),
+  chalk(
+    ToolGroup.artistic,
+    isFree: false,
+    spec: BrushSpec(
+      passes: [BrushPass(sprite: BrushSprite.grain0, tint: 0.3)],
+      radiusFactor: 1.1,
+      spacing: 0.2,
+      dabAlpha: 0.5,
+      layerOpacity: 0.6,
+      spriteVariants: 4,
+      rotationJitter: pi,
+      sizeJitter: 0.1,
+      scatter: 0.15,
+    ),
+  ),
   watercolor(
     ToolGroup.artistic,
     isFree: false,
@@ -212,6 +264,18 @@ enum DrawingTool {
       dotScale: 0.06,
     ),
   ),
+  calligraphy(
+    ToolGroup.artistic,
+    isFree: false,
+    spec: BrushSpec(
+      passes: [BrushPass(sprite: BrushSprite.flat)],
+      // As few dabs per pixel as the pencil at its full pressure; the
+      // nib's round ends keep the edges smooth at this spacing.
+      spacing: 0.09,
+      minPressureScale: 0.6,
+      fixedRotation: -_deg45,
+    ),
+  ),
   neon(
     ToolGroup.fun,
     isFree: false,
@@ -221,6 +285,30 @@ enum DrawingTool {
         BrushPass(sprite: BrushSprite.hard, radiusScale: 0.45, tint: 0.7),
       ],
       spacing: 0.12,
+    ),
+  ),
+  dotted(
+    ToolGroup.fun,
+    isFree: false,
+    spec: BrushSpec(
+      passes: [BrushPass(sprite: BrushSprite.hard)],
+      radiusFactor: 0.6,
+      spacing: 1.5,
+      minPressureScale: 1,
+    ),
+  ),
+  glitter(
+    ToolGroup.fun,
+    isFree: false,
+    spec: BrushSpec(
+      passes: [BrushPass(sprite: BrushSprite.dot)],
+      radiusFactor: 1.2,
+      spacing: 0.3,
+      sprayDensity: 0.25,
+      minSprayDots: 3,
+      dotScale: 0.09,
+      colorJitter: 0.35,
+      sparkle: 0.12,
     ),
   ),
   stampStar(

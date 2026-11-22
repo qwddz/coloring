@@ -368,6 +368,21 @@ class AppLocalizationsUk extends AppLocalizations {
   String get drawingToolFill => 'Заливка';
 
   @override
+  String get drawingToolCrayon => 'Воскова крейда';
+
+  @override
+  String get drawingToolChalk => 'Крейда';
+
+  @override
+  String get drawingToolDotted => 'Крапочки';
+
+  @override
+  String get drawingToolGlitter => 'Блискітки';
+
+  @override
+  String get drawingToolCalligraphy => 'Каліграфія';
+
+  @override
   String get drawingUndo => 'Скасувати';
 
   @override

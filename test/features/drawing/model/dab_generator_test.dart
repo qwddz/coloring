@@ -79,6 +79,24 @@ double hueOf(int argb) {
   return (h * 60) % 360;
 }
 
+/// Dab count and FNV-1a hash of the rounded dab fields.
+(int, int) fingerprint(List<Dab> dabs) {
+  var hash = 0x811C9DC5;
+  for (final d in dabs) {
+    for (final v in [
+      (d.x * 1000).round(),
+      (d.y * 1000).round(),
+      (d.radius * 1000).round(),
+      (d.rotation * 1000000).round(),
+      d.color,
+      d.variant,
+    ]) {
+      hash = ((hash ^ (v & 0xFFFFFFFF)) * 0x01000193) & 0xFFFFFFFF;
+    }
+  }
+  return (dabs.length, hash);
+}
+
 void main() {
   group('spacing', () {
     test('pencil dabs are evenly spaced along a straight line (±1 px)', () {
@@ -314,6 +332,185 @@ void main() {
         expect(b.rotation, closeTo(-a.rotation, 1e-12));
         expect(b.variant, a.variant);
       }
+    }
+  });
+
+  group('new paid tools', () {
+    const added = [
+      DrawingTool.crayon,
+      DrawingTool.chalk,
+      DrawingTool.dotted,
+      DrawingTool.glitter,
+      DrawingTool.calligraphy,
+    ];
+
+    test('replay deterministically, add equals generate', () {
+      for (final tool in added) {
+        final stroke = input(tool, scribble(21, 30), seed: 4);
+        final g = DabGenerator.forInput(stroke);
+        final incremental = [
+          for (final p in stroke.points) ...g.add(p),
+          ...g.finish(),
+        ];
+        final batch = DabGenerator.generate(stroke);
+        expect(batch, isNotEmpty, reason: tool.name);
+        expect(incremental, batch, reason: tool.name);
+        expect(DabGenerator.generate(stroke), batch, reason: tool.name);
+      }
+    });
+
+    test('the mirror copy is the exact mirror image', () {
+      for (final tool in added) {
+        final all = DabGenerator.generate(
+          input(tool, scribble(12, 25), symmetry: SymmetryMode.vertical),
+        );
+        final half = all.length ~/ 2;
+        expect(all.length, half * 2, reason: tool.name);
+        for (var i = 0; i < half; i++) {
+          final a = all[i];
+          final b = all[half + i];
+          expect(
+            b.x,
+            closeTo(drawingCanvasWidth - a.x, 1e-6),
+            reason: tool.name,
+          );
+          expect(b.y, closeTo(a.y, 1e-6));
+          expect(b.radius, closeTo(a.radius, 1e-9));
+          expect(b.rotation, closeTo(-a.rotation, 1e-12));
+          expect(b.color, a.color);
+          expect(b.variant, a.variant);
+        }
+      }
+    });
+
+    test('dots are at least a dot diameter apart', () {
+      final dabs = DabGenerator.generate(
+        input(DrawingTool.dotted, line(100, 400, 1500, 400, 70)),
+      );
+      expect(dabs.length, greaterThan(5));
+      for (var i = 1; i < dabs.length; i++) {
+        final gap = dabs[i].x - dabs[i - 1].x;
+        expect(gap, greaterThanOrEqualTo(2 * dabs[i].radius), reason: '$i');
+      }
+    });
+
+    test('glitter dots and sparkles stay inside the stroke', () {
+      const size = BrushSize.large;
+      final spec = DrawingTool.glitter.spec;
+      final dabs = DabGenerator.generate(
+        input(DrawingTool.glitter, line(200, 600, 1200, 600, 50), size: size),
+      );
+      final radius = size.width / 2 * spec.radiusFactor;
+      final dotRadius = spec.dotScale * radius;
+      final sparkles = dabs.where((d) => d.color == sparkleColor).toList();
+      expect(sparkles, isNotEmpty);
+      expect(sparkleColor, isNot(drawingWhite));
+      expect(dabs.map((d) => d.color).toSet().length, greaterThan(10));
+      for (final d in dabs) {
+        expect(
+          d.radius,
+          closeTo(
+            d.color == sparkleColor ? dotRadius * sparkleScale : dotRadius,
+            1e-9,
+          ),
+        );
+        // The dot itself, not only its center, stays in the stroke.
+        expect(
+          (d.y - 600).abs() + d.radius,
+          lessThanOrEqualTo(radius * (1 + spec.dotScale * sparkleScale)),
+        );
+        expect(d.x, inInclusiveRange(200 - radius, 1200 + radius));
+      }
+    });
+
+    test('small glitter sprays at least 3 dots per sample', () {
+      final tap = DabGenerator.generate(
+        input(DrawingTool.glitter, const [
+          StrokePoint(300, 300),
+        ], size: BrushSize.small),
+      );
+      expect(
+        tap.length,
+        greaterThanOrEqualTo(DrawingTool.glitter.spec.minSprayDots),
+      );
+      expect(tap.length, greaterThanOrEqualTo(3));
+    });
+
+    test('calligraphy makes no more dabs per pixel than the pencil', () {
+      for (final size in BrushSize.values) {
+        for (final pressure in [0.0, 0.5, 1.0]) {
+          final points = [
+            for (var i = 0; i <= 60; i++)
+              StrokePoint(100 + i * 25.0, 700, pressure: pressure),
+          ];
+          final pencil = DabGenerator.generate(
+            input(DrawingTool.pencil, points, size: size),
+          );
+          final calligraphy = DabGenerator.generate(
+            input(DrawingTool.calligraphy, points, size: size),
+          );
+          expect(
+            calligraphy.length,
+            lessThanOrEqualTo(pencil.length),
+            reason: '${size.name} $pressure',
+          );
+        }
+      }
+    });
+
+    test('calligraphy dabs carry the fixed nib angle', () {
+      final rotation = DrawingTool.calligraphy.spec.fixedRotation;
+      final dabs = DabGenerator.generate(
+        input(
+          DrawingTool.calligraphy,
+          scribble(5, 20),
+          symmetry: SymmetryMode.vertical,
+        ),
+      );
+      final half = dabs.length ~/ 2;
+      for (var i = 0; i < dabs.length; i++) {
+        expect(dabs[i].rotation, i < half ? rotation : -rotation);
+      }
+    });
+
+    test('mixWithBlack darkens toward black', () {
+      expect(mixWithBlack(0xFFFFFFFF, 1), 0xFF000000);
+      expect(mixWithBlack(0x80FF8040, 0), 0x80FF8040);
+      expect(mixWithBlack(0xFF808080, 0.5), 0xFF404040);
+    });
+  });
+
+  test('older tools keep their exact dabs (pinned from ea6419f)', () {
+    // Count and FNV-1a hash of the rounded dabs, recorded with the
+    // ea6419f model code: new brush features must not change old strokes.
+    const expected = {
+      DrawingTool.pencil: (506, 0x0c9008a7),
+      DrawingTool.pastel: (198, 0x0a62c8cb),
+      DrawingTool.watercolor: (218, 0xa4601bb5),
+      DrawingTool.airbrush: (2346, 0xc8eb288f),
+      DrawingTool.neon: (656, 0x2c122581),
+      DrawingTool.rainbow: (328, 0x6e7cd33b),
+    };
+    final points = [
+      for (var i = 0; i <= 24; i++)
+        StrokePoint(
+          400 + i * 30.0,
+          600 + (i % 5) * 18.0 - (i % 3) * 11.0,
+          pressure: 0.3 + (i % 4) * 0.2,
+          tMillis: i * 16,
+        ),
+    ];
+    for (final MapEntry(key: tool, value: pin) in expected.entries) {
+      final dabs = DabGenerator.generate(
+        input(
+          tool,
+          points,
+          size: BrushSize.large,
+          seed: 2024,
+          symmetry: SymmetryMode.vertical,
+        ),
+      );
+      expect(fingerprint(dabs), pin, reason: tool.name);
     }
   });
 

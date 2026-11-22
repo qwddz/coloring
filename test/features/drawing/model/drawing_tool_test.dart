@@ -17,9 +17,14 @@ void main() {
       DrawingTool.eraser,
       DrawingTool.rainbow,
       DrawingTool.pastel,
+      DrawingTool.crayon,
+      DrawingTool.chalk,
       DrawingTool.watercolor,
       DrawingTool.airbrush,
+      DrawingTool.calligraphy,
       DrawingTool.neon,
+      DrawingTool.dotted,
+      DrawingTool.glitter,
       DrawingTool.stampStar,
       DrawingTool.stampHeart,
       DrawingTool.fill,
@@ -95,6 +100,53 @@ void main() {
       }
       if (t != DrawingTool.neon) {
         expect(t.spec.passes, hasLength(1), reason: t.name);
+      }
+    }
+  });
+
+  test('the new paid tools', () {
+    for (final t in [
+      DrawingTool.crayon,
+      DrawingTool.chalk,
+      DrawingTool.dotted,
+      DrawingTool.glitter,
+      DrawingTool.calligraphy,
+    ]) {
+      expect(t.isFree, isFalse, reason: t.name);
+    }
+    final crayon = DrawingTool.crayon.spec;
+    final pastel = DrawingTool.pastel.spec;
+    expect(crayon.sprite, BrushSprite.grain0);
+    expect(crayon.spriteVariants, 4);
+    // Denser than pastel, but capped below solid so the grain shows.
+    expect(
+      crayon.dabAlpha * crayon.layerOpacity,
+      greaterThan(pastel.dabAlpha * pastel.layerOpacity),
+    );
+    expect(crayon.spacing, lessThan(pastel.spacing));
+    expect(crayon.layerOpacity, lessThan(1));
+    expect(DrawingTool.chalk.spec.layerOpacity, lessThan(1));
+    expect(DrawingTool.chalk.spec.passes.single.tint, greaterThan(0));
+    expect(DrawingTool.chalk.spec.scatter, greaterThan(pastel.scatter));
+    final dotted = DrawingTool.dotted.spec;
+    expect(dotted.pressureScale(0), dotted.pressureScale(1));
+    expect(dotted.spacing, greaterThanOrEqualTo(1));
+    final glitter = DrawingTool.glitter.spec;
+    expect(glitter.sprayDensity, greaterThan(0));
+    expect(glitter.colorJitter, greaterThan(0));
+    expect(glitter.sparkle, inExclusiveRange(0, 1));
+    expect(glitter.minSprayDots, greaterThanOrEqualTo(3));
+    final calligraphy = DrawingTool.calligraphy.spec;
+    expect(calligraphy.sprite, BrushSprite.flat);
+    expect(calligraphy.fixedRotation, isNot(0));
+    expect(calligraphy.rotationJitter, 0);
+    for (final t in DrawingTool.values) {
+      if (t != DrawingTool.glitter) {
+        expect(t.spec.colorJitter, 0, reason: t.name);
+        expect(t.spec.sparkle, 0, reason: t.name);
+      }
+      if (t != DrawingTool.calligraphy) {
+        expect(t.spec.fixedRotation, 0, reason: t.name);
       }
     }
   });

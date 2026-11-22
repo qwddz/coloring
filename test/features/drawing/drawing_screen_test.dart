@@ -226,8 +226,12 @@ void main() {
     final access = StreamController<bool>();
     addTearDown(access.close);
     await pumpDrawing(tester, fullAccess: () => access.stream);
-    // Locked-looking while the status loads.
-    await tester.tap(find.byTooltip('Fill: full version only'));
+    // Locked-looking while the status loads. Fill is last in the scrolling
+    // tools column.
+    final fill = find.byTooltip('Fill: full version only');
+    await tester.ensureVisible(fill);
+    await tester.pump();
+    await tester.tap(fill);
     await tester.pump();
     expect(find.text('For grown-ups'), findsNothing);
     access.add(true);

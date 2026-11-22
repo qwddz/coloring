@@ -10,6 +10,12 @@ const double rainbowPixelsPerDegree = 6;
 const double rainbowSaturation = 0.85;
 const double rainbowValue = 0.95;
 
+/// A glitter sparkle dot is this many times the size of the other dots.
+const double sparkleScale = 1.6;
+
+/// Glitter sparkles: a pale cream highlight, still visible on white paper.
+const int sparkleColor = 0xFFF3E3B5;
+
 /// The curve between two input points is walked in steps of at most this
 /// many pixels.
 const double _maxStep = 1;
@@ -206,7 +212,11 @@ class DabGenerator {
       dy = sin(angle) * dist;
     }
     final radius = baseRadius * (1 + sizeJitter);
-    final rotation = mirrored ? -rotationJitter : rotationJitter;
+    // Added only when set, so tools without it keep their exact rotations.
+    final turned = spec.fixedRotation == 0
+        ? rotationJitter
+        : rotationJitter + spec.fixedRotation;
+    final rotation = mirrored ? -turned : turned;
     if (mirrored) dx = -dx;
     final dabColor = switch (spec.colorMode) {
       BrushColorMode.selected => color,
@@ -218,18 +228,32 @@ class DabGenerator {
 
     if (spec.sprayDensity > 0) {
       final pass = spec.passes.first;
-      final dots = max(1, (spec.sprayDensity * radius).round());
+      final dots = max(spec.minSprayDots, (spec.sprayDensity * radius).round());
       final dotRadius = max(1.0, spec.dotScale * radius);
       for (var i = 0; i < dots; i++) {
         final angle = _random.nextDouble() * 2 * pi;
         final dist = radius * sqrt(_random.nextDouble());
         final ox = cos(angle) * dist;
+        // Glitter's extra draws happen only when set, so the other spray
+        // tools keep their exact dots.
+        var dotColor = mixWithWhite(dabColor, pass.tint);
+        if (spec.colorJitter > 0) {
+          final shade = _jitter(spec.colorJitter);
+          dotColor = shade >= 0
+              ? mixWithWhite(dotColor, shade)
+              : mixWithBlack(dotColor, -shade);
+        }
+        var dotScale = 1.0;
+        if (spec.sparkle > 0 && _random.nextDouble() < spec.sparkle) {
+          dotColor = sparkleColor;
+          dotScale = sparkleScale;
+        }
         out.add(
           Dab(
             x: x + dx + (mirrored ? -ox : ox),
             y: y + dy + sin(angle) * dist,
-            radius: dotRadius * pass.radiusScale,
-            color: mixWithWhite(dabColor, pass.tint),
+            radius: dotRadius * pass.radiusScale * dotScale,
+            color: dotColor,
             alpha: spec.dabAlpha * pass.alpha,
           ),
         );
@@ -290,6 +314,18 @@ int mixWithWhite(int argb, double amount) {
   int mix(int shift) {
     final c = (argb >> shift) & 0xFF;
     return (c + (255 - c) * amount).round().clamp(0, 255) << shift;
+  }
+
+  return (argb & 0xFF000000) | mix(16) | mix(8) | mix(0);
+}
+
+/// [argb] with each color channel moved [amount] (0..1) of the way to
+/// black; alpha kept.
+int mixWithBlack(int argb, double amount) {
+  if (amount <= 0) return argb;
+  int mix(int shift) {
+    final c = (argb >> shift) & 0xFF;
+    return (c * (1 - amount)).round().clamp(0, 255) << shift;
   }
 
   return (argb & 0xFF000000) | mix(16) | mix(8) | mix(0);

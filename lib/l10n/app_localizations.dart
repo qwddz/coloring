@@ -760,6 +760,36 @@ abstract class AppLocalizations {
   /// **'Fill'**
   String get drawingToolFill;
 
+  /// Drawing tool name: waxy crayon texture
+  ///
+  /// In en, this message translates to:
+  /// **'Wax crayon'**
+  String get drawingToolCrayon;
+
+  /// Drawing tool name: pale powdery chalk
+  ///
+  /// In en, this message translates to:
+  /// **'Chalk'**
+  String get drawingToolChalk;
+
+  /// Drawing tool name: a line of evenly spaced dots
+  ///
+  /// In en, this message translates to:
+  /// **'Dots'**
+  String get drawingToolDotted;
+
+  /// Drawing tool name: sparkly sprinkle of the color
+  ///
+  /// In en, this message translates to:
+  /// **'Glitter'**
+  String get drawingToolGlitter;
+
+  /// Drawing tool name: flat nib, thin and thick lines
+  ///
+  /// In en, this message translates to:
+  /// **'Calligraphy'**
+  String get drawingToolCalligraphy;
+
   /// Undo button label
   ///
   /// In en, this message translates to:

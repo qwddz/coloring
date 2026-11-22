@@ -12,7 +12,7 @@ import '../model/drawing_tool.dart';
 const int spriteCellSize = 128;
 
 /// The atlas holds one row of cells, one per [BrushSprite] in enum order.
-const int spriteAtlasWidth = spriteCellSize * 8;
+final int spriteAtlasWidth = spriteCellSize * BrushSprite.values.length;
 const int spriteAtlasHeight = spriteCellSize;
 
 /// Radius, in texels, of the shape in each cell (the unit circle of the
@@ -146,6 +146,7 @@ Float64List _coverage(BrushSprite sprite, Random random) {
         BrushSprite.grain3 =>
           _edge(d, 1.2 / r) * grain![(y ~/ 2) * (n ~/ 2) + x ~/ 2],
         BrushSprite.blot => _blot(d, atan2(dy, dx), phases!),
+        BrushSprite.flat => _flat(dx, dy, r),
       };
     }
   }
@@ -176,6 +177,20 @@ double _blot(double d, double angle, List<double> phases) {
   final inside = 1 - _smoothstep(0.9, 1, rd);
   final rim = 0.55 + 0.45 * _smoothstep(0.55, 0.95, rd);
   return inside * rim;
+}
+
+/// Half-height of the flat nib relative to the unit radius.
+const double _flatAspect = 0.22;
+
+/// A thin horizontal capsule across the full width of the unit disk (the
+/// calligraphy nib): straight long sides and round ends, so dabs spaced
+/// along a stroke leave smooth edges. The rim is a 1.2-texel ramp of the
+/// exact distance to the capsule.
+double _flat(double dx, double dy, double r) {
+  final half = _flatAspect * r;
+  final ex = max(0.0, dx.abs() - (r - half));
+  final distance = sqrt(ex * ex + dy * dy) - half;
+  return (-distance / 1.2 + 0.5).clamp(0.0, 1.0);
 }
 
 /// 1 inside the unit disk, 0 outside, a linear ramp of [width] at the edge.

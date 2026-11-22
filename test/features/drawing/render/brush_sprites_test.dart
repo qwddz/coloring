@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:coloring/features/drawing/model/drawing_tool.dart';
 import 'package:coloring/features/drawing/render/brush_sprites.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -66,6 +68,33 @@ void main() {
         expect(grains[i], isNot(grains[j]));
       }
     }
+  });
+
+  test('the atlas has one cell per sprite', () {
+    expect(spriteAtlasWidth, spriteCellSize * BrushSprite.values.length);
+    expect(BrushSprite.values.last, BrushSprite.flat);
+  });
+
+  test('the flat nib fits the unit circle and is wider than tall', () {
+    final pixels = brushSpritePixels();
+    const c = spriteCellSize / 2;
+    var minX = spriteCellSize, maxX = -1, minY = spriteCellSize, maxY = -1;
+    for (var y = 0; y < spriteCellSize; y++) {
+      for (var x = 0; x < spriteCellSize; x++) {
+        if (alphaAt(pixels, BrushSprite.flat, x, y) == 0) continue;
+        final d = sqrt(pow(x + 0.5 - c, 2) + pow(y + 0.5 - c, 2));
+        expect(d, lessThanOrEqualTo(spriteShapeRadius + 1), reason: '($x, $y)');
+        minX = min(minX, x);
+        maxX = max(maxX, x);
+        minY = min(minY, y);
+        maxY = max(maxY, y);
+      }
+    }
+    expect(alphaAt(pixels, BrushSprite.flat, c.toInt(), c.toInt()), 255);
+    final width = maxX - minX + 1;
+    final height = maxY - minY + 1;
+    expect(width, greaterThan(spriteShapeRadius * 1.9));
+    expect(height, lessThan(width / 3));
   });
 
   test('the image matches the bytes', () async {
