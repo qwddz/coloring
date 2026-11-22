@@ -118,12 +118,13 @@ void main() {
     final pastel = DrawingTool.pastel.spec;
     expect(crayon.sprite, BrushSprite.grain0);
     expect(crayon.spriteVariants, 4);
-    // Denser than pastel, but capped below solid so the grain shows.
+    // Each dab denser than pastel, but spaced and capped below solid so
+    // the grain shows through the overlaps.
     expect(
       crayon.dabAlpha * crayon.layerOpacity,
       greaterThan(pastel.dabAlpha * pastel.layerOpacity),
     );
-    expect(crayon.spacing, lessThan(pastel.spacing));
+    expect(crayon.spacing, greaterThan(pastel.spacing));
     expect(crayon.layerOpacity, lessThan(1));
     expect(DrawingTool.chalk.spec.layerOpacity, lessThan(1));
     expect(DrawingTool.chalk.spec.passes.single.tint, greaterThan(0));

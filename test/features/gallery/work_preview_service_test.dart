@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
+import 'package:coloring/features/catalog/domain/content_manifest.dart';
 import 'package:coloring/features/coloring/data/picture_loader.dart';
 import 'package:coloring/features/coloring/model/coloring_mode.dart';
 import 'package:coloring/features/coloring/model/work.dart';
@@ -69,10 +70,12 @@ class RecordingRepository extends InMemoryWorkRepository {
 WorkPreviewService serviceFor(
   WorkRepository repository, {
   PictureLoader? loader,
+  Future<bool> Function(PictureEntry entry)? isLocal,
 }) => WorkPreviewService(
   repository: repository,
   loader: loader ?? FakePictureLoader(),
   manifest: () async => fixtureManifest,
+  isLocal: isLocal,
 );
 
 ui.Image linesImage() {
@@ -248,6 +251,34 @@ void main() {
           ),
           isTrue,
         );
+      });
+    });
+
+    testWidgets('renders a CDN picture already on the device', (tester) async {
+      await tester.runAsync(() async {
+        final repo = RecordingRepository();
+        final loader = FakePictureLoader();
+        final local = <String>{freePictureId, paidPictureId};
+        final service = serviceFor(
+          repo,
+          loader: loader,
+          isLocal: (entry) async => local.contains(entry.id),
+        );
+        final downloaded = make(paidPictureId, 1000);
+        await repo.save(downloaded);
+
+        await service.backfill(await summaries(repo, [downloaded]));
+        expect(repo.calls, [(downloaded.id, downloaded.modified)]);
+
+        // Not downloaded: skipped, nothing is loaded.
+        local.remove(paidPictureId);
+        final later = make(paidPictureId, 2000);
+        await repo.save(later);
+        repo.calls.clear();
+        loader.loadedIds.clear();
+        await service.backfill(await summaries(repo, [later]));
+        expect(repo.calls, isEmpty);
+        expect(loader.loadedIds, isEmpty);
       });
     });
 

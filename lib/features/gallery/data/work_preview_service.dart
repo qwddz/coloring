@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../catalog/data/manifest_provider.dart';
 import '../../catalog/domain/content_manifest.dart';
 import '../../coloring/data/picture_loader.dart';
+import '../../content/data/picture_store.dart';
 import '../../coloring/model/region_map.dart';
 import '../../progress/data/work_repository.dart';
 import 'work_renderer.dart';
@@ -25,11 +26,15 @@ class WorkPreviewService {
     required this._repository,
     required this._loader,
     required this._manifest,
-  });
+    Future<bool> Function(PictureEntry entry)? isLocal,
+  }) : _isLocal = isLocal ?? ((entry) async => entry.asset != null);
 
   final WorkRepository _repository;
   final PictureLoader _loader;
   final Future<ContentManifest> Function() _manifest;
+
+  /// Whether a picture loads without the network (bundled or downloaded).
+  final Future<bool> Function(PictureEntry entry) _isLocal;
 
   Future<void> _tail = Future.value();
   int _backfillRun = 0;
@@ -59,8 +64,9 @@ class WorkPreviewService {
   }
 
   /// Draws the missing and stale previews of [works], one at a time, for
-  /// bundled pictures only: works of CDN pictures and of pictures missing
-  /// from the manifest are skipped, so this never downloads. A newer call,
+  /// bundled and already downloaded pictures only: works of pictures not
+  /// on the device or missing from the manifest are skipped, so this never
+  /// downloads. A newer call,
   /// [cancelBackfill] or [dispose] stops it before the next work.
   Future<void> backfill(List<WorkSummary> works) async {
     final run = ++_backfillRun;
@@ -104,7 +110,7 @@ class WorkPreviewService {
           final current = WorkSummary(work, preview: previews[workId]);
           if (!current.previewStale || cancelled()) return;
           final entry = manifest.pictureById(work.pictureId);
-          if (entry == null || entry.asset == null) return;
+          if (entry == null || !await _isLocal(entry)) return;
           final picture = await _loader.load(entry);
           try {
             await _render(
@@ -164,6 +170,9 @@ final workPreviewServiceProvider = Provider<WorkPreviewService>((ref) {
     repository: ref.watch(workRepositoryProvider),
     loader: ref.watch(pictureLoaderProvider),
     manifest: () => ref.read(manifestProvider.future),
+    isLocal: (entry) async =>
+        entry.asset != null ||
+        await ref.read(pictureStoreProvider).isLocal(entry),
   );
   ref.onDispose(service.dispose);
   return service;

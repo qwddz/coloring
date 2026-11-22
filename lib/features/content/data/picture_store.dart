@@ -120,6 +120,20 @@ class PictureStore {
   /// picture share one download.
   final _loads = <String, _Load>{};
 
+  /// Whether [load] can return [entry] without the network: it is bundled,
+  /// or its zip with the current checksum is already unpacked.
+  Future<bool> isLocal(PictureEntry entry) async {
+    final assetPath = entry.assetPath;
+    if (assetPath != null &&
+        (await _assetList()).contains('$assetPath${PictureLayers.lines}')) {
+      return true;
+    }
+    final checksum = entry.sha256;
+    if (checksum == null) return false;
+    final folder = await (_folder ??= _openFolder());
+    return _isComplete(Directory('${folder.path}/${entry.id}'), checksum);
+  }
+
   /// [onProgress] gets the downloaded share from 0 to 1; it is not called
   /// for bundled or cached pictures.
   Future<PictureFiles> load(

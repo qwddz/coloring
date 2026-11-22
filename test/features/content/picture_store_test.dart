@@ -104,6 +104,22 @@ void main() {
     expect(again, isEmpty);
   });
 
+  test(
+    'isLocal: only a complete download of the current zip, no fetch',
+    () async {
+      final entry = entryFor(zip);
+      expect(await store.isLocal(entry), isFalse);
+      expect(cdn.requests, isEmpty);
+      await store.load(entry);
+      expect(await store.isLocal(entry), isTrue);
+      final newZip = zipOf(layers(2));
+      expect(await store.isLocal(entryFor(newZip)), isFalse);
+      File('${folder().path}/${PictureLayers.regions}').deleteSync();
+      expect(await store.isLocal(entry), isFalse);
+      expect(cdn.requests, hasLength(1));
+    },
+  );
+
   test('a cache folder missing a layer is downloaded again', () async {
     final entry = entryFor(zip);
     await store.load(entry);

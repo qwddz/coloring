@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/back_gesture_exclusion.dart';
 import '../../app/immersive_mode.dart';
 import '../../app/widgets/book_button.dart';
 import '../../app/widgets/paper_background.dart';
@@ -232,17 +233,19 @@ class _DrawingScreenState extends ConsumerState<DrawingScreen> {
                     height: canvasHeight,
                     child: engine == null || live == null
                         ? null
-                        : DrawingCanvas(
-                            key: ObjectKey(engine),
-                            engine: engine,
-                            live: live,
-                            fillMode: state.tool == DrawingTool.fill,
-                            onStrokeBegin: (point, erases) =>
-                                controller.strokeBegin(point, erases: erases),
-                            onStrokeAdd: controller.strokeAdd,
-                            onStrokeEnd: controller.strokeEnd,
-                            onStrokeDiscard: controller.strokeDiscard,
-                            onFill: controller.fillAt,
+                        : BackGestureExclusion(
+                            child: DrawingCanvas(
+                              key: ObjectKey(engine),
+                              engine: engine,
+                              live: live,
+                              fillMode: state.tool == DrawingTool.fill,
+                              onStrokeBegin: (point, erases) =>
+                                  controller.strokeBegin(point, erases: erases),
+                              onStrokeAdd: controller.strokeAdd,
+                              onStrokeEnd: controller.strokeEnd,
+                              onStrokeDiscard: controller.strokeDiscard,
+                              onFill: controller.fillAt,
+                            ),
                           ),
                   ),
                 ),

@@ -249,6 +249,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get coloringLoadError => 'Не удалось открыть картинку';
 
   @override
+  String get coloringOffline =>
+      'Нет интернета. Подключитесь и попробуйте ещё раз';
+
+  @override
   String get coloringNotFound => 'Такой картинки нет';
 
   @override

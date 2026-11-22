@@ -179,6 +179,10 @@
   "@coloringLoadError": {
     "description": "Shown when the picture fails to load"
   },
+  "coloringOffline": "No internet. Connect and try again",
+  "@coloringOffline": {
+    "description": "Shown when a picture must be downloaded but the device is offline"
+  },
   "coloringNotFound": "This picture is not available",
   "@coloringNotFound": {
     "description": "Shown when the picture id is unknown"

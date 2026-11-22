@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/back_gesture_exclusion.dart';
 import '../../app/immersive_mode.dart';
 import '../../app/widgets/book_button.dart';
 import '../../app/widgets/paper_background.dart';
@@ -207,12 +208,12 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              error is ColoringNotFoundException
-                  ? l10n.coloringNotFound
-                  : l10n.coloringLoadError,
-              textAlign: TextAlign.center,
-            ),
+            Text(switch (error) {
+              ColoringNotFoundException() => l10n.coloringNotFound,
+              PictureLoadException(failure: PictureLoadFailure.network) =>
+                l10n.coloringOffline,
+              _ => l10n.coloringLoadError,
+            }, textAlign: TextAlign.center),
             const SizedBox(height: 12),
             Wrap(
               spacing: 12,
@@ -270,26 +271,28 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
                       child: SizedBox(
                         width: canvasWidth,
                         height: canvasHeight,
-                        child: ColoringCanvas(
-                          key: ObjectKey(game),
-                          game: game,
-                          brushDrags: state.mode == ColoringMode.magic,
-                          onTap: (x, y, tolerance) =>
-                              controller.tap(x, y, tolerance: tolerance),
-                          onLongPress: (x, y, tolerance) =>
-                              controller.hint(x, y, tolerance: tolerance),
-                          onStrokeStart: (x, y, tolerance) {
-                            controller
-                              ..beginStroke()
-                              ..strokeTo(x, y, tolerance: tolerance);
-                          },
-                          onStrokeUpdate: (x, y, tolerance) =>
-                              controller.strokeTo(x, y, tolerance: tolerance),
-                          onStrokeEnd: (x, y, tolerance) {
-                            controller
-                              ..strokeTo(x, y, tolerance: tolerance)
-                              ..endStroke();
-                          },
+                        child: BackGestureExclusion(
+                          child: ColoringCanvas(
+                            key: ObjectKey(game),
+                            game: game,
+                            brushDrags: state.mode == ColoringMode.magic,
+                            onTap: (x, y, tolerance) =>
+                                controller.tap(x, y, tolerance: tolerance),
+                            onLongPress: (x, y, tolerance) =>
+                                controller.hint(x, y, tolerance: tolerance),
+                            onStrokeStart: (x, y, tolerance) {
+                              controller
+                                ..beginStroke()
+                                ..strokeTo(x, y, tolerance: tolerance);
+                            },
+                            onStrokeUpdate: (x, y, tolerance) =>
+                                controller.strokeTo(x, y, tolerance: tolerance),
+                            onStrokeEnd: (x, y, tolerance) {
+                              controller
+                                ..strokeTo(x, y, tolerance: tolerance)
+                                ..endStroke();
+                            },
+                          ),
                         ),
                       ),
                     ),

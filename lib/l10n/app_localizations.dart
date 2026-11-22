@@ -526,6 +526,12 @@ abstract class AppLocalizations {
   /// **'Couldn\'t open the picture'**
   String get coloringLoadError;
 
+  /// Shown when a picture must be downloaded but the device is offline
+  ///
+  /// In en, this message translates to:
+  /// **'No internet. Connect and try again'**
+  String get coloringOffline;
+
   /// Shown when the picture id is unknown
   ///
   /// In en, this message translates to:

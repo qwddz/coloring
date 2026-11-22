@@ -70,20 +70,25 @@ final _manifest = ContentManifest.fromJson({
 /// Hands out clones of the bundled picture, decoded once per test file
 /// (decoding needs real async time, the controller runs in fake time).
 class _BundledLoader implements PictureLoader {
-  _BundledLoader(this.source);
+  _BundledLoader(this.source, {this.error});
 
   final LoadedPicture source;
+
+  /// Thrown by [load] instead of returning [source].
+  final Object? error;
 
   @override
   Future<LoadedPicture> load(
     PictureEntry entry, {
     void Function(double progress)? onProgress,
-  }) async => LoadedPicture(
-    regionsImage: source.regionsImage.clone(),
-    linesImage: source.linesImage.clone(),
-    map: source.map,
-    meta: source.meta,
-  );
+  }) async => error != null
+      ? throw error!
+      : LoadedPicture(
+          regionsImage: source.regionsImage.clone(),
+          linesImage: source.linesImage.clone(),
+          map: source.map,
+          meta: source.meta,
+        );
 }
 
 /// Real work files, with every write counted.
@@ -167,6 +172,7 @@ void main() {
     String location = '/coloring/$_pictureId',
     Size size = const Size(1280, 800),
     Key? key,
+    Object? loadError,
   }) async {
     tester.view
       ..physicalSize = size
@@ -206,7 +212,9 @@ void main() {
           sharedPreferencesProvider.overrideWithValue(prefs),
           manifestProvider.overrideWith((ref) async => _manifest),
           fullAccessProvider.overrideWith((ref) => Stream.value(false)),
-          pictureLoaderProvider.overrideWithValue(_BundledLoader(decoded!)),
+          pictureLoaderProvider.overrideWithValue(
+            _BundledLoader(decoded!, error: loadError),
+          ),
           workRepositoryProvider.overrideWithValue(repository),
           workPreviewServiceProvider.overrideWithValue(FakePreviewService()),
           progressDirectoryProvider.overrideWithValue(() async => progressDir),
@@ -230,7 +238,8 @@ void main() {
       tester,
       () =>
           find.byType(ColoringCanvas).evaluate().isNotEmpty ||
-          find.textContaining('paywall').evaluate().isNotEmpty,
+          find.textContaining('paywall').evaluate().isNotEmpty ||
+          find.text('Try again').evaluate().isNotEmpty,
       reason: 'the screen opens',
     );
     // Game load and first frames.
@@ -488,6 +497,23 @@ void main() {
     router.pop();
     await tester.pumpAndSettle();
     expect(find.text('home'), findsOneWidget);
+  });
+
+  testWidgets('a download failure says the device is offline', (tester) async {
+    await pumpApp(
+      tester,
+      loadError: const PictureLoadException(PictureLoadFailure.network),
+    );
+    expect(find.text('No internet. Connect and try again'), findsOneWidget);
+    expect(find.text('Try again'), findsOneWidget);
+  });
+
+  testWidgets('other load failures keep the general message', (tester) async {
+    await pumpApp(
+      tester,
+      loadError: const PictureLoadException(PictureLoadFailure.corrupt),
+    );
+    expect(find.text("Couldn't open the picture"), findsOneWidget);
   });
 
   testWidgets('a new app run restores the colors and mode', (tester) async {

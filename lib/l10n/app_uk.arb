@@ -71,6 +71,7 @@
   "coloringBackToPictures": "До картинок",
   "coloringLoading": "Готуємо картинку…",
   "coloringLoadError": "Не вдалося відкрити картинку",
+  "coloringOffline": "Немає інтернету. Підключіться й спробуйте ще раз",
   "coloringNotFound": "Цієї картинки немає",
   "coloringRetry": "Спробувати ще раз",
   "coloringHintTitle": "Підказка",

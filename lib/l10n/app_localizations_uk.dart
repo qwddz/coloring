@@ -248,6 +248,10 @@ class AppLocalizationsUk extends AppLocalizations {
   String get coloringLoadError => 'Не вдалося відкрити картинку';
 
   @override
+  String get coloringOffline =>
+      'Немає інтернету. Підключіться й спробуйте ще раз';
+
+  @override
   String get coloringNotFound => 'Цієї картинки немає';
 
   @override

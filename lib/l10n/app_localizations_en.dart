@@ -245,6 +245,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coloringLoadError => 'Couldn\'t open the picture';
 
   @override
+  String get coloringOffline => 'No internet. Connect and try again';
+
+  @override
   String get coloringNotFound => 'This picture is not available';
 
   @override
