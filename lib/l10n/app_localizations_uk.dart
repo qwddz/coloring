@@ -16,7 +16,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get back => 'Назад';
 
   @override
-  String get retry => 'Спробувати ще';
+  String get retry => 'Спробувати ще раз';
 
   @override
   String get catalogLoadError => 'Не вдалося завантажити картинки';
@@ -81,7 +81,9 @@ class AppLocalizationsUk extends AppLocalizations {
       count,
       locale: localeName,
       other:
-          'Усі $count картинок в усіх категоріях, а також нові, щойно вони з\'являться',
+          'Усі $count картинок у всіх категоріях, а також нові, щойно вони з\'являться',
+      many:
+          'Усі $count картинок у всіх категоріях, а також нові, щойно вони з\'являться',
       few:
           'Усі $count картинки в усіх категоріях, а також нові, щойно вони з\'являться',
       one:
@@ -115,7 +117,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get purchasePending =>
-      'Оплата очікує підтвердження. Повна версія відкриється, щойно вона завершиться.';
+      'Оплата очікує підтвердження. Повна версія відкриється, щойно оплату буде завершено.';
 
   @override
   String get nothingToRestore => 'Немає покупок для відновлення';
@@ -248,8 +250,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get coloringLoadError => 'Не вдалося відкрити картинку';
 
   @override
-  String get coloringOffline =>
-      'Немає інтернету. Підключіться й спробуйте ще раз';
+  String get coloringOffline => 'Немає інтернету. Підключись і спробуй ще раз';
 
   @override
   String get coloringNotFound => 'Цієї картинки немає';
@@ -267,7 +268,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get myWorksEmpty => 'Тут з\'являться твої розмальовки';
 
   @override
-  String get myWorksToPictures => 'Обрати малюнок';
+  String get myWorksToPictures => 'Обрати картинку';
 
   @override
   String get workContinue => 'Продовжити';
@@ -285,17 +286,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String get workSavedToGallery => 'Збережено в галерею';
 
   @override
-  String get workSaveDenied => 'Дозволь доступ, щоб зберігати малюнки';
+  String get workSaveDenied => 'Дозволь доступ, щоб зберігати картинки';
 
   @override
   String get workExportFailed =>
-      'Не вдалося підготувати малюнок. Спробуй ще раз';
+      'Не вдалося підготувати картинку. Спробуй ще раз';
 
   @override
-  String get workExporting => 'Готуємо малюнок…';
+  String get workExporting => 'Готуємо картинку…';
 
   @override
-  String get workPictureUnavailable => 'Цього малюнка немає';
+  String get workPictureUnavailable => 'Цієї картинки немає';
 
   @override
   String get workCompleted => 'Завершено';
@@ -316,7 +317,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get modeFreeDescription => 'Обирай будь-які кольори';
 
   @override
-  String get modeNumbersDescription => 'Фарбуй за цифрами';
+  String get modeNumbersDescription => 'Розфарбовуй за номерами';
 
   @override
   String get modeMagicDescription => 'Пензлик підкаже правильний колір';
@@ -372,7 +373,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get drawingToolFill => 'Заливка';
 
   @override
-  String get drawingToolCrayon => 'Воскова крейда';
+  String get drawingToolCrayon => 'Восковий олівець';
 
   @override
   String get drawingToolChalk => 'Крейда';
@@ -446,5 +447,5 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get fullVersionDrawingTools =>
-      'Усі пензлі, штампи, заливка й дзеркало в малювалці';
+      'Усі пензлі, штампи, заливка й дзеркало в «Малювалці»';
 }

@@ -24,11 +24,13 @@ import 'package:coloring/features/subscription/domain/parental_challenge.dart';
 import 'package:coloring/features/subscription/domain/purchase_service.dart';
 import 'package:coloring/features/subscription/paywall_screen.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
+import 'package:coloring/features/audio/audio_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/coloring/fakes.dart';
 import '../../support/coloring_overrides.dart';
 import '../../support/test_manifest.dart';
+import '../../support/fake_audio_backend.dart';
 
 void main() {
   late FakePurchaseService store;
@@ -54,6 +56,7 @@ void main() {
       ProviderScope(
         overrides: [
           sharedPreferencesProvider.overrideWithValue(prefs),
+          audioBackendProvider.overrideWithValue(FakeAudioBackend()),
           manifestProvider.overrideWith((ref) async => testManifest),
           purchaseServiceProvider.overrideWithValue(store),
           reviewCodeSha256Provider.overrideWithValue(reviewCodeSha256),
@@ -435,7 +438,7 @@ void main() {
     router.push(paywallRoute(), extra: paywallGatePassed);
     await tester.pumpAndSettle();
     expect(
-      find.text('All brushes, stamps, fill and mirror in Drawing'),
+      find.text('All brushes, stamps, fill and mirror in “Drawing”'),
       findsOneWidget,
     );
   });

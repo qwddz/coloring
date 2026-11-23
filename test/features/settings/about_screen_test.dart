@@ -13,7 +13,10 @@ import 'package:coloring/features/subscription/domain/parental_challenge.dart';
 import 'package:coloring/features/settings/about_screen.dart';
 import 'package:coloring/features/settings/data/about_links.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
+import 'package:coloring/features/audio/audio_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../support/fake_audio_backend.dart';
 
 void main() {
   final manifest = ContentManifest.fromJson(
@@ -35,6 +38,7 @@ void main() {
       ProviderScope(
         overrides: [
           sharedPreferencesProvider.overrideWithValue(prefs),
+          audioBackendProvider.overrideWithValue(FakeAudioBackend()),
           manifestProvider.overrideWith((ref) async => manifest),
           parentalChallengeProvider.overrideWithValue(
             () => const ParentalChallenge(7, 8),

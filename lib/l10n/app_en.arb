@@ -34,7 +34,7 @@
   "cancel": "Cancel",
   "ok": "OK",
   "fullVersionTitle": "Full version",
-  "fullVersionIncludes": "{count, plural, one{All {count} picture in every category, and new ones as they arrive} other{All {count} pictures in every category, and new ones as they arrive}}",
+  "fullVersionIncludes": "{count, plural, one{{count} picture in every category, and new ones as they arrive} other{All {count} pictures in every category, and new ones as they arrive}}",
   "@fullVersionIncludes": {
     "placeholders": {
       "count": {
@@ -449,7 +449,7 @@
   "@workNewDrawing": {
     "description": "Button that starts a fresh drawing sheet"
   },
-  "fullVersionDrawingTools": "All brushes, stamps, fill and mirror in Drawing",
+  "fullVersionDrawingTools": "All brushes, stamps, fill and mirror in “Drawing”",
   "@fullVersionDrawingTools": {
     "description": "Line on the paywall about the drawing tools"
   }

@@ -34,7 +34,8 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../gallery/fake_preview_service.dart';
-import 'feedback_test.dart' show FakeAudioBackend, FakeHaptics;
+import '../../support/fake_audio_backend.dart';
+import 'feedback_test.dart' show FakeHaptics;
 
 const _pictureId = 'home_fox_cocoa';
 const _paidId = 'home_paid';

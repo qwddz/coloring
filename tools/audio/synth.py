@@ -17,7 +17,10 @@ RATE = 44100
 SEED = 6
 OUT = Path(__file__).resolve().parents[2] / "assets" / "audio"
 
+# Sound effects peak at -3 dBFS; the music sits well below them.
 SFX_PEAK_DB = -3.0
+MUSIC_RMS_DB = -20.0
+MUSIC_PEAK_DB = -4.0
 
 
 def db(x: float) -> float:
@@ -127,6 +130,96 @@ def win() -> np.ndarray:
     return finish(buf, SFX_PEAK_DB)
 
 
+# --- Music --------------------------------------------------------------------
+
+# A calmer cousin of the puzzles' loop: F major, slower, kalimba plucks over a
+# held pad instead of a bell melody on every beat.
+BPM = 84
+BEAT = 60 / BPM
+CHORDS = {  # root for the bass, chord tones in octave 4
+    "F": (41, [60, 65, 69]),
+    "Dm": (38, [62, 65, 69]),
+    "Bb": (46, [62, 65, 70]),
+    "C": (48, [60, 64, 67]),
+    "Am": (45, [60, 64, 69]),
+}
+PROGRESSION = "F Dm Bb C F Am Bb F Dm Bb F C Bb C F C".split()
+# (beat, length in beats, midi note) per bar: a slow, sparse tune.
+MELODY = [
+    [(0, 2, 72), (2, 2, 69)],
+    [(0, 3, 74), (3, 1, 72)],
+    [(0, 2, 70), (2, 1, 69), (3, 1, 67)],
+    [(0, 2, 67), (2, 2, 72)],
+    [(0, 2, 69), (2, 2, 72)],
+    [(0, 3, 76), (3, 1, 74)],
+    [(0, 2, 74), (2, 2, 70)],
+    [(0, 4, 72)],
+    [(0, 2, 77), (2, 2, 74)],
+    [(0, 2, 74), (2, 1, 72), (3, 1, 70)],
+    [(0, 3, 69), (3, 1, 72)],
+    [(0, 2, 76), (2, 2, 72)],
+    [(0, 2, 74), (2, 2, 77)],
+    [(0, 3, 76), (3, 1, 72)],
+    [(0, 2, 72), (2, 2, 69)],
+    [(0, 2, 67), (2, 2, 64)],
+]
+# Broken-chord plucks in eighths, as indices into the chord an octave up.
+ARPEGGIO = [0, 1, 2, 1, 0, 1, 2, 1]
+
+
+def pluck(note: float, length: float = 1.4) -> np.ndarray:
+    """Kalimba-like tine: round fundamental, faint inharmonic overtone."""
+    return partials(midi_hz(note), length, [1, 2.0, 5.1], [1, 0.1, 0.04], 0.45, 0.004)
+
+
+def warm_pad(note: float, length: float) -> np.ndarray:
+    """Held chord tone: slow swell, two slightly detuned voices."""
+    freq = midi_hz(note)
+    voices = [
+        partials(freq * detune, length, [1, 2, 3], [1, 0.18, 0.04], 2.6, 0.35)
+        for detune in (0.9985, 1.0015)
+    ]
+    return 0.5 * (voices[0] + voices[1])
+
+
+def music() -> np.ndarray:
+    """16 bars over I-vi-IV-V, rendered with tails that wrap to the start.
+
+    The last bar is V, which resolves into the I of the first bar. Notes
+    ringing past the loop end are added onto the beginning, so the end
+    flows into the start exactly as it would if the piece were played
+    twice in a row.
+    """
+    rng = np.random.default_rng(SEED)
+    bar = 4 * BEAT
+    loop = int(round(len(PROGRESSION) * bar * RATE))
+    tail = int(5 * RATE)
+    buf = np.zeros(loop + tail)
+    for i, (name, notes) in enumerate(zip(PROGRESSION, MELODY)):
+        root, chord = CHORDS[name]
+        t0 = i * bar
+        mix(buf, bass(root, 2.4), t0, 0.5)
+        mix(buf, bass(root + 7, 1.4), t0 + 2 * BEAT, 0.25)
+        for k, note in enumerate(chord):
+            mix(buf, warm_pad(note, 4.0), t0 + k * 0.03, 0.1)
+        for step, index in enumerate(ARPEGGIO):
+            velocity = 0.07 * (1 + rng.uniform(-0.15, 0.15))
+            mix(buf, pluck(chord[index] + 12, 1.2), t0 + step * BEAT / 2, velocity)
+        for beat, length, note in notes:
+            velocity = 0.3 * (1 + rng.uniform(-0.08, 0.08))
+            decay = 0.5 + 0.3 * length
+            mix(buf, pluck(note, 3.0) * 0.6 + bell(note, 3.0, decay) * 0.4, t0 + beat * BEAT, velocity)
+    out = buf[:loop].copy()
+    out[:tail] += buf[loop:]
+    out -= out.mean()
+    out *= 10 ** (MUSIC_RMS_DB / 20) / np.sqrt(np.mean(out**2))
+    peak = np.abs(out).max()
+    limit = 10 ** (MUSIC_PEAK_DB / 20)
+    if peak > limit:
+        out *= limit / peak
+    return out
+
+
 # --- Output and analysis -----------------------------------------------------
 
 
@@ -143,7 +236,7 @@ def write(name: str, data: np.ndarray) -> Path:
     return path
 
 
-def report(path: Path) -> None:
+def report(path: Path, source: np.ndarray, loops: bool) -> None:
     decoded, rate = sf.read(path)
     peak = np.abs(decoded).max()
     rms = np.sqrt(np.mean(decoded**2))
@@ -152,15 +245,25 @@ def report(path: Path) -> None:
         f"{len(decoded) / rate:6.2f} s  peak {db(peak):6.2f} dBFS  "
         f"RMS {db(rms):6.2f} dBFS  DC {decoded.mean():+.1e}"
     )
-    line += f"  start {abs(decoded[0]):.4f} end {abs(decoded[-1]):.4f}"
+    if loops:
+        # Jump across the seam compared with ordinary sample-to-sample steps.
+        steps = np.abs(np.diff(source))
+        seam = abs(source[0] - source[-1])
+        decoded_seam = abs(decoded[0] - decoded[-1])
+        line += (
+            f"\n{'':10} loop seam {seam:.5f} (source), {decoded_seam:.5f} (decoded); "
+            f"median step {np.median(steps):.5f}, 99th pct {np.percentile(steps, 99):.5f}"
+        )
+    else:
+        line += f"  start {abs(decoded[0]):.4f} end {abs(decoded[-1]):.4f}"
     print(line)
 
 
 def main() -> None:
-    sounds = {"fill": fill(), "wrong": wrong(), "win": win()}
+    sounds = {"fill": fill(), "wrong": wrong(), "win": win(), "music": music()}
     for name, data in sounds.items():
         assert np.abs(data).max() < 1.0, f"{name} clips"
-        report(write(name, data))
+        report(write(name, data), data, loops=name == "music")
 
 
 if __name__ == "__main__":

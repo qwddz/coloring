@@ -6,18 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FakeAudioBackend implements AudioBackend {
-  final effects = <Sfx>[];
-
-  @override
-  Future<void> preload() async {}
-
-  @override
-  void playEffect(Sfx sfx) => effects.add(sfx);
-
-  @override
-  void dispose() {}
-}
+import '../../support/fake_audio_backend.dart';
 
 class FakeHaptics implements HapticsBackend {
   final calls = <String>[];

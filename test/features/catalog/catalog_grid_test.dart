@@ -10,9 +10,12 @@ import 'package:coloring/app/book_palette.dart';
 import 'package:coloring/features/catalog/data/manifest_provider.dart';
 import 'package:coloring/features/catalog/domain/content_manifest.dart';
 import 'package:coloring/features/settings/data/settings_controller.dart';
+import 'package:coloring/features/audio/audio_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:coloring/app/theme.dart';
 import 'package:coloring/features/catalog/catalog_grid.dart';
+
+import '../../support/fake_audio_backend.dart';
 
 void main() {
   test('3 columns on phones, 4–5 on tablets', () {
@@ -97,6 +100,7 @@ void main() {
       ProviderScope(
         overrides: [
           sharedPreferencesProvider.overrideWithValue(prefs),
+          audioBackendProvider.overrideWithValue(FakeAudioBackend()),
           manifestProvider.overrideWith((ref) async => manifest),
         ],
         child: const ColoringApp(),

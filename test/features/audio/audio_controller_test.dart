@@ -1,23 +1,11 @@
-import 'package:coloring/features/audio/audio_controller.dart';
-import 'package:coloring/features/settings/data/settings_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:coloring/features/audio/audio_controller.dart';
+import 'package:coloring/features/settings/data/settings_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FakeAudioBackend implements AudioBackend {
-  final effects = <Sfx>[];
-  var preloaded = false;
-
-  @override
-  Future<void> preload() async => preloaded = true;
-
-  @override
-  void playEffect(Sfx sfx) => effects.add(sfx);
-
-  @override
-  void dispose() {}
-}
+import '../../support/fake_audio_backend.dart';
 
 void main() {
   final binding = TestWidgetsFlutterBinding.ensureInitialized();
@@ -45,11 +33,22 @@ void main() {
     }
   }
 
+  const toBackground = [
+    AppLifecycleState.inactive,
+    AppLifecycleState.hidden,
+    AppLifecycleState.paused,
+  ];
+  const toForeground = [
+    AppLifecycleState.hidden,
+    AppLifecycleState.inactive,
+    AppLifecycleState.resumed,
+  ];
+
   setUp(() => goTo(const [AppLifecycleState.resumed]));
 
-  test('preloads the effects', () async {
+  test('preloads effects and starts the music when it is on', () async {
     await start(const {});
-    expect(backend.preloaded, isTrue);
+    expect(backend.calls, ['playMusic', 'preload']);
   });
 
   test('effects play only while sounds are on', () async {
@@ -65,23 +64,35 @@ void main() {
     expect(backend.effects, [Sfx.fill, Sfx.wrong]);
   });
 
-  test('nothing plays in the background, sound returns on resume', () async {
+  test('music follows the toggle live', () async {
+    await start(const {'settings.music': false});
+    expect(backend.calls, isNot(contains('playMusic')));
+    final settings = container.read(settingsProvider.notifier);
+    backend.calls.clear();
+    settings.setMusicEnabled(true);
+    settings.setSoundEnabled(false); // unrelated change: no music call
+    settings.setMusicEnabled(false);
+    settings.setMusicEnabled(true);
+    expect(backend.calls, ['playMusic', 'pauseMusic', 'playMusic']);
+  });
+
+  test('music pauses in the background and resumes on return', () async {
     await start(const {});
-    final audio = container.read(audioControllerProvider);
-    goTo(const [
-      AppLifecycleState.inactive,
-      AppLifecycleState.hidden,
-      AppLifecycleState.paused,
-    ]);
-    audio.play(Sfx.fill);
-    expect(backend.effects, isEmpty);
-    goTo(const [
-      AppLifecycleState.hidden,
-      AppLifecycleState.inactive,
-      AppLifecycleState.resumed,
-    ]);
-    audio.play(Sfx.fill);
-    expect(backend.effects, [Sfx.fill]);
+    backend.calls.clear();
+    goTo(toBackground);
+    expect(backend.calls, ['pauseMusic']);
+    container.read(audioControllerProvider).play(Sfx.fill);
+    goTo(toForeground);
+    expect(backend.calls, ['pauseMusic', 'playMusic']);
+  });
+
+  test('music turned off stays off after returning to the app', () async {
+    await start(const {});
+    goTo(toBackground);
+    container.read(settingsProvider.notifier).setMusicEnabled(false);
+    backend.calls.clear();
+    goTo(toForeground);
+    expect(backend.calls, isEmpty);
   });
 
   test('a short focus loss (inactive) still plays', () async {

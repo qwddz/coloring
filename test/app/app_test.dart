@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:coloring/features/audio/audio_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../features/coloring/fakes.dart';
@@ -29,6 +30,7 @@ import '../features/coloring/model/fixtures.dart';
 import '../features/gallery/fake_preview_service.dart';
 import '../support/coloring_overrides.dart';
 import '../support/test_manifest.dart';
+import '../support/fake_audio_backend.dart';
 
 void main() {
   final bundled = ContentManifest.fromJson(
@@ -54,6 +56,7 @@ void main() {
       ProviderScope(
         overrides: [
           sharedPreferencesProvider.overrideWithValue(prefs),
+          audioBackendProvider.overrideWithValue(FakeAudioBackend()),
           // rootBundle caches loads across tests; read the file directly.
           manifestProvider.overrideWith((ref) async => manifest ?? bundled),
           ...coloringScreenOverrides(works: works, previews: previews),

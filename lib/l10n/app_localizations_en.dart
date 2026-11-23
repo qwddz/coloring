@@ -81,7 +81,7 @@ class AppLocalizationsEn extends AppLocalizations {
       locale: localeName,
       other:
           'All $count pictures in every category, and new ones as they arrive',
-      one: 'All $count picture in every category, and new ones as they arrive',
+      one: '$count picture in every category, and new ones as they arrive',
     );
     return '$_temp0';
   }
@@ -441,5 +441,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fullVersionDrawingTools =>
-      'All brushes, stamps, fill and mirror in Drawing';
+      'All brushes, stamps, fill and mirror in “Drawing”';
 }

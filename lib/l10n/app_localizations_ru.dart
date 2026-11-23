@@ -16,7 +16,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get back => 'Назад';
 
   @override
-  String get retry => 'Попробовать снова';
+  String get retry => 'Попробовать ещё раз';
 
   @override
   String get catalogLoadError => 'Не удалось загрузить картинки';
@@ -81,6 +81,8 @@ class AppLocalizationsRu extends AppLocalizations {
       count,
       locale: localeName,
       other:
+          'Все $count картинок во всех категориях, а также новые, как только они появятся',
+      many:
           'Все $count картинок во всех категориях, а также новые, как только они появятся',
       few:
           'Все $count картинки во всех категориях, а также новые, как только они появятся',
@@ -249,11 +251,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get coloringLoadError => 'Не удалось открыть картинку';
 
   @override
-  String get coloringOffline =>
-      'Нет интернета. Подключитесь и попробуйте ещё раз';
+  String get coloringOffline => 'Нет интернета. Подключись и попробуй ещё раз';
 
   @override
-  String get coloringNotFound => 'Такой картинки нет';
+  String get coloringNotFound => 'Этой картинки нет';
 
   @override
   String get coloringRetry => 'Попробовать ещё раз';
@@ -317,7 +318,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get modeFreeDescription => 'Выбирай любые цвета';
 
   @override
-  String get modeNumbersDescription => 'Крась по цифрам';
+  String get modeNumbersDescription => 'Раскрашивай по номерам';
 
   @override
   String get modeMagicDescription => 'Кисточка подскажет правильный цвет';
@@ -447,5 +448,5 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fullVersionDrawingTools =>
-      'Все кисти, штампы, заливка и зеркало в рисовалке';
+      'Все кисти, штампы, заливка и зеркало в «Рисовалке»';
 }

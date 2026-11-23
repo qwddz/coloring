@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/audio/audio_controller.dart';
 import '../features/coloring/perf/fill_latency_probe.dart';
 import '../features/settings/data/settings_controller.dart';
 import '../l10n/app_localizations.dart';
@@ -13,6 +14,8 @@ class ColoringApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Starts the music and keeps it in step with settings and lifecycle.
+    ref.watch(audioControllerProvider);
     final languageCode = ref.watch(
       settingsProvider.select((s) => s.languageCode),
     );

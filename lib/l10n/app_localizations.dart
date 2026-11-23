@@ -229,7 +229,7 @@ abstract class AppLocalizations {
   /// No description provided for @fullVersionIncludes.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{All {count} picture in every category, and new ones as they arrive} other{All {count} pictures in every category, and new ones as they arrive}}'**
+  /// **'{count, plural, one{{count} picture in every category, and new ones as they arrive} other{All {count} pictures in every category, and new ones as they arrive}}'**
   String fullVersionIncludes(int count);
 
   /// No description provided for @oneTimePurchase.
@@ -907,7 +907,7 @@ abstract class AppLocalizations {
   /// Line on the paywall about the drawing tools
   ///
   /// In en, this message translates to:
-  /// **'All brushes, stamps, fill and mirror in Drawing'**
+  /// **'All brushes, stamps, fill and mirror in “Drawing”'**
   String get fullVersionDrawingTools;
 }
 

@@ -20,12 +20,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:coloring/features/audio/audio_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../support/coloring_overrides.dart';
 import '../../support/test_manifest.dart';
 import 'controller_harness.dart';
 import 'fakes.dart';
+import '../../support/fake_audio_backend.dart';
 
 void main() {
   late FakePurchaseService store;
@@ -56,6 +58,7 @@ void main() {
       ProviderScope(
         overrides: [
           sharedPreferencesProvider.overrideWithValue(prefs),
+          audioBackendProvider.overrideWithValue(FakeAudioBackend()),
           manifestProvider.overrideWith((ref) async => testManifest),
           purchaseServiceProvider.overrideWithValue(store),
           if (fullAccess != null)

@@ -1,5 +1,5 @@
 {
- "version": 6,
+ "version": 7,
  "minAppVersion": "1.0.0",
  "categories": [
   {
@@ -203,7 +203,7 @@
     {
      "id": "food_chick_pancakes",
      "title": {
-      "uk": "Курча і млинці",
+      "uk": "Курча й млинці",
       "en": "Chick and pancakes",
       "ru": "Цыплёнок и блинчики"
      },
@@ -233,7 +233,7 @@
     {
      "id": "food_capybara_watermelon",
      "title": {
-      "uk": "Капібара і кавун",
+      "uk": "Капібара й кавун",
       "en": "Capybara and watermelon",
       "ru": "Капибара и арбуз"
      },
@@ -248,7 +248,7 @@
     {
      "id": "food_mouse_cheese",
      "title": {
-      "uk": "Мишка і сир",
+      "uk": "Мишка й сир",
       "en": "Mouse and cheese",
       "ru": "Мышка и сыр"
      },
@@ -506,7 +506,7 @@
   {
    "id": "winter",
    "title": {
-    "uk": "Зима і свята",
+    "uk": "Зима й свята",
     "en": "Winter and holidays",
     "ru": "Зима и праздники"
    },
@@ -616,7 +616,7 @@
     {
      "id": "winter_lamb_snowflakes",
      "title": {
-      "uk": "Ягнятко і сніжинки",
+      "uk": "Ягнятко й сніжинки",
       "en": "Lamb catches snowflakes",
       "ru": "Ягнёнок и снежинки"
      },
@@ -686,7 +686,7 @@
   {
    "id": "spring",
    "title": {
-    "uk": "Весна і сад",
+    "uk": "Весна й сад",
     "en": "Spring garden",
     "ru": "Весна и сад"
    },
@@ -711,7 +711,7 @@
     {
      "id": "spring_duckling_boat",
      "title": {
-      "uk": "Каченя і кораблик",
+      "uk": "Каченя й кораблик",
       "en": "Duckling and a paper boat",
       "ru": "Утёнок и кораблик"
      },
@@ -745,7 +745,7 @@
     {
      "id": "spring_kitten_butterfly",
      "title": {
-      "uk": "Кошеня і метелик",
+      "uk": "Кошеня й метелик",
       "en": "Kitten and a butterfly",
       "ru": "Котёнок и бабочка"
      },
@@ -847,9 +847,9 @@
     {
      "id": "spring_guinea_pig_seeds",
      "title": {
-      "uk": "Свинка на грядці",
+      "uk": "Морська свинка на грядці",
       "en": "Guinea pig gardener",
-      "ru": "Свинка на грядке"
+      "ru": "Морская свинка на грядке"
      },
      "characters": [
       "pets_guinea_pig_lawn"
@@ -866,7 +866,7 @@
   {
    "id": "summer",
    "title": {
-    "uk": "Літо і пляж",
+    "uk": "Літо й пляж",
     "en": "Summer and beach",
     "ru": "Лето и пляж"
    },
@@ -925,9 +925,9 @@
     {
      "id": "summer_sea_lion_float",
      "title": {
-      "uk": "Морський котик і м'яч",
+      "uk": "Морський лев і м'яч",
       "en": "Sea lion and a ball",
-      "ru": "Морской котик и мяч"
+      "ru": "Морской лев и мяч"
      },
      "characters": [
       "sea_sea_lion_rock"
@@ -1027,7 +1027,7 @@
     {
      "id": "summer_zebra_sprinkler",
      "title": {
-      "uk": "Зебра і поливалка",
+      "uk": "Зебра й поливалка",
       "en": "Zebra and the sprinkler",
       "ru": "Зебра и поливалка"
      },
@@ -1156,7 +1156,7 @@
     {
      "id": "underwater_manatee_garden",
      "title": {
-      "uk": "Ламантин у садку",
+      "uk": "Ламантин у саду",
       "en": "Manatee's garden",
       "ru": "Ламантин в саду"
      },
@@ -1354,7 +1354,7 @@
     {
      "id": "farm_collie_sheep",
      "title": {
-      "uk": "Цуценя і овечка",
+      "uk": "Цуценя й овечка",
       "en": "Puppy and sheep",
       "ru": "Щенок и овечка"
      },
@@ -1429,7 +1429,7 @@
     {
      "id": "hobbies_meerkat_telescope",
      "title": {
-      "uk": "Сурикат-зіркар",
+      "uk": "Сурикат-звіздар",
       "en": "Meerkat stargazer",
       "ru": "Сурикат-звездочёт"
      },
@@ -1568,7 +1568,7 @@
    "id": "travel",
    "title": {
     "uk": "Подорожі",
-    "en": "Travels",
+    "en": "Travel",
     "ru": "Путешествия"
    },
    "pictures": [
@@ -1594,7 +1594,7 @@
      "title": {
       "uk": "Песик на повітряній кулі",
       "en": "Balloon ride",
-      "ru": "Пёс на воздушном шаре"
+      "ru": "Пёсик на воздушном шаре"
      },
      "characters": [
       "canines_samoyed_cosmos"
