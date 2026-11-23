@@ -36,7 +36,7 @@ flutter run --profile -d <device-id> --dart-define=COLORING_PERF_OVERLAY=true  #
 
 `flutter gen-l10n` reads `l10n.yaml`: ARB files in `lib/l10n/`, template `app_en.arb`, output `app_localizations.dart`, non-nullable getters. The generated `app_localizations*.dart` files are checked in next to the ARBs; regenerate after every ARB change. `flutter pub get` also regenerates them (`flutter: generate: true`).
 
-The launcher icon is a placeholder (`assets/icon/`, made by `tools/icon/placeholder_icon.py`). After changing the art, run `FLUTTER_ROOT=/opt/homebrew/share/flutter /opt/homebrew/share/flutter/bin/dart run flutter_launcher_icons`.
+The launcher icon (`assets/icon/`) is made from the store icon `tools/store/icons/fox_brush2_b.png` (Gemini, `tools/store/icon_candidates.py`) by `tools/icon/app_icon.py`; the store graphics live in `tools/store/listing/` (`tools/store/feature_graphic.py`). After changing the art, run `FLUTTER_ROOT=/opt/homebrew/share/flutter /opt/homebrew/share/flutter/bin/dart run flutter_launcher_icons`.
 
 Run the profile checks on a real low-end phone as well as the emulator, because shader performance on an emulator says little.
 

@@ -64,3 +64,8 @@ tools/coloring_pipeline/processed/
 tools/coloring_pipeline/cdn/
 tools/coloring_pipeline/state.json
 tools/coloring_pipeline/review.html
+
+# Store icon candidates and the review page: only the chosen icon is kept
+tools/store/icons/*
+!tools/store/icons/fox_brush2_b.png
+tools/store/review.html
