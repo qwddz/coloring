@@ -18,14 +18,14 @@
 | Package name | `app.animosaic.coloring` (после первой загрузки не меняется) |
 | Privacy policy URL | https://animosaic.app/colors/privacy (страница должна быть опубликована до заполнения; черновик в `docs/store/site/colors/privacy.html`) |
 | Terms (в карточке и на пейволле) | https://animosaic.app/colors/terms |
-| Contact e-mail | pirate.dmitry@gmail.com (как в `lib/features/settings/data/about_links.dart`) |
+| Contact e-mail | contact@animosaic.app (как в `lib/features/settings/data/about_links.dart`) |
 | Website | https://animosaic.app (**проверить**, что открывается; иначе оставить пустым) |
 | Phone | не указывать |
 | App or game | **проверить**: раскраска не игра в классическом смысле, но в манифесте стоит `appCategory="game"` (нужен для альбомной ориентации на больших экранах Android 16+), а puzzles объявлен как Game. Варианты: App → Art & Design, или Game → Educational/Casual. Склоняюсь к App → Art & Design; решение пользователя |
 | Free or paid | Free (с внутриигровой покупкой) |
 | Category | **проверить**: Art & Design (если App) или Educational (если Game). Educational включает дополнительные вопросы по педагогике; Art & Design проще для ревью |
 | Tags (до 5) | **проверить**: набор фиксирован. Искать ближайшие к «Coloring», «Drawing», «Kids», «Casual», «Family», «Offline» |
-| In-app product | `full_version`, разовая (one-time, non-consumable). Цена: по умолчанию US$4.99, как у puzzles (открытый вопрос PLAN.md, **проверить** у пользователя). Должен быть **активен** до отправки на ревью. Создаётся после первой загрузки AAB |
+| In-app product | `full_version`, разовая (one-time, non-consumable). Цена US$7.99 (поставлена 23.11.2026, все 174 страны пересчитаны, UAH 434.99). Должен быть **активен** до отправки на ревью. Создаётся после первой загрузки AAB |
 | Countries | Страны с оплатой в Google Play (PLAN.md). **проверить** при выборе |
 
 ## App access
@@ -95,7 +95,7 @@ without paying:
 |---|---|
 | Does your app collect or share any of the required user data types? | **Yes** (только Purchase history, см. ниже) |
 | Is all of the user data collected by your app encrypted in transit? | **Yes** (RevenueCat и CDN только по HTTPS; **проверить после WP9**, что `CDN_BASE_URL` начинается с `https://`) |
-| Do you provide a way for users to request that their data is deleted? | **Yes**: по e-mail pirate.dmitry@gmail.com; удаление клиента делается в дашборде RevenueCat (Customer → Delete customer) |
+| Do you provide a way for users to request that their data is deleted? | **Yes**: по e-mail contact@animosaic.app; удаление клиента делается в дашборде RevenueCat (Customer → Delete customer) |
 | Data deletion URL | Не требуется: учётных записей нет. Если Play спросит: https://animosaic.app/colors/privacy (раздел «Your rights») |
 | Independent security review | No |
 | Committed to Families Policy | Yes |

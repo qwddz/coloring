@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 // listing links them too.
 final privacyPolicyUrl = Uri.parse('https://animosaic.app/colors/privacy');
 final termsOfUseUrl = Uri.parse('https://animosaic.app/colors/terms');
-const contactEmail = 'pirate.dmitry@gmail.com';
+const contactEmail = 'contact@animosaic.app';
 final contactEmailUrl = Uri(scheme: 'mailto', path: contactEmail);
 
 /// Opens a link outside the app; replaced in tests.

@@ -8,7 +8,7 @@
 
 1. `[агент]` `flutter analyze` без замечаний, `flutter test` зелёный, `dart format --set-exit-if-changed lib test`.
 2. `[агент]` Пробная релизная сборка с фиктивными define и отладочной подписью (Gradle предупредит) проходит; записан размер AAB и список разрешений слитого манифеста: `INTERNET`, `ACCESS_NETWORK_STATE`, `BILLING`, `WRITE_EXTERNAL_STORAGE` (≤ 29, `maxSdkVersion="29"`, с `requestLegacyExternalStorage` в приложении), `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`; нет `AD_ID` и `READ_MEDIA_*`. **Проверено в WP9** (2026-11-18, minSdk 24)
-3. `[пользователь]` Решить открытые вопросы: категория и возрастные группы (**проверить**, см. `play_console.md`), цена `full_version` (по умолчанию US$4.99), адрес CDN.
+3. `[пользователь]` Решить открытые вопросы: категория и возрастные группы (**проверить**, см. `play_console.md`), цена `full_version` (US$7.99, решено 23.11.2026), адрес CDN.
 4. `[пользователь]` Заменить временную иконку (`assets/icon/`, см. «Commands» в `CLAUDE.md`) и подготовить feature graphic 1024 × 500 и скриншоты (список в `listing.md`).
 
 ## 1. Ключ загрузки (keystore)
@@ -70,7 +70,7 @@ COLORING_KEY_PROPERTIES=~/keys/coloring/key.properties flutter build appbundle -
 
 1. Название, краткое и полное описание для en-US, затем добавить переводы uk и ru.
 2. Иконка 512 × 512, feature graphic 1024 × 500, минимум 2 скриншота телефона (лучше 4–6; планшетные по желанию).
-3. Категория и теги (**проверить**), e-mail для связи `pirate.dmitry@gmail.com`, сайт (по желанию).
+3. Категория и теги (**проверить**), e-mail для связи `contact@animosaic.app`, сайт (по желанию).
 4. Для закрытого теста Play проверяет карточку не так строго, как для продакшена, но без названия, описания, иконки и скриншотов выпуск не отправить.
 
 ## 6. Policy and programs: App content
@@ -98,7 +98,7 @@ COLORING_KEY_PROPERTIES=~/keys/coloring/key.properties flutter build appbundle -
 
 `[пользователь]`, **только после первой загрузки AAB** с окончательным package name:
 
-1. (Создан 2026-11-23 как черновик: способ покупки `buy` с обратной совместимостью, US$4.99 и пересчёт на 174 страны, в Украине 269.99 UAH; названия и описания en/uk/ru.) Monetize → In-app products → создать `full_version` (one-time, non-consumable), название и описание на en/uk/ru, цена (по умолчанию US$4.99), пересчёт по странам, затем просмотреть UAH и EUR вручную.
+1. (Создан 2026-11-23 как черновик: способ покупки `buy` с обратной совместимостью, US$4.99 и пересчёт на 174 страны, в Украине 269.99 UAH; названия и описания en/uk/ru.) Monetize → In-app products → создать `full_version` (one-time, non-consumable), название и описание на en/uk/ru, цена US$7.99 (поставлена 2026-11-23 на все 174 страны: 434.99 UAH, 8.99 EUR, 7.49 GBP), пересчёт по странам, затем просмотреть UAH и EUR вручную.
 2. **Активировать** продукт: неактивный продукт ревью не пропустит.
 3. В RevenueCat (проект `proj94119f87`) продукт `full_version` уже создан и привязан к entitlement `full` и пакету `$rc_lifetime` оффера `default` (2026-11-23, через API v2). Осталось: Project settings → Apps → «Animosaic Colors (Google Play)» → загрузить JSON сервисного аккаунта Google Play (можно тот же, что у puzzles, если у него есть доступ к новому приложению в Play Console: Users and permissions → сервисный аккаунт → добавить приложение с правами на финансовые данные и заказы).
 4. Проверить покупку тестовой учёткой лицензирования (License testing в Play Console) на устройстве из внутреннего теста: покупка, затем «Восстановить покупки» после переустановки.
