@@ -98,7 +98,7 @@ COLORING_KEY_PROPERTIES=~/keys/coloring/key.properties flutter build appbundle -
 
 `[пользователь]`, **только после первой загрузки AAB** с окончательным package name:
 
-1. Monetize → In-app products → создать `full_version` (one-time, non-consumable), название и описание на en/uk/ru, цена (по умолчанию US$4.99), пересчёт по странам, затем просмотреть UAH и EUR вручную.
+1. (Создан 2026-11-23 как черновик: способ покупки `buy` с обратной совместимостью, US$4.99 и пересчёт на 174 страны, в Украине 269.99 UAH; названия и описания en/uk/ru.) Monetize → In-app products → создать `full_version` (one-time, non-consumable), название и описание на en/uk/ru, цена (по умолчанию US$4.99), пересчёт по странам, затем просмотреть UAH и EUR вручную.
 2. **Активировать** продукт: неактивный продукт ревью не пропустит.
 3. В RevenueCat (проект `proj94119f87`) продукт `full_version` уже создан и привязан к entitlement `full` и пакету `$rc_lifetime` оффера `default` (2026-11-23, через API v2). Осталось: Project settings → Apps → «Animosaic Colors (Google Play)» → загрузить JSON сервисного аккаунта Google Play (можно тот же, что у puzzles, если у него есть доступ к новому приложению в Play Console: Users and permissions → сервисный аккаунт → добавить приложение с правами на финансовые данные и заказы).
 4. Проверить покупку тестовой учёткой лицензирования (License testing в Play Console) на устройстве из внутреннего теста: покупка, затем «Восстановить покупки» после переустановки.
