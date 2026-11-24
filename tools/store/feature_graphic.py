@@ -48,6 +48,12 @@ def main() -> None:
         pass  # a static font has no weight axis
     draw.text((60, 300), "Animosaic", font=font, fill="#4a2c1a")
     draw.text((60, 365), "Colors", font=font, fill="#4a2c1a")
+    subtitle = ImageFont.truetype(str(FONT), 30)
+    try:
+        subtitle.set_variation_by_axes([800])
+    except OSError:
+        pass
+    draw.text((62, 440), "Coloring for kids", font=subtitle, fill="#9a3f1c")
     image.save(OUT)
 
 
