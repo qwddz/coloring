@@ -11,9 +11,11 @@ const double labelMaxZoomCap = 8;
 
 const double _labelMinFontDp = 10;
 const double _labelMaxFontDp = 28;
-const double _toleranceDp = 6;
-const double _toleranceMinImagePx = 4;
-const double _toleranceMaxImagePx = 16;
+const double _toleranceDp = 8;
+// Half the width of 99% of picture lines is under 11 image px: a tap in the
+// middle of a line finds a region at any zoom.
+const double _toleranceMinImagePx = 12;
+const double _toleranceMaxImagePx = 24;
 
 double _onScreenRadiusDp(double radiusImagePx, double imagePxPerDp) =>
     radiusImagePx / imagePxPerDp;
@@ -47,7 +49,7 @@ double labelFontSize(double radiusImagePx, double imagePxPerDp) => math
     .toDouble();
 
 /// Tap tolerance for region lookup near lines, in image px:
-/// `clamp(6 dp * imagePxPerDp, 4, 16)`, rounded to a whole pixel.
+/// `clamp(8 dp * imagePxPerDp, 12, 24)`, rounded to a whole pixel.
 int lineTolerance(double imagePxPerDp) => math
     .max(
       _toleranceMinImagePx,

@@ -278,8 +278,15 @@ class _ColoringScreenState extends ConsumerState<ColoringScreen> {
                             brushDrags: state.mode == ColoringMode.magic,
                             onTap: (x, y, tolerance) =>
                                 controller.tap(x, y, tolerance: tolerance),
-                            onLongPress: (x, y, tolerance) =>
-                                controller.hint(x, y, tolerance: tolerance),
+                            // Only free mode has a hint; elsewhere a held
+                            // finger taps when it lifts.
+                            onLongPress: state.mode == ColoringMode.free
+                                ? (x, y, tolerance) => controller.hint(
+                                    x,
+                                    y,
+                                    tolerance: tolerance,
+                                  )
+                                : null,
                             onStrokeStart: (x, y, tolerance) {
                               controller
                                 ..beginStroke()

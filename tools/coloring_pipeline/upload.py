@@ -49,7 +49,8 @@ def endpoint_url(account):
 
 
 def manifest_refs(manifest):
-    return {p[k] for c in manifest.get('categories', []) for p in c.get('pictures', [])
+    # `?v=<sha>` only busts the CDN cache; the object name is the path before it
+    return {p[k].split('?', 1)[0] for c in manifest.get('categories', []) for p in c.get('pictures', [])
             for k in ('url', 'thumbUrl', 'thumbLockedUrl') if isinstance(p.get(k), str) and '://' not in p[k]}
 
 

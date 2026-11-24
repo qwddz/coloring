@@ -43,13 +43,14 @@ void main() {
   });
 
   group('lineTolerance', () {
-    test('is 6 dp in image px', () {
-      expect(lineTolerance(1.5), 9);
+    test('is 8 dp in image px', () {
+      expect(lineTolerance(2), 16);
     });
-    test('clamps to 4..16', () {
-      expect(lineTolerance(0.1), 4);
-      expect(lineTolerance(1), 6);
-      expect(lineTolerance(10), 16);
+    test('clamps to 12..24', () {
+      expect(lineTolerance(0.1), 12);
+      expect(lineTolerance(1.5), 12);
+      expect(lineTolerance(2.5), 20);
+      expect(lineTolerance(10), 24);
     });
   });
 }

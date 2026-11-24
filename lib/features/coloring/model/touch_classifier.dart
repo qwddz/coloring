@@ -1,6 +1,5 @@
 import 'dart:math';
 
-const Duration tapMaxDuration = Duration(milliseconds: 300);
 const Duration longPressDuration = Duration(milliseconds: 500);
 const double tapSlopDp = 10;
 
@@ -56,6 +55,9 @@ enum _Phase { idle, pending, longPressed, dragging, scaling, ignoring }
 
 /// Turns raw pointer events into gestures. Pure: time is passed in. Long press
 /// needs time to pass without events, so call [tick] (e.g. from a Timer).
+/// A finger that lifts within [tapSlopDp] of where it went down is a tap
+/// however long it was held, unless a [LongPress] fired first: children
+/// often press slowly, and a held finger that does nothing feels broken.
 /// A cancelled pointer is dropped alone: it never taps, and it ends the drag
 /// or scale it belonged to (see [pointerCancel]).
 class TouchClassifier {
@@ -139,9 +141,7 @@ class TouchClassifier {
     final out = <TouchGesture>[];
     switch (_phase) {
       case _Phase.pending:
-        if (id == _primary && now - _downAt < tapMaxDuration) {
-          out.add(Tap(position));
-        }
+        if (id == _primary) out.add(Tap(position));
         _phase = _Phase.idle;
       case _Phase.longPressed:
         _phase = _Phase.idle;

@@ -20,6 +20,11 @@ typedef CanvasPointCallback = void Function(
 
 enum _Drag { none, stroke, pan }
 
+/// At 1× outside magic mode a one-finger drag has nothing to do, so a finger
+/// that wobbles past [tapSlopDp] but stays within this distance of where it
+/// went down still taps there.
+const double wobbleTapDp = 24;
+
 /// The [ColoringGame] with touch input (spec §4, A3): raw pointers go
 /// through [TouchClassifier]; taps, long presses and magic-brush strokes are
 /// reported through the callbacks, pinch and pan move the game's viewport.
@@ -27,7 +32,10 @@ enum _Drag { none, stroke, pan }
 /// - Two fingers always zoom (1×–4×) and pan.
 /// - One finger drags the picture when zoomed in, unless [brushDrags]
 ///   (magic mode), where it paints a stroke at any zoom. At 1× without
-///   [brushDrags] a drag does nothing.
+///   [brushDrags] a drag that stays within [wobbleTapDp] of its start is a
+///   tap there; a longer one does nothing.
+/// - A held finger reports [onLongPress] at 500 ms when that callback is set
+///   (and not [brushDrags]); without it, holding and lifting is a tap.
 /// - A second finger ends a running stroke through [onStrokeEnd]. So does a
 ///   cancelled pointer (the system took the touch): the regions already
 ///   painted stay and the stroke is committed, never left open.
@@ -65,6 +73,9 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
   Timer? _longPressTimer;
   Duration _downAt = Duration.zero;
   _Drag _drag = _Drag.none;
+  Point<double>? _wobbleFrom;
+  bool _longPressed = false;
+  double _wobbleFar = 0;
   Viewport? _scaleStart;
   late final FillLatencyProbe? _probe =
       widget.latencyProbe ??
@@ -87,7 +98,8 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
     // new ones until it lifts.
     _game.gestureActive = true;
     // Magic mode has no long press: a held finger only waits for its stroke.
-    if (first && !widget.brushDrags) {
+    if (first) _longPressed = false;
+    if (first && !widget.brushDrags && widget.onLongPress != null) {
       _downAt = e.timeStamp;
       // The classifier needs time to pass without events for a long press.
       _longPressTimer = Timer(
@@ -130,6 +142,7 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
         case Tap(:final position):
           _tap(position, upStamp);
         case LongPress(:final position):
+          _longPressed = true;
           _emit(widget.onLongPress, position);
         case DragStart(:final position):
           final zoomed = (_game.viewport?.zoom ?? minZoom) > minZoom;
@@ -139,6 +152,9 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
               ? _Drag.pan
               : _Drag.none;
           if (_drag == _Drag.stroke) _emit(widget.onStrokeStart, position);
+          // A finger that already showed a hint never taps.
+          _wobbleFrom = _drag == _Drag.none && !_longPressed ? position : null;
+          _wobbleFar = 0;
         case DragUpdate(:final position, :final delta):
           switch (_drag) {
             case _Drag.stroke:
@@ -147,10 +163,23 @@ class _ColoringCanvasState extends State<ColoringCanvas> {
               final v = _game.viewport;
               if (v != null) _game.viewport = v.panBy(delta);
             case _Drag.none:
-              break;
+              final from = _wobbleFrom;
+              if (from != null) {
+                _wobbleFar = max(_wobbleFar, position.distanceTo(from));
+              }
           }
         case DragEnd(:final position):
           if (_drag == _Drag.stroke) _emit(widget.onStrokeEnd, position);
+          // Only a lifted finger taps: a drag ended by a second finger or a
+          // cancel has no up stamp.
+          final from = _wobbleFrom;
+          if (_drag == _Drag.none &&
+              from != null &&
+              upStamp != null &&
+              max(_wobbleFar, position.distanceTo(from)) <= wobbleTapDp) {
+            _tap(from, upStamp);
+          }
+          _wobbleFrom = null;
           _drag = _Drag.none;
         case ScaleStart():
           _scaleStart = _game.viewport;

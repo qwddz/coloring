@@ -74,16 +74,22 @@ class Work {
     );
   }
 
-  /// This work for a picture with [regionCount] regions. When the saved
-  /// colors don't fit (the picture changed on the CDN), the colors are reset
-  /// and the work is no longer completed; the mode is kept.
+  /// This work for a picture with [regionCount] regions. When the picture
+  /// changed on the CDN, the work is no longer completed and the mode is
+  /// kept; colors survive when regions were only added, else they reset.
   Work fitTo(int regionCount) {
     if (colors.length == regionCount + 1) return this;
+    // The pipeline's `split` (a line gap fixed on the CDN) keeps every id and
+    // appends new ones, so a grown picture keeps its colors and gets new
+    // empty regions. Fewer regions means the picture was rebuilt: reset.
+    final grown = colors.length < regionCount + 1;
     return Work(
       id: id,
       pictureId: pictureId,
       mode: mode,
-      colors: Uint32List(regionCount + 1),
+      colors: grown
+          ? (Uint32List(regionCount + 1)..setAll(0, colors))
+          : Uint32List(regionCount + 1),
       modified: modified,
     );
   }

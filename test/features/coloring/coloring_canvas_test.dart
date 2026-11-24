@@ -52,6 +52,7 @@ void main() {
   Future<ColoringGame> pumpCanvas(
     WidgetTester tester, {
     bool brushDrags = false,
+    bool longPress = true,
     Size canvas = const Size(800, 600),
     FillLatencyProbe? probe,
   }) async {
@@ -74,7 +75,7 @@ void main() {
               game: game,
               brushDrags: brushDrags,
               onTap: calls.record('tap'),
-              onLongPress: calls.record('longPress'),
+              onLongPress: longPress ? calls.record('longPress') : null,
               onStrokeStart: calls.record('strokeStart'),
               onStrokeUpdate: calls.record('strokeUpdate'),
               onStrokeEnd: calls.record('strokeEnd'),
@@ -99,8 +100,8 @@ void main() {
     final (x, y, tolerance) = calls.points.single;
     expect(x, closeTo(10.5, 1e-9));
     expect(y, closeTo(1.5, 1e-9));
-    // 6 dp at 50 dp per image px is below the 4 px minimum.
-    expect(tolerance, 4);
+    // 8 dp at 50 dp per image px is below the 12 px minimum.
+    expect(tolerance, 12);
   });
 
   testWidgets('the latency probe starts at the pointer-up stamp', (
@@ -149,6 +150,58 @@ void main() {
     expect(calls.events, isEmpty);
     expect(game.viewport!.zoom, 1);
     expect(game.viewport!.pan, before.pan);
+  });
+
+  testWidgets('at 1x a finger that wobbles within 24 dp taps where it went '
+      'down', (tester) async {
+    await pumpCanvas(tester);
+    final g = await tester.startGesture(const Offset(125, 75));
+    await g.moveBy(const Offset(15, 0));
+    await g.moveBy(const Offset(0, 15));
+    await g.up();
+    expect(calls.events, ['tap']);
+    expect(calls.points.single.$1, closeTo(2.5, 1e-9));
+    expect(calls.points.single.$2, closeTo(1.5, 1e-9));
+  });
+
+  testWidgets('a finger that wanders past 24 dp and comes back is no tap', (
+    tester,
+  ) async {
+    await pumpCanvas(tester);
+    final g = await tester.startGesture(const Offset(300, 300));
+    await g.moveBy(const Offset(30, 0));
+    await g.moveBy(const Offset(-30, 0));
+    await g.up();
+    expect(calls.events, isEmpty);
+  });
+
+  testWidgets('a wobble after a long press is no tap', (tester) async {
+    await pumpCanvas(tester);
+    final g = await tester.createGesture();
+    await g.down(const Offset(125, 75));
+    await tester.pump(const Duration(milliseconds: 600));
+    await g.moveBy(const Offset(15, 0));
+    await g.up();
+    expect(calls.events, ['longPress']);
+  });
+
+  testWidgets('a wobble ended by a second finger is no tap', (tester) async {
+    await pumpCanvas(tester);
+    final a = await tester.startGesture(const Offset(300, 300), pointer: 1);
+    await a.moveBy(const Offset(15, 0));
+    final b = await tester.startGesture(const Offset(500, 300), pointer: 2);
+    await b.up();
+    await a.up();
+    expect(calls.events, isEmpty);
+  });
+
+  testWidgets('zoomed in, a wobble pans and does not tap', (tester) async {
+    final game = await pumpCanvas(tester);
+    game.viewport = game.viewport!.zoomAt(const Point(400, 300), 2);
+    final before = game.viewport!.pan;
+    await tester.dragFrom(const Offset(400, 300), const Offset(15, 0));
+    expect(calls.events, isEmpty);
+    expect(game.viewport!.pan.x, greaterThan(before.x));
   });
 
   testWidgets('a one-finger drag pans when zoomed in', (tester) async {
@@ -277,15 +330,26 @@ void main() {
       expect(calls.events, ['tap']);
     });
 
-    testWidgets('released at 400 ms: too long for a tap, too short for a '
-        'long press', (tester) async {
+    testWidgets('released at 400 ms: still a tap', (tester) async {
       await pumpCanvas(tester);
       final g = await tester.createGesture();
       await g.down(const Offset(125, 75));
       await tester.pump(const Duration(milliseconds: 400));
       await g.up(timeStamp: const Duration(milliseconds: 400));
       await tester.pump(const Duration(milliseconds: 500));
+      expect(calls.events, ['tap']);
+    });
+
+    testWidgets('without onLongPress, a 1 s hold taps when it lifts', (
+      tester,
+    ) async {
+      await pumpCanvas(tester, longPress: false);
+      final g = await tester.createGesture();
+      await g.down(const Offset(125, 75));
+      await tester.pump(const Duration(seconds: 1));
       expect(calls.events, isEmpty);
+      await g.up(timeStamp: const Duration(seconds: 1));
+      expect(calls.events, ['tap']);
     });
   });
 

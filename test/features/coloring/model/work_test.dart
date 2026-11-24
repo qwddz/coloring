@@ -79,7 +79,7 @@ void main() {
     expect(Work.fromJson(validJson()..['completedAt'] = 'soon'), isNull);
   });
 
-  test('a colors length mismatch resets colors and completion', () {
+  test('added regions keep the colors and reset completion', () {
     final w = Work.fromJson(
       validJson()
         ..['completed'] = true
@@ -87,10 +87,18 @@ void main() {
     )!;
     expect(identical(w.fitTo(3), w), isTrue);
     final fitted = w.fitTo(5);
-    expect(fitted.colors, List.filled(6, 0));
+    expect(fitted.colors, [...w.colors, 0, 0]);
     expect(fitted.mode, ColoringMode.numbers);
     expect(fitted.completed, isFalse);
     expect(fitted.completedAt, isNull);
+    expect(fitted.id, w.id);
+  });
+
+  test('fewer regions reset the colors', () {
+    final w = Work.fromJson(validJson())!;
+    final fitted = w.fitTo(2);
+    expect(fitted.colors, List.filled(3, 0));
+    expect(fitted.completed, isFalse);
     expect(fitted.id, w.id);
   });
 

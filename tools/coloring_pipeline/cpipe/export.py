@@ -48,8 +48,12 @@ def export(scenes):
             shutil.copy2(src / 'thumb_locked.webp', cdir / f'{s.id}_thumb_locked.webp')
             # relative to the app's CDN_BASE_URL (resolveCdnUrl), so moving the CDN needs no re-export
             base = f'{s.category}/{s.id}'
-            entry.update(url=f'{base}.zip', thumbUrl=f'{base}_thumb.webp',
-                         thumbLockedUrl=f'{base}_thumb_locked.webp', sha256=_sha256(z))
+            sha = _sha256(z)
+            # the zip keeps its name when a picture is fixed, and the CDN edge caches it for a day;
+            # the checksum in the query gives a changed zip a new cache key, else the app would
+            # get the old zip, fail the sha256 check and not open the picture
+            entry.update(url=f'{base}.zip?v={sha[:8]}', thumbUrl=f'{base}_thumb.webp',
+                         thumbLockedUrl=f'{base}_thumb_locked.webp', sha256=sha)
         cats[s.category]['pictures'].append(entry)
     mpath = config.APP_ASSETS / 'manifest.json'
     old = json.loads(mpath.read_text(encoding='utf-8')) if mpath.exists() else {}

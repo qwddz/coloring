@@ -1,5 +1,5 @@
 {
- "version": 7,
+ "version": 10,
  "minAppVersion": "1.0.0",
  "categories": [
   {
@@ -343,7 +343,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "autumn/autumn_hamster_leaves.zip",
+     "url": "autumn/autumn_hamster_leaves.zip?v=272df500",
      "thumbUrl": "autumn/autumn_hamster_leaves_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_hamster_leaves_thumb_locked.webp",
      "sha256": "272df5007d8894e8e7582c349851749ae88f48533ddc76ca3ab5b86bbdf80b0d"
@@ -360,7 +360,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "autumn/autumn_hedgehog_apple.zip",
+     "url": "autumn/autumn_hedgehog_apple.zip?v=10255ef8",
      "thumbUrl": "autumn/autumn_hedgehog_apple_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_hedgehog_apple_thumb_locked.webp",
      "sha256": "10255ef88715c324a151d9520ee7e4516ed400793cdb96b13902f372c1a0318d"
@@ -377,7 +377,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "autumn/autumn_spitz_puddle.zip",
+     "url": "autumn/autumn_spitz_puddle.zip?v=70d17f50",
      "thumbUrl": "autumn/autumn_spitz_puddle_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_spitz_puddle_thumb_locked.webp",
      "sha256": "70d17f5083bc8a54f3ee8849fefc3cdb062a10fa5cef71bc415f9f9d90d3c22d"
@@ -394,7 +394,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "autumn/autumn_lynx_mushrooms.zip",
+     "url": "autumn/autumn_lynx_mushrooms.zip?v=897a3084",
      "thumbUrl": "autumn/autumn_lynx_mushrooms_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_lynx_mushrooms_thumb_locked.webp",
      "sha256": "897a3084c3f1d4159d3d23268b42c2516d81b90d2055809948e8caae6bfbe148"
@@ -411,7 +411,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "autumn/autumn_goose_apples.zip",
+     "url": "autumn/autumn_goose_apples.zip?v=2622e130",
      "thumbUrl": "autumn/autumn_goose_apples_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_goose_apples_thumb_locked.webp",
      "sha256": "2622e1303e60c77f8f7ec9515513beeb638a51fb6dafad070da3de6fd92d9cfd"
@@ -428,7 +428,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "autumn/autumn_owl_hollow.zip",
+     "url": "autumn/autumn_owl_hollow.zip?v=54012f97",
      "thumbUrl": "autumn/autumn_owl_hollow_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_owl_hollow_thumb_locked.webp",
      "sha256": "54012f97ce6043210f29c554d26488eeac3df3e48a91b99bc882293597b3aade"
@@ -445,7 +445,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "autumn/autumn_turkey_pumpkins.zip",
+     "url": "autumn/autumn_turkey_pumpkins.zip?v=32624d1a",
      "thumbUrl": "autumn/autumn_turkey_pumpkins_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_turkey_pumpkins_thumb_locked.webp",
      "sha256": "32624d1a8b0ebe78ac2c8cb3598530fdea5dbbcc2a310e3ebfdbee0e119617a9"
@@ -462,7 +462,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "autumn/autumn_wolf_kite.zip",
+     "url": "autumn/autumn_wolf_kite.zip?v=0396f695",
      "thumbUrl": "autumn/autumn_wolf_kite_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_wolf_kite_thumb_locked.webp",
      "sha256": "0396f695070d2500f26c947af8c80a1fb904e56b0b717d9a2c230f56bbd13177"
@@ -479,7 +479,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "autumn/autumn_pallas_leaves.zip",
+     "url": "autumn/autumn_pallas_leaves.zip?v=a283365b",
      "thumbUrl": "autumn/autumn_pallas_leaves_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_pallas_leaves_thumb_locked.webp",
      "sha256": "a283365b168f992c9fd4390b708655b83c986da8a5cdc99316fa9162d33cbab0"
@@ -496,7 +496,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "autumn/autumn_spider_pumpkin.zip",
+     "url": "autumn/autumn_spider_pumpkin.zip?v=acc333d0",
      "thumbUrl": "autumn/autumn_spider_pumpkin_thumb.webp",
      "thumbLockedUrl": "autumn/autumn_spider_pumpkin_thumb_locked.webp",
      "sha256": "acc333d076f0c96835ed0f34ae122f871c07e063b65480cdb62df7b6008bf11d"
@@ -523,10 +523,10 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "winter/winter_monkey_snowman.zip",
+     "url": "winter/winter_monkey_snowman.zip?v=6e7155b7",
      "thumbUrl": "winter/winter_monkey_snowman_thumb.webp",
      "thumbLockedUrl": "winter/winter_monkey_snowman_thumb_locked.webp",
-     "sha256": "743477abb1b928a2c070f3f6bc7e403472fe2a25fc09fcb54574bd13ce1774d2"
+     "sha256": "6e7155b7f27e7fec5557cb0b7f7200fb72230824ba318683ebf75839a0246463"
     },
     {
      "id": "winter_penguin_skates",
@@ -540,10 +540,10 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "winter/winter_penguin_skates.zip",
+     "url": "winter/winter_penguin_skates.zip?v=66fb8c97",
      "thumbUrl": "winter/winter_penguin_skates_thumb.webp",
      "thumbLockedUrl": "winter/winter_penguin_skates_thumb_locked.webp",
-     "sha256": "17d8cbf9c12c911c687e094ec94102bd7f80d1f06d5066467055b0739c1286c1"
+     "sha256": "66fb8c97fa1a24e73ae473c4f59943b556a9208446edb537511a4cf9f15f15a1"
     },
     {
      "id": "winter_corgi_presents",
@@ -557,7 +557,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "winter/winter_corgi_presents.zip",
+     "url": "winter/winter_corgi_presents.zip?v=d66e6839",
      "thumbUrl": "winter/winter_corgi_presents_thumb.webp",
      "thumbLockedUrl": "winter/winter_corgi_presents_thumb_locked.webp",
      "sha256": "d66e6839a73d43e2f20fcaa1be9554100eb4788714a4512b68a86f3742df626c"
@@ -574,7 +574,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "winter/winter_cat_fireplace.zip",
+     "url": "winter/winter_cat_fireplace.zip?v=64606fad",
      "thumbUrl": "winter/winter_cat_fireplace_thumb.webp",
      "thumbLockedUrl": "winter/winter_cat_fireplace_thumb_locked.webp",
      "sha256": "64606fadd1af63f5fbf1da583fc063bb9f5671a8828cdebf611e3ee9c81ebf07"
@@ -591,7 +591,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "winter/winter_seal_sled.zip",
+     "url": "winter/winter_seal_sled.zip?v=3662dcd5",
      "thumbUrl": "winter/winter_seal_sled_thumb.webp",
      "thumbLockedUrl": "winter/winter_seal_sled_thumb_locked.webp",
      "sha256": "3662dcd5eb7c4382af814a74d4f60c52c65e63c24680a578de17e133a991e0d0"
@@ -608,7 +608,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "winter/winter_husky_tree.zip",
+     "url": "winter/winter_husky_tree.zip?v=8ca30f92",
      "thumbUrl": "winter/winter_husky_tree_thumb.webp",
      "thumbLockedUrl": "winter/winter_husky_tree_thumb_locked.webp",
      "sha256": "8ca30f92e8a102177adcb65e236609d0f626fcc293f6f76de19c4faa97b7ce91"
@@ -625,7 +625,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "winter/winter_lamb_snowflakes.zip",
+     "url": "winter/winter_lamb_snowflakes.zip?v=9bee44c6",
      "thumbUrl": "winter/winter_lamb_snowflakes_thumb.webp",
      "thumbLockedUrl": "winter/winter_lamb_snowflakes_thumb_locked.webp",
      "sha256": "9bee44c6b1127cf8aafc8acd1eb85c46b1b8b8082055bb31e2bca25e0f4b4b7c"
@@ -642,7 +642,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "winter/winter_tiger_skiing.zip",
+     "url": "winter/winter_tiger_skiing.zip?v=2607c034",
      "thumbUrl": "winter/winter_tiger_skiing_thumb.webp",
      "thumbLockedUrl": "winter/winter_tiger_skiing_thumb_locked.webp",
      "sha256": "2607c034b2c0805609c49f154570b7e407b319453a8e31780f81fd6067389a33"
@@ -659,7 +659,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "winter/winter_walrus_gift.zip",
+     "url": "winter/winter_walrus_gift.zip?v=e6f2b4af",
      "thumbUrl": "winter/winter_walrus_gift_thumb.webp",
      "thumbLockedUrl": "winter/winter_walrus_gift_thumb_locked.webp",
      "sha256": "e6f2b4af407adb73be31d3d43371fdd8f150353d23ee13fa16ed6df49f918790"
@@ -676,7 +676,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "winter/winter_chinchilla_gingerbread.zip",
+     "url": "winter/winter_chinchilla_gingerbread.zip?v=7984b3a7",
      "thumbUrl": "winter/winter_chinchilla_gingerbread_thumb.webp",
      "thumbLockedUrl": "winter/winter_chinchilla_gingerbread_thumb_locked.webp",
      "sha256": "7984b3a7c04648420ccab8b610b09ab940687fcf75b74d5032b50925d0da2ac8"
@@ -703,7 +703,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "spring/spring_bunny_watering.zip",
+     "url": "spring/spring_bunny_watering.zip?v=f9e9b256",
      "thumbUrl": "spring/spring_bunny_watering_thumb.webp",
      "thumbLockedUrl": "spring/spring_bunny_watering_thumb_locked.webp",
      "sha256": "f9e9b256f8db6f1f1be879ff416ef10c617e90db74e1ed02e0fe11edf3cd89c1"
@@ -720,7 +720,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "spring/spring_duckling_boat.zip",
+     "url": "spring/spring_duckling_boat.zip?v=ad8fca66",
      "thumbUrl": "spring/spring_duckling_boat_thumb.webp",
      "thumbLockedUrl": "spring/spring_duckling_boat_thumb_locked.webp",
      "sha256": "ad8fca660b176bb29aaba4713f48cf83affb047ee3ee20a0eb1f60ccdeedaedc"
@@ -737,7 +737,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "spring/spring_foal_wreath.zip",
+     "url": "spring/spring_foal_wreath.zip?v=834d82c7",
      "thumbUrl": "spring/spring_foal_wreath_thumb.webp",
      "thumbLockedUrl": "spring/spring_foal_wreath_thumb_locked.webp",
      "sha256": "834d82c7b9aaa29a51e5a66d274b8dd324fb2da2e8c3e8a069ef1cde8829811f"
@@ -754,7 +754,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "spring/spring_kitten_butterfly.zip",
+     "url": "spring/spring_kitten_butterfly.zip?v=dad1ab77",
      "thumbUrl": "spring/spring_kitten_butterfly_thumb.webp",
      "thumbLockedUrl": "spring/spring_kitten_butterfly_thumb_locked.webp",
      "sha256": "dad1ab7793217426eef67c7ab6ca516c4bbe1c60fa5187f83a2f6eb37bd24ee4"
@@ -771,7 +771,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "spring/spring_shiba_tree.zip",
+     "url": "spring/spring_shiba_tree.zip?v=0201cf78",
      "thumbUrl": "spring/spring_shiba_tree_thumb.webp",
      "thumbLockedUrl": "spring/spring_shiba_tree_thumb_locked.webp",
      "sha256": "0201cf78a49bf669652178d9010508658413b15d186d75bebf387ef0cab33868"
@@ -788,7 +788,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "spring/spring_lovebirds_birdhouse.zip",
+     "url": "spring/spring_lovebirds_birdhouse.zip?v=9073c1dc",
      "thumbUrl": "spring/spring_lovebirds_birdhouse_thumb.webp",
      "thumbLockedUrl": "spring/spring_lovebirds_birdhouse_thumb_locked.webp",
      "sha256": "9073c1dcbe07960c8fda0a74efd57173e7ba5005bf435aed14c6521bb3c52235"
@@ -805,7 +805,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "spring/spring_tortoise_flowerpot.zip",
+     "url": "spring/spring_tortoise_flowerpot.zip?v=b4a91ac8",
      "thumbUrl": "spring/spring_tortoise_flowerpot_thumb.webp",
      "thumbLockedUrl": "spring/spring_tortoise_flowerpot_thumb_locked.webp",
      "sha256": "b4a91ac8e42ca619f844df27b6c49e7975385d22fee24a65adcdc7ad2b1a11ba"
@@ -822,7 +822,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "spring/spring_spider_umbrella.zip",
+     "url": "spring/spring_spider_umbrella.zip?v=4eaed12c",
      "thumbUrl": "spring/spring_spider_umbrella_thumb.webp",
      "thumbLockedUrl": "spring/spring_spider_umbrella_thumb_locked.webp",
      "sha256": "4eaed12cb8018fae6dc67f31cd6572f48f932f66767a5fb6d113a32d64d929ba"
@@ -839,7 +839,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "spring/spring_snake_garden.zip",
+     "url": "spring/spring_snake_garden.zip?v=a38044b1",
      "thumbUrl": "spring/spring_snake_garden_thumb.webp",
      "thumbLockedUrl": "spring/spring_snake_garden_thumb_locked.webp",
      "sha256": "a38044b1b3555c6b956520272def43cc8cf84e34f73f16e92839deda77a8e767"
@@ -856,7 +856,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "spring/spring_guinea_pig_seeds.zip",
+     "url": "spring/spring_guinea_pig_seeds.zip?v=7507b8c5",
      "thumbUrl": "spring/spring_guinea_pig_seeds_thumb.webp",
      "thumbLockedUrl": "spring/spring_guinea_pig_seeds_thumb_locked.webp",
      "sha256": "7507b8c50a852e94b907561f1959dea1766b8becfd1fc5d822cb77daa054e2b6"
@@ -883,7 +883,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "summer/summer_giraffe_beach.zip",
+     "url": "summer/summer_giraffe_beach.zip?v=06ac2ae7",
      "thumbUrl": "summer/summer_giraffe_beach_thumb.webp",
      "thumbLockedUrl": "summer/summer_giraffe_beach_thumb_locked.webp",
      "sha256": "06ac2ae7bfee5f8586ff2d689b8c89005304427ec7e0cf6a6d4c8a35600a9850"
@@ -900,7 +900,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "summer/summer_crab_castle.zip",
+     "url": "summer/summer_crab_castle.zip?v=e4259082",
      "thumbUrl": "summer/summer_crab_castle_thumb.webp",
      "thumbLockedUrl": "summer/summer_crab_castle_thumb_locked.webp",
      "sha256": "e42590821647f85fd8929433a55910428188da93d839c9d2d9413fa8e033a1a2"
@@ -917,7 +917,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "summer/summer_fennec_icecream.zip",
+     "url": "summer/summer_fennec_icecream.zip?v=fb326ffd",
      "thumbUrl": "summer/summer_fennec_icecream_thumb.webp",
      "thumbLockedUrl": "summer/summer_fennec_icecream_thumb_locked.webp",
      "sha256": "fb326ffddf0a4a50b74044afa0f10c0896002e977543b671369957344638faa0"
@@ -934,7 +934,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "summer/summer_sea_lion_float.zip",
+     "url": "summer/summer_sea_lion_float.zip?v=1434e38f",
      "thumbUrl": "summer/summer_sea_lion_float_thumb.webp",
      "thumbLockedUrl": "summer/summer_sea_lion_float_thumb_locked.webp",
      "sha256": "1434e38f0b2003d95216ab1b9273c6be863eb9ca0e6a1c86aa4337f23909d62d"
@@ -951,7 +951,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "summer/summer_flamingo_pool.zip",
+     "url": "summer/summer_flamingo_pool.zip?v=5fe3a3f6",
      "thumbUrl": "summer/summer_flamingo_pool_thumb.webp",
      "thumbLockedUrl": "summer/summer_flamingo_pool_thumb_locked.webp",
      "sha256": "5fe3a3f66455206d19ac55cc1640d8976abdd8e9e71cbd4b7d6450899f043f4d"
@@ -968,7 +968,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "summer/summer_dolphin_ball.zip",
+     "url": "summer/summer_dolphin_ball.zip?v=643d106b",
      "thumbUrl": "summer/summer_dolphin_ball_thumb.webp",
      "thumbLockedUrl": "summer/summer_dolphin_ball_thumb_locked.webp",
      "sha256": "643d106b8f333a69b6f6d68a488b14923537882d7c87eaa94a7777eecb2bb301"
@@ -985,7 +985,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "summer/summer_dog_surf.zip",
+     "url": "summer/summer_dog_surf.zip?v=cee94326",
      "thumbUrl": "summer/summer_dog_surf_thumb.webp",
      "thumbLockedUrl": "summer/summer_dog_surf_thumb_locked.webp",
      "sha256": "cee94326c013dfdebd95178e4dc9c2b33f4b96f5a3a43305671075746f1ac8f8"
@@ -1002,7 +1002,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "summer/summer_hare_strawberries.zip",
+     "url": "summer/summer_hare_strawberries.zip?v=8af1a04a",
      "thumbUrl": "summer/summer_hare_strawberries_thumb.webp",
      "thumbLockedUrl": "summer/summer_hare_strawberries_thumb_locked.webp",
      "sha256": "8af1a04ad91b730fae5ee86fab0a9dab362ce7ed753610d32290cdf607d0a7f5"
@@ -1019,7 +1019,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "summer/summer_puppy_camping.zip",
+     "url": "summer/summer_puppy_camping.zip?v=ce999380",
      "thumbUrl": "summer/summer_puppy_camping_thumb.webp",
      "thumbLockedUrl": "summer/summer_puppy_camping_thumb_locked.webp",
      "sha256": "ce9993809778d1de323f8de4eb53082a13398e22da5daa5639d0fa38ba93a7e8"
@@ -1036,7 +1036,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "summer/summer_zebra_sprinkler.zip",
+     "url": "summer/summer_zebra_sprinkler.zip?v=b6ae2a5f",
      "thumbUrl": "summer/summer_zebra_sprinkler_thumb.webp",
      "thumbLockedUrl": "summer/summer_zebra_sprinkler_thumb_locked.webp",
      "sha256": "b6ae2a5f3c68435bcc355f0d8567bb2cde287c2b0e55c689b9bc8d12f093bd32"
@@ -1063,7 +1063,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "underwater/underwater_turtle_cafe.zip",
+     "url": "underwater/underwater_turtle_cafe.zip?v=9abff5ad",
      "thumbUrl": "underwater/underwater_turtle_cafe_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_turtle_cafe_thumb_locked.webp",
      "sha256": "9abff5ad578055d8a738e42585525e0dc23ffc9ab59f9edda16cafd40545d2b9"
@@ -1080,7 +1080,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "underwater/underwater_octopus_drums.zip",
+     "url": "underwater/underwater_octopus_drums.zip?v=9faaed27",
      "thumbUrl": "underwater/underwater_octopus_drums_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_octopus_drums_thumb_locked.webp",
      "sha256": "9faaed27b8e043ce40d30f16aca0a222e4cf068b25b943258b9f13a58eaa61a6"
@@ -1097,7 +1097,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "underwater/underwater_clownfish_home.zip",
+     "url": "underwater/underwater_clownfish_home.zip?v=f17015f6",
      "thumbUrl": "underwater/underwater_clownfish_home_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_clownfish_home_thumb_locked.webp",
      "sha256": "f17015f60cdb064226f23f65191d13f8523454abb15d4b951843a7c3aff97451"
@@ -1114,7 +1114,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "underwater/underwater_seahorse_bubbles.zip",
+     "url": "underwater/underwater_seahorse_bubbles.zip?v=15f7a706",
      "thumbUrl": "underwater/underwater_seahorse_bubbles_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_seahorse_bubbles_thumb_locked.webp",
      "sha256": "15f7a706d9a0576da994361c96abdb1a6a4827bf842646395444762155a49d85"
@@ -1131,7 +1131,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "underwater/underwater_beluga_story.zip",
+     "url": "underwater/underwater_beluga_story.zip?v=1d2276bc",
      "thumbUrl": "underwater/underwater_beluga_story_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_beluga_story_thumb_locked.webp",
      "sha256": "1d2276bc4958657a6cb639ff5541d06781ad25092d786b4be209bb7873a45ea3"
@@ -1148,7 +1148,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "underwater/underwater_pufferfish_bubble.zip",
+     "url": "underwater/underwater_pufferfish_bubble.zip?v=e6953d22",
      "thumbUrl": "underwater/underwater_pufferfish_bubble_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_pufferfish_bubble_thumb_locked.webp",
      "sha256": "e6953d220f293f2e2bb93bc150eb9ea946d0c8f13715efbea6acbcaad11802d8"
@@ -1165,7 +1165,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "underwater/underwater_manatee_garden.zip",
+     "url": "underwater/underwater_manatee_garden.zip?v=396ab852",
      "thumbUrl": "underwater/underwater_manatee_garden_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_manatee_garden_thumb_locked.webp",
      "sha256": "396ab8527dca7467bea4c8c4c99069f90fb3cbed8e62ce2bc307ef63d62840e7"
@@ -1182,7 +1182,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "underwater/underwater_manta_ride.zip",
+     "url": "underwater/underwater_manta_ride.zip?v=d92f19dd",
      "thumbUrl": "underwater/underwater_manta_ride_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_manta_ride_thumb_locked.webp",
      "sha256": "d92f19dd96b1d074b869f2bd5a1dac38348218c4dd92393652eab294f7b983f2"
@@ -1199,7 +1199,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "underwater/underwater_jellyfish_dance.zip",
+     "url": "underwater/underwater_jellyfish_dance.zip?v=9706945d",
      "thumbUrl": "underwater/underwater_jellyfish_dance_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_jellyfish_dance_thumb_locked.webp",
      "sha256": "9706945d4953ea17d3f6e3d0040547b08a61ff3d260131c1fc330af8ac3a6234"
@@ -1216,7 +1216,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "underwater/underwater_baby_shark_shells.zip",
+     "url": "underwater/underwater_baby_shark_shells.zip?v=b673b504",
      "thumbUrl": "underwater/underwater_baby_shark_shells_thumb.webp",
      "thumbLockedUrl": "underwater/underwater_baby_shark_shells_thumb_locked.webp",
      "sha256": "b673b5049e6cb0682ac3f9581cef5862458a4ed3ed4aa03fb9c2e9b9a7b1730a"
@@ -1404,7 +1404,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "hobbies/hobbies_lion_painting.zip",
+     "url": "hobbies/hobbies_lion_painting.zip?v=fe58b263",
      "thumbUrl": "hobbies/hobbies_lion_painting_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_lion_painting_thumb_locked.webp",
      "sha256": "fe58b26309356ee9de06c5f556adec99f8f2b0ef1680c3d5c79a7dfe3d2ae1c8"
@@ -1421,7 +1421,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "hobbies/hobbies_frog_violin.zip",
+     "url": "hobbies/hobbies_frog_violin.zip?v=5a2064d6",
      "thumbUrl": "hobbies/hobbies_frog_violin_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_frog_violin_thumb_locked.webp",
      "sha256": "5a2064d62841d2317b22008347ce52b906347b7038c77a8bafc7494ba0d50ccd"
@@ -1438,7 +1438,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "hobbies/hobbies_meerkat_telescope.zip",
+     "url": "hobbies/hobbies_meerkat_telescope.zip?v=cb99f6bf",
      "thumbUrl": "hobbies/hobbies_meerkat_telescope_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_meerkat_telescope_thumb_locked.webp",
      "sha256": "cb99f6bf7c872c99ac7547980d2447642d7db7e50b573d03cf059d910e7f318d"
@@ -1455,7 +1455,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "hobbies/hobbies_dalmatian_bike.zip",
+     "url": "hobbies/hobbies_dalmatian_bike.zip?v=0ef86058",
      "thumbUrl": "hobbies/hobbies_dalmatian_bike_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_dalmatian_bike_thumb_locked.webp",
      "sha256": "0ef860582dd99fcc40c03f2706190dfe0c0d8cf5e1c3b74102aee17c1329e504"
@@ -1472,7 +1472,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "hobbies/hobbies_pug_piano.zip",
+     "url": "hobbies/hobbies_pug_piano.zip?v=0ab28c86",
      "thumbUrl": "hobbies/hobbies_pug_piano_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_pug_piano_thumb_locked.webp",
      "sha256": "0ab28c8687b45644a9be5f51eeec5b78c99d4c6e7e653d34e590db9e34bf3448"
@@ -1489,7 +1489,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "hobbies/hobbies_dachshund_pottery.zip",
+     "url": "hobbies/hobbies_dachshund_pottery.zip?v=d12967e5",
      "thumbUrl": "hobbies/hobbies_dachshund_pottery_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_dachshund_pottery_thumb_locked.webp",
      "sha256": "d12967e556c251132e0936e6e5ef7c63941e63b58b978e4d580f809bd11fd441"
@@ -1506,7 +1506,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "hobbies/hobbies_shark_guitar.zip",
+     "url": "hobbies/hobbies_shark_guitar.zip?v=062f8e82",
      "thumbUrl": "hobbies/hobbies_shark_guitar_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_shark_guitar_thumb_locked.webp",
      "sha256": "062f8e823e337bb94d94d4614224ae673606335fe0ee38c073c3425524ea892a"
@@ -1523,7 +1523,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "hobbies/hobbies_orangutan_fishing.zip",
+     "url": "hobbies/hobbies_orangutan_fishing.zip?v=f379faa2",
      "thumbUrl": "hobbies/hobbies_orangutan_fishing_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_orangutan_fishing_thumb_locked.webp",
      "sha256": "f379faa21c151ce717753e690725aa4fde9e673f62b83eac6d3d7f8300657108"
@@ -1540,7 +1540,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "hobbies/hobbies_ferret_fort.zip",
+     "url": "hobbies/hobbies_ferret_fort.zip?v=caf0ecfd",
      "thumbUrl": "hobbies/hobbies_ferret_fort_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_ferret_fort_thumb_locked.webp",
      "sha256": "caf0ecfdd1957559eb3a9eec96de5564cd2e594482e5f4b3aa6849ce3d00e64c"
@@ -1557,7 +1557,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "hobbies/hobbies_gorilla_greenhouse.zip",
+     "url": "hobbies/hobbies_gorilla_greenhouse.zip?v=f2cbb5f5",
      "thumbUrl": "hobbies/hobbies_gorilla_greenhouse_thumb.webp",
      "thumbLockedUrl": "hobbies/hobbies_gorilla_greenhouse_thumb_locked.webp",
      "sha256": "f2cbb5f5c34600f0227f292337510b5ab7124bf59385acc1fffdf640180cbe5f"
@@ -1584,7 +1584,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "travel/travel_camel_camera.zip",
+     "url": "travel/travel_camel_camera.zip?v=d774e48e",
      "thumbUrl": "travel/travel_camel_camera_thumb.webp",
      "thumbLockedUrl": "travel/travel_camel_camera_thumb_locked.webp",
      "sha256": "d774e48e58d092bada83aeec22845932fc40a67aca09580effdae73785a55e68"
@@ -1601,7 +1601,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "travel/travel_samoyed_balloon.zip",
+     "url": "travel/travel_samoyed_balloon.zip?v=f01aca38",
      "thumbUrl": "travel/travel_samoyed_balloon_thumb.webp",
      "thumbLockedUrl": "travel/travel_samoyed_balloon_thumb_locked.webp",
      "sha256": "f01aca3890693263b8a40942eb0287db916144b0eb7248f20f2e561df9d94860"
@@ -1618,7 +1618,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "travel/travel_cat_suitcase.zip",
+     "url": "travel/travel_cat_suitcase.zip?v=af18e398",
      "thumbUrl": "travel/travel_cat_suitcase_thumb.webp",
      "thumbLockedUrl": "travel/travel_cat_suitcase_thumb_locked.webp",
      "sha256": "af18e398a4d65c98e1f92d33e9bc3c679ebfcbd1266673f4c23df9799ee5d3d2"
@@ -1635,7 +1635,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "travel/travel_poodle_car.zip",
+     "url": "travel/travel_poodle_car.zip?v=4f1a6f4c",
      "thumbUrl": "travel/travel_poodle_car_thumb.webp",
      "thumbLockedUrl": "travel/travel_poodle_car_thumb_locked.webp",
      "sha256": "4f1a6f4cd2f47a893fad3a52b215fe317a37520cabd962811b1546e4b2d4d612"
@@ -1652,7 +1652,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "travel/travel_tortoise_sailboat.zip",
+     "url": "travel/travel_tortoise_sailboat.zip?v=b4119cc1",
      "thumbUrl": "travel/travel_tortoise_sailboat_thumb.webp",
      "thumbLockedUrl": "travel/travel_tortoise_sailboat_thumb_locked.webp",
      "sha256": "b4119cc1e85a426dc599c81d92839cbbb0ba78fd7d9f0f8afeb3a5e840e322f5"
@@ -1669,7 +1669,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "travel/travel_parrot_plane.zip",
+     "url": "travel/travel_parrot_plane.zip?v=1068fad2",
      "thumbUrl": "travel/travel_parrot_plane_thumb.webp",
      "thumbLockedUrl": "travel/travel_parrot_plane_thumb_locked.webp",
      "sha256": "1068fad287877d624e102997cccf325fa777b56ee39519377a08cac04baed903"
@@ -1686,7 +1686,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "travel/travel_rhino_train.zip",
+     "url": "travel/travel_rhino_train.zip?v=4f9c8ab1",
      "thumbUrl": "travel/travel_rhino_train_thumb.webp",
      "thumbLockedUrl": "travel/travel_rhino_train_thumb_locked.webp",
      "sha256": "4f9c8ab11359991c547949b5f0c58a077b3d814f9f95441e10033663261aefab"
@@ -1703,7 +1703,7 @@
      ],
      "level": "simple",
      "free": false,
-     "url": "travel/travel_beagle_station.zip",
+     "url": "travel/travel_beagle_station.zip?v=1e1d16f8",
      "thumbUrl": "travel/travel_beagle_station_thumb.webp",
      "thumbLockedUrl": "travel/travel_beagle_station_thumb_locked.webp",
      "sha256": "1e1d16f8980176a8d5e77ebc5428de345325f256ef9020ed69ddaa983f6654e4"
@@ -1720,7 +1720,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "travel/travel_saint_bernard_hike.zip",
+     "url": "travel/travel_saint_bernard_hike.zip?v=b050bfb6",
      "thumbUrl": "travel/travel_saint_bernard_hike_thumb.webp",
      "thumbLockedUrl": "travel/travel_saint_bernard_hike_thumb_locked.webp",
      "sha256": "b050bfb615156b5c41955be90eb9dcc5149be79eca491fac4948abf4d866dcf3"
@@ -1737,7 +1737,7 @@
      ],
      "level": "medium",
      "free": false,
-     "url": "travel/travel_tapir_raft.zip",
+     "url": "travel/travel_tapir_raft.zip?v=e1877cc8",
      "thumbUrl": "travel/travel_tapir_raft_thumb.webp",
      "thumbLockedUrl": "travel/travel_tapir_raft_thumb_locked.webp",
      "sha256": "e1877cc80d118a390f69af67c0e232aad83d8220ead76622138334d611107e40"

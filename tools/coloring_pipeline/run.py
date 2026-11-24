@@ -213,6 +213,17 @@ def cmd_anchor(a, scenes):
     print(f'Выберите лучший вариант и скопируйте его в {config.STYLE_ANCHOR}')
 
 
+def cmd_split(a, scenes):
+    from cpipe.split import split
+    s = _select(scenes, [a.scene_id])[0]
+    out = config.WORK / 'build' / s.id
+    if not (out / 'regions.json').exists():
+        sys.exit(f'{s.id}: не собрана')
+    for line in split(out, a.regions):
+        print(f'{s.id}: {line}')
+    print(f'Проверьте {out / "preview.jpg"} и выполните python run.py export')
+
+
 def cmd_status(a, scenes):
     rows = {'ожидает генерации контура': [], 'контур на проверке': [], 'ожидает цветной версии': [],
             'готова к финальной проверке': [], 'принята': [], 'нужно поменять сцену': []}
@@ -242,6 +253,8 @@ def main():
     p = sub.add_parser('reject'); p.add_argument('step', choices=['lineart', 'final']); p.add_argument('ids', nargs='+')
     p.add_argument('--reason'); p.add_argument('--lineart', action='store_true', help='final: redo the line art too')
     p = sub.add_parser('reset'); p.add_argument('ids', nargs='+')
+    p = sub.add_parser('split', help='split regions merged by a gap in the line art along the colored edge')
+    p.add_argument('scene_id'); p.add_argument('regions', nargs='+', type=int)
     sub.add_parser('export')
     a = ap.parse_args()
     scenes = load_scenes()
@@ -258,6 +271,7 @@ def main():
     elif a.cmd == 'reset': cmd_reset(a, scenes)
     elif a.cmd == 'anchor': cmd_anchor(a, scenes)
     elif a.cmd == 'status': cmd_status(a, scenes)
+    elif a.cmd == 'split': cmd_split(a, scenes)
     elif a.cmd == 'export':
         from cpipe.export import export
         r = export(scenes)

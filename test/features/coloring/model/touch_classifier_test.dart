@@ -17,9 +17,16 @@ void main() {
     expect((out.single as Tap).position, const Point(109.0, 100.0));
   });
 
-  test('hold 300 ms is not a tap', () {
+  test('a finger held 2 s without a long press still taps', () {
     c.pointerDown(1, const Point(0, 0), ms(0));
-    expect(c.pointerUp(1, const Point(0, 0), ms(300)), isEmpty);
+    final out = c.pointerUp(1, const Point(4, 0), ms(2000));
+    expect((out.single as Tap).position, const Point(4.0, 0.0));
+  });
+
+  test('after a long press, lifting is no tap', () {
+    c.pointerDown(1, const Point(0, 0), ms(0));
+    c.tick(ms(500));
+    expect(c.pointerUp(1, const Point(0, 0), ms(900)), isEmpty);
   });
 
   test('moving 10 dp is not a tap but a drag', () {
