@@ -6,7 +6,7 @@ import '../../app/widgets/book_button.dart';
 import '../../app/widgets/book_dialog.dart';
 import '../../l10n/app_localizations.dart';
 import '../palette/color_swatch.dart';
-import '../palette/domain/base_palette.dart';
+import 'model/drawing_palette.dart';
 import 'data/tool_access.dart';
 import 'drawing_state.dart';
 import 'model/brush_size.dart';
@@ -174,7 +174,7 @@ class _DrawingPanelState extends ConsumerState<DrawingPanel> {
                       children: [
                         for (final color in [
                           ...widget.recent.take(4),
-                          ...basePalette,
+                          ...drawingPalette,
                         ])
                           PaletteSwatch(
                             color: color,

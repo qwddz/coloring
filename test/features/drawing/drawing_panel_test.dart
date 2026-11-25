@@ -1,6 +1,7 @@
 import 'package:coloring/features/drawing/drawing_panel.dart';
 import 'package:coloring/features/drawing/drawing_state.dart';
 import 'package:coloring/features/drawing/model/brush_size.dart';
+import 'package:coloring/features/drawing/model/drawing_palette.dart';
 import 'package:coloring/features/drawing/model/drawing_tool.dart';
 import 'package:coloring/features/drawing/model/symmetry.dart';
 import 'package:coloring/features/palette/color_swatch.dart';
@@ -13,7 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 const _state = DrawingState(
   drawingId: 'drawing-1',
   tool: DrawingTool.pencil,
-  color: 0xFF4A86C5,
+  color: 0xFF2456D6,
   size: BrushSize.medium,
   symmetry: SymmetryMode.off,
   canUndo: true,
@@ -245,7 +246,7 @@ void main() {
   testWidgets('colors: recent first, the selected one ringed', (tester) async {
     final log = await pumpPanel(tester, width: 317, height: 344);
     final swatches = find.byType(PaletteSwatch);
-    expect(swatches, findsNWidgets(2 + 24));
+    expect(swatches, findsNWidgets(2 + drawingPalette.length));
     expect(tester.widget<PaletteSwatch>(swatches.first).color, 0xFFE57373);
     expect(
       tester.widgetList<PaletteSwatch>(swatches).where((s) => s.selected),

@@ -31,7 +31,7 @@ import 'render/raster_engine.dart';
 const Duration drawingSaveDelay = Duration(seconds: 2);
 
 /// The color selected when the drawing screen opens.
-const int defaultDrawingColor = 0xFF4A86C5;
+const int defaultDrawingColor = 0xFF2456D6;
 
 /// The clock for drawing ids, created and modified times; tests fix it.
 final drawingClockProvider = Provider<DateTime Function()>(

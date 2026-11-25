@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:coloring/features/drawing/model/flood_fill.dart';
-import 'package:coloring/features/palette/domain/base_palette.dart';
+import 'package:coloring/features/drawing/model/drawing_palette.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -129,14 +129,14 @@ void main() {
   });
 
   test('the palette rationale of the threshold holds', () {
-    final colors = basePalette.where((c) => c != _white).toList();
+    final colors = drawingPalette.where((c) => c != _white).toList();
     for (final c in colors) {
       expect(colorDistance(c, _white), greaterThan(fillTolerance));
     }
-    for (var i = 0; i < basePalette.length; i++) {
-      for (var j = i + 1; j < basePalette.length; j++) {
+    for (var i = 0; i < drawingPalette.length; i++) {
+      for (var j = i + 1; j < drawingPalette.length; j++) {
         expect(
-          colorDistance(basePalette[i], basePalette[j]),
+          colorDistance(drawingPalette[i], drawingPalette[j]),
           greaterThan(fillTolerance),
         );
       }
@@ -241,8 +241,8 @@ void main() {
   });
 
   test('dilation never joins a solid core pixel', () {
-    for (final line in basePalette.where((c) => c != _white)) {
-      for (final fill in basePalette) {
+    for (final line in drawingPalette.where((c) => c != _white)) {
+      for (final fill in drawingPalette) {
         if (fill == line) continue;
         final r = _Raster(24, 24);
         // A 1 px aliased diagonal and a vertical line, both solid cores.
@@ -311,7 +311,7 @@ void main() {
   });
 
   group('every base color as a thin pencil line', () {
-    final lines = basePalette.where((c) => c != _white).toList();
+    final lines = drawingPalette.where((c) => c != _white).toList();
     // The small pencil at pressure 0.5 is about 5 px wide (12 x 0.5 x 0.85);
     // an antialiased 2 px line is thinner and so a stricter test.
     const lineWidth = 2.0;
@@ -399,7 +399,7 @@ void main() {
 
         for (final line in lines) {
           final onWhite = _Raster(w, h)..draw(line, coverage);
-          for (final a in basePalette) {
+          for (final a in drawingPalette) {
             if (a == line) continue;
             final reason =
                 'line ${line.toRadixString(16)} fill ${a.toRadixString(16)}';
@@ -415,7 +415,7 @@ void main() {
             // On a base color: the line drawn over a sheet filled with `a`,
             // then filled inside or outside with every other base color.
             final onColor = _Raster(w, h, a)..draw(line, coverage);
-            for (final b in basePalette) {
+            for (final b in drawingPalette) {
               if (b == a) continue;
               final at = '$reason on ${b.toRadixString(16)}';
               expectFill(_copy(onColor), inSeed, b, solid, '$at in');
@@ -425,7 +425,7 @@ void main() {
             // In a row: inside, then outside with every color next to it.
             final filled = _copy(onWhite);
             filled.apply(filled.fill([inSeed], a)!, a);
-            for (final b in basePalette.where((c) => c != _white)) {
+            for (final b in drawingPalette.where((c) => c != _white)) {
               final bits = _maskBits(filled.fill([outSeed], b)!, w, h);
               expect(
                 [
